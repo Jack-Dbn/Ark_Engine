@@ -3,7 +3,7 @@
 
 
 int main() {
-	std::cout << "Welcome to the Ark Engine Editor." << std::endl;
+	std::cout << "Welcome to the a Ark Engine powered game." << std::endl;
 	GameEngine::PrintMessage();
 	return 0;
 }

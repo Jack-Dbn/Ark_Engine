@@ -8,6 +8,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Ark_Editor", "Ark_Editor\Ark_Editor.vcxproj", "{0102A448-3E58-4EFA-A4BF-345FD492D4F2}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Game", "Game\Game.vcxproj", "{3EAAFE1B-FFEA-46D2-9245-E4DCD5523A93}"
+	ProjectSection(ProjectDependencies) = postProject
+		{62BCC5B6-5D8E-442B-B0E6-674038C48B86} = {62BCC5B6-5D8E-442B-B0E6-674038C48B86}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
