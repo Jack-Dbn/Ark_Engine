@@ -1,9 +1,11 @@
 #include <iostream>
-#include "Ark_GameEngine.h"
+#include "Window.h"
 
+int WINAPI wWinMain(HINSTANCE instHandle, HINSTANCE prevInstHandle, PWSTR cmdLineArgs, int displayMode) {
 
-int main() {
-	std::cout << "Welcome to the Ark Engine Editor." << std::endl;
-	GameEngine::PrintMessage();
+	Ark::Window editorWindow(instHandle, L"Ark Editor", L"Editor Window");
+
+	editorWindow.Show();
+
 	return 0;
 }

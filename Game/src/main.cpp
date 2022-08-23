@@ -1,9 +1,12 @@
 #include <iostream>
-#include "Ark_GameEngine.h"
+#include "Window.h"
 
 
-int main() {
-	std::cout << "Welcome to the a Ark Engine powered game." << std::endl;
-	GameEngine::PrintMessage();
+int WINAPI wWinMain(HINSTANCE instHandle, HINSTANCE prevInstHandle, PWSTR cmdLineArgs, int displayMode) {
+
+	Ark::Window gameWindow(instHandle, L"Game Powered By Ark", L"Game Window");
+
+	gameWindow.Show();
+
 	return 0;
 }
