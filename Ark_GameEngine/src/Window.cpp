@@ -4,21 +4,43 @@ namespace Ark {
 
 	LRESULT CALLBACK WindowProc(HWND wndHandle, UINT wndMsg, WPARAM wParam, LPARAM lParam) {
 
+		Application* linkedApp = reinterpret_cast<Application*>(GetWindowLongPtr(wndHandle, GWLP_USERDATA));
+
 		switch (wndMsg) {
 
-			case WM_PAINT:
+			case WM_CREATE:
 				{
-				PAINTSTRUCT pStruct;
-				HDC hdc = BeginPaint(wndHandle, &pStruct);
+					LPCREATESTRUCT createStruct = reinterpret_cast<LPCREATESTRUCT>(lParam);
+					SetWindowLongPtr(wndHandle, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(createStruct->lpCreateParams));
 
-				FillRect(hdc, &pStruct.rcPaint, (HBRUSH)(COLOR_WINDOW + 1));
-
-				EndPaint(wndHandle, &pStruct);
+					Application* linkedApp = reinterpret_cast<Application*>(GetWindowLongPtr(wndHandle, GWLP_USERDATA));
+					if (linkedApp) {
+						linkedApp->OnCreate();
+					}
 				}
+				return 0;
+
+			case WM_PAINT:
 				
+				if (linkedApp) {
+					linkedApp->OnUpdate();
+				}
+				if(true) {
+					PAINTSTRUCT paintStruct;
+					HDC hdc = BeginPaint(wndHandle, &paintStruct);
+
+					// All painting occurs here, between BeginPaint and EndPaint.
+
+					FillRect(hdc, &paintStruct.rcPaint, (HBRUSH)(COLOR_WINDOW + 1));
+
+					EndPaint(wndHandle, &paintStruct);
+				}
 				return 0;
 
 			case WM_DESTROY:
+				if (linkedApp) {
+					linkedApp->OnDelete();
+				}
 				PostQuitMessage(0);
 				return 0;
 
@@ -43,6 +65,13 @@ namespace Ark {
 		RegisterClass(&this->wndClass);
 	}
 
+	int Window::LinkApp(Application* targetApp)
+	{
+		this->linkedApp = targetApp;
+
+		return 0;
+	}
+
 	int Window::Show(int displayMode)
 	{
 		//Create Window Handle
@@ -53,12 +82,12 @@ namespace Ark {
 			this->wndStyle,
 
 			//Size and Position
-			this->Width, this->Height, this->PosX, this->PosY,
+			this->width, this->height, this->posX, this->posY,
 
 			NULL,
 			NULL,
 			this->wndClass.hInstance,
-			NULL //Change to external app
+			this->linkedApp //Change to external app
 		);
 
 		//Check handle has been created sucessfully.
