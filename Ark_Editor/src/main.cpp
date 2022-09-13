@@ -6,10 +6,7 @@ int WINAPI wWinMain(HINSTANCE instHandle, HINSTANCE prevInstHandle, PWSTR cmdLin
 
 	Ark::Window editorWindow(instHandle, L"Ark Editor", L"Editor Window");
 
-	Editor editorApp;
-	editorWindow.LinkApp(&editorApp);
+	Editor editorApp(&editorWindow);
 
-	editorWindow.Show();
-
-	return 0;
+	return editorApp.Run();
 }

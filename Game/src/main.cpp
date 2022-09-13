@@ -6,10 +6,7 @@ int WINAPI wWinMain(HINSTANCE instHandle, HINSTANCE prevInstHandle, PWSTR cmdLin
 
 	Ark::Window gameWindow(instHandle, L"Game Powered By Ark", L"Game Window");
 
-	Game usersGame;
-	gameWindow.LinkApp(&usersGame);
+	Game usersGame(&gameWindow);
 
-	gameWindow.Show();
-
-	return 0;
+	return usersGame.Run();
 }

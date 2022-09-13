@@ -1,15 +1,17 @@
 #include "Game.h"
 
-void Game::OnCreate()
+Game::Game(Ark::Window* tgtWindow)
 {
-	MessageBox(NULL, L"Game Created", L"OnCreate", 0);
+	appWindow = tgtWindow;
 }
 
-void Game::OnUpdate()
+int Game::Run()
 {
-}
+	appWindow->Show();
 
-void Game::OnDelete()
-{
-	MessageBox(NULL, L"Game Deleted", L"OnDelete", 0);
+	while (true) {
+		appWindow->CheckMsgQueue();
+	}
+
+	return 0;
 }

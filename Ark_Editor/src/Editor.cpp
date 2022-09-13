@@ -1,16 +1,17 @@
 #include "Editor.h"
 
-void Editor::OnCreate()
+Editor::Editor(Ark::Window* tgtWindow)
 {
-	MessageBox(NULL, L"Editor App Created", L"OnCreate", 0);
+	appWindow = tgtWindow;
 }
 
-void Editor::OnUpdate()
+int Editor::Run()
 {
-	//MessageBox(NULL, L"OnUpdate", L"OnUpdate", 0);
-}
+	appWindow->Show();
 
-void Editor::OnDelete()
-{
-	MessageBox(NULL, L"Editor App Deleted", L"OnDelete", 0);
+	while (true) {
+		appWindow->CheckMsgQueue();
+	}
+	
+	return 0;
 }

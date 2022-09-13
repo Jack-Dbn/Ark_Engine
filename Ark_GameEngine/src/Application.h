@@ -1,18 +1,15 @@
 #pragma once
+#include "Window.h"
 
 namespace Ark {
 
 	class Application
 	{
 	public:
+		virtual int Run() = 0;
 
-		//Application States
-		virtual void OnCreate() = 0;
-		virtual void OnUpdate() = 0;
-		virtual void OnDelete() = 0;
-
-		//Application Events
-		//virtual void OnKeyDown();
+	private:
+		Ark::Window* appWindow = nullptr;
 	};
 }
 

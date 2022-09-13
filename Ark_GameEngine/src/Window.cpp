@@ -4,27 +4,18 @@ namespace Ark {
 
 	LRESULT CALLBACK WindowProc(HWND wndHandle, UINT wndMsg, WPARAM wParam, LPARAM lParam) {
 
-		Application* linkedApp = reinterpret_cast<Application*>(GetWindowLongPtr(wndHandle, GWLP_USERDATA));
+		//Application* linkedApp = reinterpret_cast<Application*>(GetWindowLongPtr(wndHandle, GWLP_USERDATA));
 
 		switch (wndMsg) {
 
 			case WM_CREATE:
 				{
-					LPCREATESTRUCT createStruct = reinterpret_cast<LPCREATESTRUCT>(lParam);
-					SetWindowLongPtr(wndHandle, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(createStruct->lpCreateParams));
-
-					Application* linkedApp = reinterpret_cast<Application*>(GetWindowLongPtr(wndHandle, GWLP_USERDATA));
-					if (linkedApp) {
-						linkedApp->OnCreate();
-					}
+					//LPCREATESTRUCT createStruct = reinterpret_cast<LPCREATESTRUCT>(lParam);
+					//SetWindowLongPtr(wndHandle, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(createStruct->lpCreateParams));					
 				}
 				return 0;
 
 			case WM_PAINT:
-				
-				if (linkedApp) {
-					linkedApp->OnUpdate();
-				}
 				if(true) {
 					PAINTSTRUCT paintStruct;
 					HDC hdc = BeginPaint(wndHandle, &paintStruct);
@@ -38,9 +29,6 @@ namespace Ark {
 				return 0;
 
 			case WM_DESTROY:
-				if (linkedApp) {
-					linkedApp->OnDelete();
-				}
 				PostQuitMessage(0);
 				return 0;
 
@@ -59,50 +47,64 @@ namespace Ark {
 		newWndClass.hInstance = instHandle;
 		newWndClass.lpfnWndProc = WindowProc;
 
-		this->wndClass = newWndClass;
-		this->wndText = windowText;
+		wndClass = newWndClass;
+		wndText = windowText;
 
-		RegisterClass(&this->wndClass);
+		RegisterClass(&wndClass);
 	}
 
-	int Window::LinkApp(Application* targetApp)
-	{
-		this->linkedApp = targetApp;
-
-		return 0;
-	}
-
-	int Window::Show(int displayMode)
+	int Window::Show(int displayMode, bool loopFlag)
 	{
 		//Create Window Handle
 		HWND wndHandle = CreateWindowEx(
 			0,
-			this->wndClass.lpszClassName,
-			this->wndText,
-			this->wndStyle,
+			wndClass.lpszClassName,
+			wndText,
+			wndStyle,
 
 			//Size and Position
-			this->width, this->height, this->posX, this->posY,
+			width, height, posX, posY,
 
 			NULL,
 			NULL,
-			this->wndClass.hInstance,
-			this->linkedApp //Change to external app
+			wndClass.hInstance,
+			nullptr //Change to external app
 		);
 
 		//Check handle has been created sucessfully.
 		if (wndHandle == NULL) {
 			return -1;
 		}
+		else {
+			handlePtr = &wndHandle;
+		}
 
 		//Show Window
-		ShowWindow(wndHandle, displayMode);
+		ShowWindow(wndHandle, displayMode);			
 
+		if (loopFlag) {
+			//Local version of message queue.
+			MSG msgQueue = {};
+
+			//Copy window messages to local queue and while messages exist loop...
+			while (GetMessage(&msgQueue, wndHandle, 0, 0) > 0) {
+
+				//Translate and Process messages.
+				TranslateMessage(&msgQueue);
+				DispatchMessage(&msgQueue);
+			}
+		}	
+
+		return 0;
+	}
+
+	int Window::CheckMsgQueue()
+	{
 		//Local version of message queue.
 		MSG msgQueue = {};
 
 		//Copy window messages to local queue and while messages exist loop...
-		while (GetMessage(&msgQueue, wndHandle, 0, 0) > 0) {
+		while (PeekMessage(&msgQueue, NULL, 0, 0, PM_REMOVE)) {
 
 			//Translate and Process messages.
 			TranslateMessage(&msgQueue);
