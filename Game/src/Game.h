@@ -13,5 +13,6 @@ public:
 
 private:
 	Ark::Window* appWindow = nullptr;
+	bool runFlag = false;
 };
 

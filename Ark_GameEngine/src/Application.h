@@ -10,6 +10,7 @@ namespace Ark {
 
 	private:
 		Ark::Window* appWindow = nullptr;
+		bool runFlag = false;
 	};
 }
 

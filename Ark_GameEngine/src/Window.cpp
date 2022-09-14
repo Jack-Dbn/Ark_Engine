@@ -4,14 +4,14 @@ namespace Ark {
 
 	LRESULT CALLBACK WindowProc(HWND wndHandle, UINT wndMsg, WPARAM wParam, LPARAM lParam) {
 
-		//Application* linkedApp = reinterpret_cast<Application*>(GetWindowLongPtr(wndHandle, GWLP_USERDATA));
+		Window* tgtWindow = reinterpret_cast<Window*>(GetWindowLongPtr(wndHandle, GWLP_USERDATA));
 
 		switch (wndMsg) {
 
 			case WM_CREATE:
 				{
-					//LPCREATESTRUCT createStruct = reinterpret_cast<LPCREATESTRUCT>(lParam);
-					//SetWindowLongPtr(wndHandle, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(createStruct->lpCreateParams));					
+					LPCREATESTRUCT createStruct = reinterpret_cast<LPCREATESTRUCT>(lParam);
+					SetWindowLongPtr(wndHandle, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(createStruct->lpCreateParams));					
 				}
 				return 0;
 
@@ -29,6 +29,7 @@ namespace Ark {
 				return 0;
 
 			case WM_DESTROY:
+				tgtWindow->Release();
 				PostQuitMessage(0);
 				return 0;
 
@@ -68,20 +69,20 @@ namespace Ark {
 			NULL,
 			NULL,
 			wndClass.hInstance,
-			nullptr //Change to external app
+			this //Change to external app
 		);
 
 		//Check handle has been created sucessfully.
 		if (wndHandle == NULL) {
 			return -1;
 		}
-		else {
-			handlePtr = &wndHandle;
-		}
 
 		//Show Window
-		ShowWindow(wndHandle, displayMode);			
+		ShowWindow(wndHandle, displayMode);		
 
+		wndActive = true;
+
+		/*
 		if (loopFlag) {
 			//Local version of message queue.
 			MSG msgQueue = {};
@@ -93,7 +94,7 @@ namespace Ark {
 				TranslateMessage(&msgQueue);
 				DispatchMessage(&msgQueue);
 			}
-		}	
+		}	*/
 
 		return 0;
 	}
@@ -112,6 +113,16 @@ namespace Ark {
 		}
 
 		return 0;
+	}
+
+	bool Window::IsActive()
+	{
+		return wndActive;
+	}
+
+	void Window::Release()
+	{
+		wndActive = false;
 	}
 
 }

@@ -11,10 +11,14 @@ namespace Ark {
 
 		int CheckMsgQueue();
 
+		bool IsActive();
+
+		void Release();
+
 	private:
 
 		WNDCLASS wndClass = {};
-		HWND* handlePtr = nullptr;
+		bool wndActive = false;
 
 		LPCWSTR wndText = L"";
 		long wndStyle = WS_OVERLAPPEDWINDOW;

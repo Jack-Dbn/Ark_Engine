@@ -9,8 +9,14 @@ int Editor::Run()
 {
 	appWindow->Show();
 
-	while (true) {
+	runFlag = true;
+
+	while (runFlag) {
 		appWindow->CheckMsgQueue();
+
+		if (!appWindow->IsActive()) {
+			runFlag = false;
+		}
 	}
 	
 	return 0;
