@@ -145,14 +145,13 @@
   <ItemGroup>
     <ClInclude Include="src\GameEngine\RenderSystem.h" />
     <ClInclude Include="src\GameEngine.h" />
-    <ClInclude Include="src\Application.h" />
-    <ClInclude Include="src\Window.h" />
     <ClInclude Include="src\GameEngine\System.h" />
+    <ClInclude Include="src\Win32App.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\GameEngine\RenderSystem.cpp" />
     <ClCompile Include="src\GameEngine.cpp" />
-    <ClCompile Include="src\Window.cpp" />
+    <ClCompile Include="src\Win32App.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

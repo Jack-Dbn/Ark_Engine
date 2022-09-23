@@ -1,19 +1,19 @@
 #pragma once
 #include <Windows.h>
-#include "Application.h"
-#include "GameEngine.h"
+#include "Win32App.h"
 
-class Editor : public Ark::Application
+class Editor : public Ark::Win32App
 {
 public:
 
-	Editor(Ark::Window* tgtWindow);
+	Editor(HINSTANCE instHandle, LPCWSTR windowText = L"", LPCWSTR className = L"Window Class Name");
 
-	//Application Loop
-	int Run();
+	//App Stages
+	//OnInit();
+	int OnUpdate();
+	int OnDestroy();
 
-private:
-	Ark::Window* appWindow = nullptr;
-	bool runFlag = false;
+	//App Events
+	void Resize();
 };
 
