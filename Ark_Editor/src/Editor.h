@@ -1,6 +1,7 @@
 #pragma once
 #include <Windows.h>
 #include "Win32App.h"
+#include "GameEngine.h"
 
 class Editor : public Ark::Win32App
 {
@@ -15,5 +16,8 @@ public:
 
 	//App Events
 	void Resize();
+
+private:
+	Ark::GameEngine engineInst;
 };
 

@@ -2,8 +2,8 @@
 class System
 {
 public:
-	virtual void Initialise() = 0;
-	virtual void Update() = 0;
-	virtual void Release() = 0;
+	virtual int Initialise() = 0;
+	virtual int Update() = 0;
+	virtual int Release() = 0;
 };
 
