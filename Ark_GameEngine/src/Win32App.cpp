@@ -92,6 +92,8 @@ namespace Ark {
 
 	int Win32App::Run(int displayMode)
 	{
+		this->OnInit();
+
 		this->DisplayWindow(displayMode);
 
 		//Local version of message queue.
@@ -113,6 +115,11 @@ namespace Ark {
 		this->OnDestroy();
 
 		return 0;
+	}
+
+	//App Events
+	void Win32App::Resize()
+	{
 	}
 	
 }

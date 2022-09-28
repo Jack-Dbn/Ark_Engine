@@ -5,6 +5,12 @@ Editor::Editor(HINSTANCE instHandle, LPCWSTR windowText, LPCWSTR className) : Ar
 	MessageBox(NULL, L"Editor Constructed", L"Editor Constructed", 0);
 }
 
+int Editor::OnInit()
+{
+	MessageBox(NULL, L"Editor OnInit", L"Editor OnInit", 0);
+	return 0;
+}
+
 int Editor::OnUpdate()
 {
 	MessageBox(NULL, L"Editor OnUpdate", L"Editor OnUpdate", 0);
@@ -16,6 +22,7 @@ int Editor::OnDestroy()
 	MessageBox(NULL, L"Editor OnDestroy", L"Editor OnDestroy", 0);
 	return 0;
 }
+
 
 void Editor::Resize()
 {

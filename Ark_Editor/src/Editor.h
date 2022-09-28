@@ -9,7 +9,7 @@ public:
 	Editor(HINSTANCE instHandle, LPCWSTR windowText = L"", LPCWSTR className = L"Window Class Name");
 
 	//App Stages
-	//OnInit();
+	int OnInit();
 	int OnUpdate();
 	int OnDestroy();
 

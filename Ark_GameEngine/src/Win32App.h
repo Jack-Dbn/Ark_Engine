@@ -13,13 +13,13 @@ namespace Ark {
 		
 
 		//App Events
-		virtual void Resize() = 0;
+		virtual void Resize();
 
 		bool wndActive = false;
 
 	protected:
 		//App Stages
-		//virtual int OnInit() = 0;
+		virtual int OnInit() = 0;
 		virtual int OnUpdate() = 0;
 		virtual int OnDestroy() = 0;
 

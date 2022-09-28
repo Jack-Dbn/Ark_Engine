@@ -5,6 +5,12 @@ Game::Game(HINSTANCE instHandle, LPCWSTR windowText, LPCWSTR className) : Ark::W
 	MessageBox(NULL, L"Game Constructed", L"Game Constructed", 0);
 }
 
+int Game::OnInit()
+{
+	MessageBox(NULL, L"Game OnInit", L"Game OnInit", 0);
+	return 0;
+}
+
 int Game::OnUpdate()
 {
 	MessageBox(NULL, L"Game OnUpdate", L"Game OnUpdate", 0);
