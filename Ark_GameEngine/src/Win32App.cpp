@@ -33,7 +33,7 @@ namespace Ark {
 			return 0;
 
 		case WM_DESTROY:
-			tgtApp->wndActive = false;
+			tgtApp->m_WndActive = false;
 			//PostQuitMessage(0);
 			return 0;
 
@@ -53,24 +53,24 @@ namespace Ark {
 		newWndClass.hInstance = instHandle;
 		newWndClass.lpfnWndProc = WindowProc;
 
-		wndClass = newWndClass;
-		wndText = windowText;
+		m_wndClass = newWndClass;
+		m_wndText = windowText;
 
-		RegisterClass(&wndClass);
+		RegisterClass(&m_wndClass);
 
 		//Create Window Handle
-		wndHandle = CreateWindowEx(
+		m_wndHandle = CreateWindowEx(
 			0,
-			wndClass.lpszClassName,
-			wndText,
-			wndStyle,
+			m_wndClass.lpszClassName,
+			m_wndText,
+			m_wndStyle,
 
 			//Size and Position
-			width, height, posX, posY,
+			m_width, m_height, m_posX, m_posY,
 
 			NULL,
 			NULL,
-			wndClass.hInstance,
+			m_wndClass.hInstance,
 			this //Change to external app
 		);
 	}
@@ -78,14 +78,14 @@ namespace Ark {
 	bool Win32App::DisplayWindow(int displayMode)
 	{
 		//Check handle has been created sucessfully.
-		if (wndHandle == NULL) {
+		if (m_wndHandle == NULL) {
 			return false;
 		}
 
 		//Show Window
-		ShowWindow(wndHandle, displayMode);
+		ShowWindow(m_wndHandle, displayMode);
 
-		wndActive = true;
+		m_WndActive = true;
 
 		return true;
 	}
@@ -99,7 +99,7 @@ namespace Ark {
 		//Local version of message queue.
 		MSG msgQueue = {};
 
-		while (wndActive) {
+		while (m_WndActive) {
 
 			//Copy window messages to local queue and while messages exist loop...
 			while (PeekMessage(&msgQueue, NULL, 0, 0, PM_REMOVE)) {

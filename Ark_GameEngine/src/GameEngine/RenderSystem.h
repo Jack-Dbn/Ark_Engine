@@ -21,12 +21,16 @@ public:
 private:
 	bool CreateDevice();
 	bool CreateSwapChain();
+	bool CreateRenderTgtView();
+	bool SetViewPort();
 
-	HWND tgtWindow = NULL;
+	HWND m_tgtWindow = NULL;
 
-	Microsoft::WRL::ComPtr<ID3D11Device> engineDevice;
-	Microsoft::WRL::ComPtr<ID3D11DeviceContext> engineDeviceContext;
+	Microsoft::WRL::ComPtr<ID3D11Device> m_d3dDevice;
+	Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_d3dDeviceContext;
 
-	Microsoft::WRL::ComPtr<IDXGISwapChain1> engineSwapChain;
+	Microsoft::WRL::ComPtr<IDXGISwapChain1> m_swapChain;
+
+	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> m_RenderTgtView;
 };
 

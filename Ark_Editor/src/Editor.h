@@ -18,6 +18,6 @@ public:
 	void Resize();
 
 private:
-	Ark::GameEngine engineInst;
+	Ark::GameEngine m_engineInst;
 };
 

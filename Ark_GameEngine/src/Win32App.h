@@ -15,7 +15,7 @@ namespace Ark {
 		//App Events
 		virtual void Resize();
 
-		bool wndActive = false;
+		bool m_WndActive = false;
 
 	protected:
 		//App Stages
@@ -23,14 +23,14 @@ namespace Ark {
 		virtual int OnUpdate() = 0;
 		virtual int OnDestroy() = 0;
 
-		HWND wndHandle = NULL;		
+		HWND m_wndHandle = NULL;		
 
-		WNDCLASS wndClass = {};
+		WNDCLASS m_wndClass = {};
 
-		LPCWSTR wndText = L"";
-		long wndStyle = WS_OVERLAPPEDWINDOW;
+		LPCWSTR m_wndText = L"";
+		long m_wndStyle = WS_OVERLAPPEDWINDOW;
 
-		int width = CW_USEDEFAULT, height = CW_USEDEFAULT, posX = CW_USEDEFAULT, posY = CW_USEDEFAULT;
+		int m_width = CW_USEDEFAULT, m_height = CW_USEDEFAULT, m_posX = CW_USEDEFAULT, m_posY = CW_USEDEFAULT;
 
 	private:
 		bool DisplayWindow(int displayMode);

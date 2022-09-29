@@ -8,13 +8,17 @@ RenderSystem::RenderSystem()
 // Initialise Stage
 int RenderSystem::Initialise()
 {
-	if (tgtWindow == NULL) {
+	if (m_tgtWindow == NULL) {
 		return -1;
 	}
 
 	CreateDevice();
 
 	CreateSwapChain();
+
+	CreateRenderTgtView();
+
+	SetViewPort();
 
 	MessageBox(NULL, L"DirectX11 Initialised", L"DirectX11 Initialised", 0);
 	return 0;
@@ -53,10 +57,10 @@ bool RenderSystem::CreateDevice()
 		return false;
 	}
 
-	newD3dDevice.As(&engineDevice);
-	newD3dDeviceContext.As(&engineDeviceContext);
+	newD3dDevice.As(&m_d3dDevice);
+	newD3dDeviceContext.As(&m_d3dDeviceContext);
 
-	if (engineDevice == nullptr || engineDeviceContext == nullptr) {
+	if (m_d3dDevice == nullptr || m_d3dDeviceContext == nullptr) {
 		return false;
 	}
 
@@ -87,7 +91,7 @@ bool RenderSystem::CreateSwapChain()
 
 	
 	Microsoft::WRL::ComPtr<IDXGIDevice2> dxgiDevice;
-	engineDevice.As(&dxgiDevice);
+	m_d3dDevice.As(&dxgiDevice);
 
 	dxgiDevice->SetMaximumFrameLatency(1);
 	
@@ -97,13 +101,42 @@ bool RenderSystem::CreateSwapChain()
 	Microsoft::WRL::ComPtr<IDXGIFactory2> dxgiFactory;
 	dxgiAdapter->GetParent(IID_PPV_ARGS(&dxgiFactory));
 
-	dxgiFactory->CreateSwapChainForHwnd(
-		engineDevice.Get(), 
-		tgtWindow,
+	HRESULT swpChnResult = dxgiFactory->CreateSwapChainForHwnd(
+		m_d3dDevice.Get(),
+		m_tgtWindow,
 		&swapChainDesc,
 		NULL,
 		nullptr,
-		&engineSwapChain);
+		&m_swapChain);
+
+	if (FAILED(swpChnResult)) {
+		return false;
+	}
+
+	return true;
+}
+
+bool RenderSystem::CreateRenderTgtView()
+{
+	Microsoft::WRL::ComPtr<ID3D11Texture2D> backBuffer;
+	HRESULT getbufferRes = m_swapChain->GetBuffer(0, IID_PPV_ARGS(&backBuffer));
+
+	if (FAILED(getbufferRes)) {
+			return false;
+	}
+
+	HRESULT createRtvRes = m_d3dDevice->CreateRenderTargetView(backBuffer.Get(), nullptr, &m_RenderTgtView);
+
+	if (FAILED(createRtvRes)) {
+		return false;
+	}
+
+	return true;
+}
+
+bool RenderSystem::SetViewPort() {
+
+
 
 	return true;
 }
@@ -124,7 +157,7 @@ int RenderSystem::Release()
 
 void RenderSystem::SetHWND(HWND windowHWND)
 {
-	tgtWindow = windowHWND;
+	m_tgtWindow = windowHWND;
 }
 
 

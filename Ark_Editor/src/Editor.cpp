@@ -6,7 +6,7 @@ Editor::Editor(HINSTANCE instHandle, LPCWSTR windowText, LPCWSTR className) : Ar
 
 int Editor::OnInit()
 {
-	engineInst.Initialise(this->wndHandle);
+	m_engineInst.Initialise(this->m_wndHandle);
 
 	//MessageBox(NULL, L"Editor OnInit", L"Editor OnInit", 0);
 	return 0;
@@ -14,7 +14,7 @@ int Editor::OnInit()
 
 int Editor::OnUpdate()
 {
-	engineInst.Update();
+	m_engineInst.Update();
 
 	//MessageBox(NULL, L"Editor OnUpdate", L"Editor OnUpdate", 0);
 	return 0;
@@ -22,7 +22,7 @@ int Editor::OnUpdate()
 
 int Editor::OnDestroy()
 {
-	engineInst.Release();
+	m_engineInst.Release();
 
 	//MessageBox(NULL, L"Editor OnDestroy", L"Editor OnDestroy", 0);
 	return 0;

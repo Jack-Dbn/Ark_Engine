@@ -16,9 +16,9 @@ namespace Ark {
 		void Release();
 
 	private:
-		std::vector<System> activeSystems;
+		std::vector<System> m_activeSystems;
 
-		RenderSystem renderSystem;
+		RenderSystem m_renderSystem;
 	};
 }
 

@@ -7,17 +7,17 @@ namespace Ark {
 
 	void GameEngine::Initialise(HWND windowHWND)
 	{		
-		renderSystem.SetHWND(windowHWND);
-		renderSystem.Initialise();
+		m_renderSystem.SetHWND(windowHWND);
+		m_renderSystem.Initialise();
 	}
 
 	void GameEngine::Update()
 	{		
-		renderSystem.Update();
+		m_renderSystem.Update();
 	}
 
 	void GameEngine::Release()
 	{
-		renderSystem.Release();
+		m_renderSystem.Release();
 	}
 }
