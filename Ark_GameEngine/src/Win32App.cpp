@@ -6,6 +6,9 @@ namespace Ark {
 
 		Win32App* tgtApp = reinterpret_cast<Win32App*>(GetWindowLongPtr(wndHandle, GWLP_USERDATA));
 
+		//int windowWidth = 1600.0f;
+		//int windowHeight = 900.0f;
+
 		switch (wndMsg) {
 
 		case WM_CREATE:
@@ -28,8 +31,18 @@ namespace Ark {
 			}
 			return 0;
 
+		/*
+		case WM_SIZE:
+
+			windowHeight = HIWORD(lParam);
+			windowWidth = LOWORD(lParam);
+
+			return 0;*/
+
 		case WM_EXITSIZEMOVE:
+
 			tgtApp->Resize();
+
 			return 0;
 
 		case WM_DESTROY:
@@ -118,7 +131,7 @@ namespace Ark {
 	}
 
 	//App Events
-	void Win32App::Resize()
+	void Win32App::Resize(int newHeight, int newWidth)
 	{
 	}
 	

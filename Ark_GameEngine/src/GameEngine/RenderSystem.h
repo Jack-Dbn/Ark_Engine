@@ -15,6 +15,8 @@ public:
 	int Update();
 	int Release();
 
+	bool Resize(int newHeight, int newWidth);
+
 	//Getters & Setters
 	void SetHWND(HWND windowHWND);
 

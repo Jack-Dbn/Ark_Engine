@@ -20,4 +20,9 @@ namespace Ark {
 	{
 		m_renderSystem.Release();
 	}
+
+	void GameEngine::WindowResize(int newHeight, int newWidth)
+	{
+		m_renderSystem.Resize(newHeight, newWidth);
+	}
 }

@@ -15,7 +15,7 @@ public:
 	int OnDestroy();
 
 	//App Events
-	void Resize();
+	void Resize(int newHeight, int newWidth);
 
 private:
 	Ark::GameEngine m_engineInst;

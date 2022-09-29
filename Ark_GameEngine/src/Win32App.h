@@ -13,7 +13,7 @@ namespace Ark {
 		
 
 		//App Events
-		virtual void Resize();
+		virtual void Resize(int newHeight = 900, int newWidth = 1600);
 
 		bool m_WndActive = false;
 

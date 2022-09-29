@@ -192,6 +192,26 @@ int RenderSystem::Release()
 	return 0;
 }
 
+bool RenderSystem::Resize(int newHeight, int newWidth)
+{
+	if (m_swapChain) {
+
+		m_RenderTgtView.Reset();
+
+		HRESULT resizeRes = m_swapChain->ResizeBuffers(2, 0, 0, DXGI_FORMAT_B8G8R8A8_UNORM, 0);
+
+		if (FAILED(resizeRes)) {
+			return false;
+		}
+
+		CreateRenderTgtView();
+
+		return true;
+	}
+
+	return false;
+}
+
 void RenderSystem::SetHWND(HWND windowHWND)
 {
 	m_tgtWindow = windowHWND;

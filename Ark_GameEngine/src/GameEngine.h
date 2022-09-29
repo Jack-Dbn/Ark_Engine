@@ -15,6 +15,8 @@ namespace Ark {
 
 		void Release();
 
+		void WindowResize(int newHeight, int newWidth);
+
 	private:
 		std::vector<System> m_activeSystems;
 

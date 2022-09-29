@@ -29,8 +29,9 @@ int Editor::OnDestroy()
 }
 
 
-void Editor::Resize()
+void Editor::Resize(int newHeight, int newWidth)
 {
+	m_engineInst.WindowResize(newHeight, newWidth);
 	//MessageBox(NULL, L"Editor Resize", L"Editor Resize", 0);
 }
 
