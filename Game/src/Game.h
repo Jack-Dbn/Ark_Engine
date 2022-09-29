@@ -1,6 +1,7 @@
 #pragma once
 #include <Windows.h>
 #include "Win32App.h"
+#include "GameEngine.h"
 
 class Game : public Ark::Win32App
 {
@@ -14,6 +15,9 @@ public:
 	int OnDestroy();
 
 	//App Events
-	void Resize();
+	void Resize(int newHeight, int newWidth);
+
+private:
+	Ark::GameEngine m_engineInst;
 };
 

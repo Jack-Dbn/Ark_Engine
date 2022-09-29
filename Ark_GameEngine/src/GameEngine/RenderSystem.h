@@ -4,6 +4,7 @@
 #include <d3d11_2.h>
 #include <Windows.h>
 #include <wrl.h>
+#include <vector>
 
 
 class RenderSystem : public System
@@ -30,6 +31,11 @@ private:
 	//Update
 	void SetupFrame(const float redVal = 0.0f, const float greenVal = 0.75f, const float blueVal = 0.75f, const float alphaVal = 1.0f);
 	bool PresentFrame(bool vSyncOn = true);
+
+	//std::vector<Shader> m_activeShaders;
+	//std::vector<Mesh> m_activeMeshes;
+	//std::vector<Texture> m_activeTextures;
+
 
 	HWND m_tgtWindow = NULL;
 
