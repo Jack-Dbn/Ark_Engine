@@ -19,10 +19,15 @@ public:
 	void SetHWND(HWND windowHWND);
 
 private:
+	//Init
 	bool CreateDevice();
 	bool CreateSwapChain();
 	bool CreateRenderTgtView();
-	bool SetViewPort();
+	void SetViewPort(float viewPortWidth = 1920.0f, float viewPortHeight = 1080.0f);
+
+	//Update
+	void SetupFrame(const float redVal = 0.0f, const float greenVal = 0.75f, const float blueVal = 0.75f, const float alphaVal = 1.0f);
+	bool PresentFrame(bool vSyncOn = true);
 
 	HWND m_tgtWindow = NULL;
 
@@ -33,4 +38,3 @@ private:
 
 	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> m_RenderTgtView;
 };
-

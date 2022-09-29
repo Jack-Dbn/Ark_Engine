@@ -16,9 +16,7 @@ int RenderSystem::Initialise()
 
 	CreateSwapChain();
 
-	CreateRenderTgtView();
-
-	SetViewPort();
+	CreateRenderTgtView();	
 
 	MessageBox(NULL, L"DirectX11 Initialised", L"DirectX11 Initialised", 0);
 	return 0;
@@ -131,21 +129,60 @@ bool RenderSystem::CreateRenderTgtView()
 		return false;
 	}
 
+	D3D11_TEXTURE2D_DESC backBufferDesc = { 0 };
+	backBuffer->GetDesc(&backBufferDesc);
+
+	SetViewPort(backBufferDesc.Width, backBufferDesc.Height);
+
 	return true;
 }
 
-bool RenderSystem::SetViewPort() {
+void RenderSystem::SetViewPort(float viewPortWidth, float viewPortHeight) {
 
+	D3D11_VIEWPORT newViewPort;
 
+	newViewPort.TopLeftX = 0.0f;
+	newViewPort.TopLeftY = 0.0f;
+	newViewPort.Width = viewPortWidth;
+	newViewPort.Height = viewPortHeight;
+	newViewPort.MinDepth = D3D11_MIN_DEPTH;
+	newViewPort.MaxDepth = D3D11_MAX_DEPTH;
 
-	return true;
+	m_d3dDeviceContext->RSSetViewports(1, &newViewPort);
 }
 
 // Update Stage
 int RenderSystem::Update()
 {
-	MessageBox(NULL, L"DirectX11 Frame", L"DirectX11 Frame", 0);
+	SetupFrame();
+
+	PresentFrame(false);
+	//MessageBox(NULL, L"DirectX11 Frame", L"DirectX11 Frame", 0);
 	return 0;
+}
+
+void RenderSystem::SetupFrame(float redVal, float greenVal, float blueVal, float alphaVal)
+{
+	m_d3dDeviceContext->OMSetRenderTargets(1, m_RenderTgtView.GetAddressOf(), nullptr);
+
+	float backgrndColour[4] = {redVal, greenVal, blueVal, alphaVal};
+	m_d3dDeviceContext->ClearRenderTargetView(m_RenderTgtView.Get(), backgrndColour);
+}
+
+bool RenderSystem::PresentFrame(bool vSyncOn)
+{
+	int syncInterval = 0;
+	if (vSyncOn) {
+		syncInterval = 1;
+	}
+
+	HRESULT presentRes = m_swapChain->Present(syncInterval, 0);
+
+	if (FAILED(presentRes)) {
+		return false;
+	}
+
+	return true;
 }
 
 // Release Stage
