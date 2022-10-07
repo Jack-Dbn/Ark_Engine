@@ -1,7 +1,8 @@
 #pragma once
 #include <vector>
-#include "GameEngine/RenderSystem.h"
-
+#include "GameEngine/Systems/RenderSystem.h"
+#include "GameEngine/Components/Transform.h"
+#include "GameEngine/Components/Material.h"
 
 namespace Ark {
 	class GameEngine

@@ -9,6 +9,14 @@ namespace Ark {
 	{		
 		m_renderSystem.SetHWND(windowHWND);
 		m_renderSystem.Initialise();
+
+		//Scene mainScene
+
+		//Entity cubeOne
+		//Material solidMaterial
+		//cubeOne.AddComponent(Component solidMaterial)
+		//mainScene.AddEntity(cubeOne)
+		//this->LoadScene(mainScene)
 	}
 
 	void GameEngine::Update()

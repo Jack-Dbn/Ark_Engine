@@ -1,5 +1,5 @@
 #pragma once
-#include "System.h"
+#include "../System.h"
 #include <d3d11.h>
 #include <d3d11_2.h>
 #include <Windows.h>

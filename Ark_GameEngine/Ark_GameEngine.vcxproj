@@ -143,21 +143,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\GameEngine\Components\Model.h" />
+    <ClInclude Include="src\GameEngine\Components\Material.h" />
     <ClInclude Include="src\GameEngine\Scene.h" />
     <ClInclude Include="src\GameEngine\Component.h" />
     <ClInclude Include="src\GameEngine\Entity.h" />
-    <ClInclude Include="src\GameEngine\RenderSystem.h" />
+    <ClInclude Include="src\GameEngine\Systems\RenderSystem.h" />
     <ClInclude Include="src\GameEngine.h" />
     <ClInclude Include="src\GameEngine\System.h" />
     <ClInclude Include="src\Win32App.h" />
+    <ClInclude Include="src\GameEngine\Components\Transform.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\GameEngine\Components\Model.cpp" />
+    <ClCompile Include="src\GameEngine\Components\Material.cpp" />
     <ClCompile Include="src\GameEngine\Scene.cpp" />
     <ClCompile Include="src\GameEngine\Component.cpp" />
     <ClCompile Include="src\GameEngine\Entity.cpp" />
-    <ClCompile Include="src\GameEngine\RenderSystem.cpp" />
+    <ClCompile Include="src\GameEngine\Systems\RenderSystem.cpp" />
     <ClCompile Include="src\GameEngine.cpp" />
     <ClCompile Include="src\Win32App.cpp" />
+    <ClCompile Include="src\GameEngine\Components\Transform.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
