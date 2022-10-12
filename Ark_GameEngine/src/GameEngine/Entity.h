@@ -1,16 +1,26 @@
 #pragma once
-class Entity
-{
-public:
-	Entity();
+#include <vector>
+#include <bitset>
+#include <Windows.h>
 
-	unsigned int GetId();
+const unsigned int MAX_COMPONENTS = 32;
 
-private:
-	static unsigned int m_IdCounter;
+static std::vector<unsigned int> freeEntitySlots;
 
-	unsigned int m_Id;
+namespace Ark {
+	class Entity
+	{
+	public:
+		Entity();
+		~Entity();
 
-	bool m_ComponentMask[];
-};
+		static void Initialise(unsigned int maxEntities);
+
+	private:
+		unsigned int m_id;
+
+		std::bitset<MAX_COMPONENTS> m_componentMask;
+	};
+
+}
 

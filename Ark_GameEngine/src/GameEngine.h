@@ -3,8 +3,12 @@
 #include "GameEngine/Systems/RenderSystem.h"
 #include "GameEngine/Components/Transform.h"
 #include "GameEngine/Components/Material.h"
+#include "GameEngine/Entity.h"
 
 namespace Ark {
+
+	const unsigned int MAX_ENTITIES = 100;
+
 	class GameEngine
 	{
 	public:

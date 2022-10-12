@@ -10,6 +10,10 @@ namespace Ark {
 		m_renderSystem.SetHWND(windowHWND);
 		m_renderSystem.Initialise();
 
+		Entity::Initialise(MAX_ENTITIES);
+		
+		Entity cube;
+
 		//Scene mainScene
 
 		//Entity cubeOne
