@@ -6,17 +6,22 @@ namespace Ark {
 		m_id = freeEntitySlots.back();
 		freeEntitySlots.pop_back();
 
+		
 		wchar_t text[256];
 
-		swprintf_s(text, L"Created entity two: %d", m_id);
+		swprintf_s(text, L"Created entity with id: %d", m_id);
 		MessageBox(NULL, text, text, 0);
+		/*
+		swprintf_s(text, L"Next Entity Id: %d", freeEntitySlots.back());
+		MessageBox(NULL, text, text, 0);*/
 	}
 
 	Entity::~Entity()
 	{
+		
 		wchar_t text[256];
 
-		swprintf_s(text, L"Deleting entity: %d", m_id);
+		swprintf_s(text, L"Returning entity id: %d", m_id);
 		MessageBox(NULL, text, text, 0);
 
 		freeEntitySlots.push_back(m_id);

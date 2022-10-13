@@ -14,6 +14,8 @@ namespace Ark {
 		
 		Entity cube;
 
+		Entity cube2;
+
 		//Scene mainScene
 
 		//Entity cubeOne
