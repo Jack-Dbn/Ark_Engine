@@ -5,8 +5,6 @@
 
 const unsigned int MAX_COMPONENTS = 32;
 
-static std::vector<unsigned int> freeEntitySlots;
-
 namespace Ark {
 	class Entity
 	{
@@ -15,12 +13,22 @@ namespace Ark {
 		~Entity();
 
 		static void Initialise(unsigned int maxEntities);
+		
+		void Load();
+
+		void Unload();
 
 	private:
-		unsigned int m_id;
+		int m_id;
 
 		std::bitset<MAX_COMPONENTS> m_componentMask;
 	};
 
+	static std::vector<unsigned int> freeEntitySlots;
+
+	static std::vector<Entity> activeEntities;
+
 }
+
+
 

@@ -16,6 +16,9 @@ namespace Ark {
 
 		Entity cube2;
 
+		cube.Load();
+		cube2.Load();
+
 		//Scene mainScene
 
 		//Entity cubeOne
