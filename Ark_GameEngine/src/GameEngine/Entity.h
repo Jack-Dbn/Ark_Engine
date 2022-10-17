@@ -2,32 +2,30 @@
 #include <vector>
 #include <bitset>
 #include <Windows.h>
-
-const unsigned int MAX_COMPONENTS = 32;
+#include <string>
 
 namespace Ark {
+
 	class Entity
 	{
 	public:
-		Entity();
-		~Entity();
+		static const unsigned int MAX_ENTITIES = 100;
+		static const unsigned int MAX_COMPONENTS = 32;
 
-		static void Initialise(unsigned int maxEntities);
-		
-		void Load();
+		static void Init();
 
-		void Unload();
+		//bool Load();
+		//bool Unload();
 
 	private:
-		int m_id;
+
+		static Entity m_activeEntities[MAX_ENTITIES];
+		static std::vector<unsigned int> m_availableIds;
+
+		//unsigned int m_engineLabel[8];
 
 		std::bitset<MAX_COMPONENTS> m_componentMask;
 	};
-
-	static std::vector<unsigned int> freeEntitySlots;
-
-	static std::vector<Entity> activeEntities;
-
 }
 
 

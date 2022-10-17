@@ -5,13 +5,12 @@
 #include "GameEngine/Components/Material.h"
 #include "GameEngine/Entity.h"
 
-namespace Ark {
-
-	const unsigned int MAX_ENTITIES = 100;
+namespace Ark {	
 
 	class GameEngine
 	{
 	public:
+
 		GameEngine();
 		
 		void Initialise(HWND windowHWND);
