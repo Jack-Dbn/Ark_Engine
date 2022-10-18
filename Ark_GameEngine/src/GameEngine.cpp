@@ -45,6 +45,17 @@ namespace Ark {
 		m_renderSystem.Release();
 	}
 
+	void GameEngine::LoadScene(Scene tgtScene)
+	{
+		std::vector<Entity> newActiveEntities = tgtScene.GetEntityList();
+		
+		Entity::UnloadAll();
+
+		for (int e = 0; e < newActiveEntities.size(); e++) {
+			newActiveEntities.at(e).Load();
+		}
+	}
+
 	void GameEngine::WindowResize(int newHeight, int newWidth)
 	{
 		m_renderSystem.Resize(newHeight, newWidth);

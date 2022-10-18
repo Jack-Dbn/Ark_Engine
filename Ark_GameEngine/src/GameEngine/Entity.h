@@ -13,22 +13,20 @@ namespace Ark {
 		static const int MAX_COMPONENTS = 32;
 
 		static void Init();
+		static void UnloadAll();
 
 		Entity();
 
 		bool Load();
-		bool Unload();
+		bool Unload();		
+
+	private:
+		static std::bitset<MAX_COMPONENTS> m_activeEntities[MAX_ENTITIES];
+		static std::vector<int> m_availableIds;
 
 		int m_id;
 
 		std::bitset<MAX_COMPONENTS> m_componentMask;
-
-	private:
-
-		static std::bitset<MAX_COMPONENTS> m_activeEntities[MAX_ENTITIES];
-		static std::vector<int> m_availableIds;
-
-		
 	};
 }
 

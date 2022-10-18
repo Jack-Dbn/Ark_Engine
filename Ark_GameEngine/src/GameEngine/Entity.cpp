@@ -10,6 +10,21 @@ void Ark::Entity::Init()
 	}
 }
 
+void Ark::Entity::UnloadAll()
+{
+	std::bitset<MAX_COMPONENTS> blankMask;
+
+	for (int i = 0; i < MAX_ENTITIES; i++) {
+
+		if (m_activeEntities[i] == blankMask) {
+			continue;
+		}
+
+		m_activeEntities[i] = blankMask;
+		m_availableIds.push_back(i);
+	}
+}
+
 Ark::Entity::Entity()
 {
 	m_id = -1;
