@@ -18,7 +18,10 @@ namespace Ark {
 		Entity();
 
 		bool Load();
-		bool Unload();		
+		bool Unload();
+
+		//Debug
+		static void PrintActive();
 
 	private:
 		static std::bitset<MAX_COMPONENTS> m_activeEntities[MAX_ENTITIES];

@@ -10,29 +10,13 @@ namespace Ark {
 		m_renderSystem.SetHWND(windowHWND);
 		m_renderSystem.Initialise();
 
-		Entity::Init();
-		
-		Entity cube;
-
-		Entity cube2;
-		Entity cube3;
-
-		cube.Load();
-		cube2.Load();
+		Entity::Init();		
 
 		/*
 		wchar_t text[256];
 
 		swprintf_s(text, L"%d", cube.m_id);
-		MessageBox(NULL, text, text, 0);*/
-
-		//Scene mainScene
-
-		//Entity cubeOne
-		//Material solidMaterial
-		//cubeOne.AddComponent(Component solidMaterial)
-		//mainScene.AddEntity(cubeOne)
-		//this->LoadScene(mainScene)
+		MessageBox(NULL, text, text, 0);*/		
 	}
 
 	void GameEngine::Update()

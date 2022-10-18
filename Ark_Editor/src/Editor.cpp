@@ -8,6 +8,16 @@ int Editor::OnInit()
 {
 	m_engineInst.Initialise(this->m_wndHandle);
 
+	Ark::Scene mainScene;
+	Ark::Entity cube;
+	Ark::Entity cube2;
+
+	mainScene.AddEntity(cube);
+	mainScene.AddEntity(cube2);
+	m_engineInst.LoadScene(mainScene);
+
+	Ark::Entity::PrintActive();
+
 	//MessageBox(NULL, L"Editor OnInit", L"Editor OnInit", 0);
 	return 0;
 }
