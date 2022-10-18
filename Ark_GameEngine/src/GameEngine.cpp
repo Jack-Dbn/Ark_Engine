@@ -15,9 +15,16 @@ namespace Ark {
 		Entity cube;
 
 		Entity cube2;
+		Entity cube3;
 
-		//cube.Load();
-		//cube2.Load();
+		cube.Load();
+		cube2.Load();
+
+		/*
+		wchar_t text[256];
+
+		swprintf_s(text, L"%d", cube.m_id);
+		MessageBox(NULL, text, text, 0);*/
 
 		//Scene mainScene
 

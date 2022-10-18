@@ -9,22 +9,26 @@ namespace Ark {
 	class Entity
 	{
 	public:
-		static const unsigned int MAX_ENTITIES = 100;
-		static const unsigned int MAX_COMPONENTS = 32;
+		static const int MAX_ENTITIES = 100;
+		static const int MAX_COMPONENTS = 32;
 
 		static void Init();
 
-		//bool Load();
-		//bool Unload();
+		Entity();
+
+		bool Load();
+		bool Unload();
+
+		int m_id;
+
+		std::bitset<MAX_COMPONENTS> m_componentMask;
 
 	private:
 
-		static Entity m_activeEntities[MAX_ENTITIES];
-		static std::vector<unsigned int> m_availableIds;
+		static std::bitset<MAX_COMPONENTS> m_activeEntities[MAX_ENTITIES];
+		static std::vector<int> m_availableIds;
 
-		//unsigned int m_engineLabel[8];
-
-		std::bitset<MAX_COMPONENTS> m_componentMask;
+		
 	};
 }
 
