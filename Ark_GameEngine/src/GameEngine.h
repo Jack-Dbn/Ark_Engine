@@ -3,7 +3,7 @@
 #include "GameEngine/Systems/RenderSystem.h"
 #include "GameEngine/Components/Transform.h"
 #include "GameEngine/Components/Material.h"
-#include "GameEngine/Scene.h"
+#include "GameEngine/Entity.h"
 
 namespace Ark {	
 
@@ -18,8 +18,6 @@ namespace Ark {
 		void Update();
 
 		void Release();
-
-		void LoadScene(Scene tgtScene);
 
 		void WindowResize(int newHeight, int newWidth);
 

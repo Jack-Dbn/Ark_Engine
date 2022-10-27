@@ -8,13 +8,9 @@ int Editor::OnInit()
 {
 	m_engineInst.Initialise(this->m_wndHandle);
 
-	Ark::Scene mainScene;
-	Ark::Entity cube;
-	Ark::Entity cube2;
+	Ark::Entity cube = Ark::Entity::CreateEntity();
+	Ark::Entity cube2 = Ark::Entity::CreateEntity();
 
-	mainScene.AddEntity(cube);
-	mainScene.AddEntity(cube2);
-	m_engineInst.LoadScene(mainScene);
 
 	Ark::Entity::PrintActive();
 

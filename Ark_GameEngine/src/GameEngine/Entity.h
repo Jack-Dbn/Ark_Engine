@@ -15,10 +15,12 @@ namespace Ark {
 		static void Init();
 		static void UnloadAll();
 
+		static Entity CreateEntity();
+
 		Entity();
 
-		bool Load();
-		bool Unload();
+		bool Register();
+		bool Unregister();
 
 		//Debug
 		static void PrintActive();

@@ -25,12 +25,20 @@ void Ark::Entity::UnloadAll()
 	}
 }
 
+Ark::Entity Ark::Entity::CreateEntity()
+{
+	Entity newEntity;
+	newEntity.Register();	
+
+	return newEntity;
+}
+
 Ark::Entity::Entity()
 {
 	m_id = -1;
 }
 
-bool Ark::Entity::Load()
+bool Ark::Entity::Register()
 {
 	m_id = m_availableIds.back();
 	m_availableIds.pop_back();
@@ -39,10 +47,12 @@ bool Ark::Entity::Load()
 		return false;
 	}
 
+	m_activeEntities[m_id] = m_componentMask;
+
 	return true;
 }
 
-bool Ark::Entity::Unload()
+bool Ark::Entity::Unregister()
 {
 	std::bitset<Ark::Entity::MAX_COMPONENTS> emptyMask;
 	m_activeEntities[m_id] = emptyMask;
