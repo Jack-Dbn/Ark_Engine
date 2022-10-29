@@ -28,7 +28,7 @@ void Ark::Entity::UnloadAll()
 Ark::Entity Ark::Entity::CreateEntity()
 {
 	Entity newEntity;
-	newEntity.Register();	
+	newEntity.Load();	
 
 	return newEntity;
 }
@@ -38,8 +38,28 @@ Ark::Entity::Entity()
 	m_id = -1;
 }
 
-bool Ark::Entity::Register()
+int Ark::Entity::GetID()
 {
+	return m_id;
+}
+
+void Ark::Entity::AddComponent(Component& tgtComponent)
+{
+	int maskPos = tgtComponent.GetMaskPos();
+	if (maskPos < 0 || maskPos >= MAX_COMPONENTS) {
+		return;
+	}
+
+	m_activeEntities[m_id].set(maskPos, true);
+	tgtComponent.LoadData(this->m_id);
+}
+
+bool Ark::Entity::Load()
+{
+	if (m_id >= 0 && m_id < MAX_ENTITIES) {
+		return true;
+	}
+
 	m_id = m_availableIds.back();
 	m_availableIds.pop_back();
 
@@ -52,8 +72,13 @@ bool Ark::Entity::Register()
 	return true;
 }
 
-bool Ark::Entity::Unregister()
+bool Ark::Entity::Unload()
 {
+	if (m_id < 0 || m_id >= MAX_ENTITIES) {
+		m_id = -1;
+		return true;
+	}
+
 	std::bitset<Ark::Entity::MAX_COMPONENTS> emptyMask;
 	m_activeEntities[m_id] = emptyMask;
 	m_availableIds.push_back(m_id);
@@ -62,14 +87,17 @@ bool Ark::Entity::Unregister()
 	return true;
 }
 
-void Ark::Entity::PrintActive()
+void Ark::Entity::PrintActive(int numElements)
 {
+	if (numElements >= MAX_ENTITIES || numElements < 0) {
+		return;
+	}
+
 	std::bitset<Ark::Entity::MAX_COMPONENTS> emptyMask;
 	wchar_t text[256];
 
-	for (int e = 0; e < 5; e++) {
-
+	for (int e = 0; e < numElements; e++) {
 		swprintf_s(text, L"%d", m_activeEntities[e]);
-		MessageBox(NULL, text, text, 0);		
+		MessageBox(NULL, text, text, 0);
 	}
 }

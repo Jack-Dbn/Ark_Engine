@@ -3,6 +3,7 @@
 #include <bitset>
 #include <Windows.h>
 #include <string>
+#include "Component.h"
 
 namespace Ark {
 
@@ -19,11 +20,15 @@ namespace Ark {
 
 		Entity();
 
-		bool Register();
-		bool Unregister();
+		int GetID();
+
+		void AddComponent(Component& tgtComponent);
+
+		bool Load();
+		bool Unload();
 
 		//Debug
-		static void PrintActive();
+		static void PrintActive(int numElements);
 
 	private:
 		static std::bitset<MAX_COMPONENTS> m_activeEntities[MAX_ENTITIES];

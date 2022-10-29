@@ -2,7 +2,6 @@
 #include <vector>
 #include "GameEngine/Systems/RenderSystem.h"
 #include "GameEngine/Components/Transform.h"
-#include "GameEngine/Components/Material.h"
 #include "GameEngine/Entity.h"
 
 namespace Ark {	

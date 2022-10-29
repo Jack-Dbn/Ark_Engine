@@ -11,8 +11,11 @@ int Editor::OnInit()
 	Ark::Entity cube = Ark::Entity::CreateEntity();
 	Ark::Entity cube2 = Ark::Entity::CreateEntity();
 
+	Ark::Transform cubeTransform;
+	cubeTransform.ChangePos(1, 1, 1);
+	cube.AddComponent(cubeTransform);
 
-	Ark::Entity::PrintActive();
+	Ark::Entity::PrintActive(3);
 
 	//MessageBox(NULL, L"Editor OnInit", L"Editor OnInit", 0);
 	return 0;
