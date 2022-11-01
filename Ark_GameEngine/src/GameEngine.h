@@ -2,7 +2,7 @@
 #include <vector>
 #include "GameEngine/Systems/RenderSystem.h"
 #include "GameEngine/Components/Transform.h"
-#include "GameEngine/Entity.h"
+#include "GameEngine/EntityController.h"
 
 namespace Ark {	
 
@@ -20,8 +20,12 @@ namespace Ark {
 
 		void WindowResize(int newHeight, int newWidth);
 
+		Ark::EntityController* GetEC();
+
 	private:
 		std::vector<System> m_activeSystems;
+
+		EntityController m_entityController;
 
 		RenderSystem m_renderSystem;
 	};

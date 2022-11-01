@@ -8,14 +8,12 @@ int Editor::OnInit()
 {
 	m_engineInst.Initialise(this->m_wndHandle);
 
-	Ark::Entity cube = Ark::Entity::CreateEntity();
-	Ark::Entity cube2 = Ark::Entity::CreateEntity();
+	Ark::Entity cube = m_engineInst.GetEC()->NewEntity();
+	Ark::Entity cube2 = m_engineInst.GetEC()->NewEntity();
 
 	Ark::Transform cubeTransform;
 	cubeTransform.ChangePos(1, 1, 1);
-	cube.AddComponent(cubeTransform);
-
-	Ark::Entity::PrintActive(3);
+	//cube.AddComponent(cubeTransform);
 
 	//MessageBox(NULL, L"Editor OnInit", L"Editor OnInit", 0);
 	return 0;

@@ -8,9 +8,7 @@ namespace Ark {
 	void GameEngine::Initialise(HWND windowHWND)
 	{		
 		m_renderSystem.SetHWND(windowHWND);
-		m_renderSystem.Initialise();
-
-		Entity::Init();		
+		m_renderSystem.Initialise();	
 
 		/*
 		wchar_t text[256];
@@ -32,5 +30,9 @@ namespace Ark {
 	void GameEngine::WindowResize(int newHeight, int newWidth)
 	{
 		m_renderSystem.Resize(newHeight, newWidth);
+	}
+	Ark::EntityController* GameEngine::GetEC()
+	{
+		return &m_entityController;
 	}
 }
