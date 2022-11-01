@@ -25,12 +25,12 @@ int Ark::Transform::GetMaskPos()
 	return maskPos;
 }
 
-void Ark::Transform::LoadData(int entityPos)
+void Ark::Transform::LoadData(unsigned int entityPos)
 {
 	m_activeTransforms[entityPos] = *this;
 }
 
-void Ark::Transform::UnloadData(int entityPos)
+void Ark::Transform::UnloadData(unsigned int entityPos)
 {
 	Transform blankTransform;
 	m_activeTransforms[entityPos] = blankTransform;

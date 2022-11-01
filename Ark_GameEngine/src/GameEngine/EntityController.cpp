@@ -36,3 +36,10 @@ Ark::Entity Ark::EntityController::NewEntity()
 
 	return newEntity;
 }
+
+void Ark::EntityController::AddComponent(Entity tgtEntity, Component& newComponent)
+{
+	m_entityMasks[tgtEntity].set(newComponent.GetMaskPos(), true);
+
+	newComponent.LoadData(tgtEntity);
+}

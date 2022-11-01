@@ -13,8 +13,8 @@ namespace Ark {
 
 		int GetMaskPos();
 
-		void LoadData(int entityPos);
-		void UnloadData(int entityPos);
+		void LoadData(unsigned int entityPos);
+		void UnloadData(unsigned int entityPos);
 
 		void ChangePos(int x = 0, int y = 0, int z = 0);		
 

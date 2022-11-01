@@ -18,6 +18,8 @@ namespace Ark {
 		EntityController();
 		Entity NewEntity();
 
+		void AddComponent(Entity tgtEntity, Component& newComponent);
+
 	private:
 		std::bitset<MAX_COMPONENTS> m_entityMasks[MAX_ENTITIES];
 		std::vector<unsigned int> m_availableIds;
