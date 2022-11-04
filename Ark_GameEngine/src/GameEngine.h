@@ -3,6 +3,7 @@
 #include "GameEngine/Systems/RenderSystem.h"
 #include "GameEngine/Components/Transform.h"
 #include "GameEngine/EntityController.h"
+#include "GameEngine/ComponentManager.h"
 
 namespace Ark {	
 
@@ -21,11 +22,13 @@ namespace Ark {
 		void WindowResize(int newHeight, int newWidth);
 
 		Ark::EntityController* GetEC();
+		Ark::ComponentManager* GetCM();
 
 	private:
 		std::vector<System> m_activeSystems;
 
 		EntityController m_entityController;
+		ComponentManager m_componentManager;
 
 		RenderSystem m_renderSystem;
 	};

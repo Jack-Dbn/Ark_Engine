@@ -13,7 +13,6 @@ int Editor::OnInit()
 
 	Ark::Transform cubeTransform;
 	cubeTransform.ChangePos(1, 1, 1);
-	m_engineInst.GetEC()->AddComponent(cube, cubeTransform);
 
 	//MessageBox(NULL, L"Editor OnInit", L"Editor OnInit", 0);
 	return 0;

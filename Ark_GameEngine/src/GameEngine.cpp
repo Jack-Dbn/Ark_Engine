@@ -31,8 +31,14 @@ namespace Ark {
 	{
 		m_renderSystem.Resize(newHeight, newWidth);
 	}
+
 	Ark::EntityController* GameEngine::GetEC()
 	{
 		return &m_entityController;
+	}
+
+	Ark::ComponentManager* GameEngine::GetCM()
+	{
+		return &m_componentManager;
 	}
 }

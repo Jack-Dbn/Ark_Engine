@@ -1,6 +1,5 @@
 #include "EntityController.h"
 
-
 /*
 void Ark::Entity::PrintActive(int numElements)
 {
@@ -35,11 +34,4 @@ Ark::Entity Ark::EntityController::NewEntity()
 	m_availableIds.pop_back();
 
 	return newEntity;
-}
-
-void Ark::EntityController::AddComponent(Entity tgtEntity, Component& newComponent)
-{
-	m_entityMasks[tgtEntity].set(newComponent.GetMaskPos(), true);
-
-	newComponent.LoadData(tgtEntity);
 }

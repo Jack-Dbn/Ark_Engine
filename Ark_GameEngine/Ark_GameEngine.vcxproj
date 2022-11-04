@@ -143,6 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\GameEngine\ComponentManager.h" />
     <ClInclude Include="src\GameEngine\Component.h" />
     <ClInclude Include="src\GameEngine\EntityController.h" />
     <ClInclude Include="src\GameEngine\Systems\RenderSystem.h" />
@@ -152,6 +153,7 @@
     <ClInclude Include="src\GameEngine\Components\Transform.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\GameEngine\ComponentManager.cpp" />
     <ClCompile Include="src\GameEngine\Component.cpp" />
     <ClCompile Include="src\GameEngine\EntityController.cpp" />
     <ClCompile Include="src\GameEngine\Systems\RenderSystem.cpp" />
