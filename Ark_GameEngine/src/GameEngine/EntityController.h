@@ -3,7 +3,6 @@
 #include <bitset>
 #include <Windows.h>
 #include <string>
-#include "Component.h"
 
 namespace Ark {
 
@@ -13,7 +12,7 @@ namespace Ark {
 	{
 	public:
 		static const unsigned int MAX_ENTITIES = 100;
-		static const int MAX_COMPONENTS = 32;
+		static const unsigned int MAX_COMPONENTS = 32;
 
 		EntityController();
 		Entity NewEntity();
