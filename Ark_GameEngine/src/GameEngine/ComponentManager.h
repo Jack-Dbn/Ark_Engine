@@ -22,7 +22,7 @@ namespace Ark {
 
 		std::string m_componentTypes[EntityController::MAX_COMPONENTS];
 	
-		//std::vector<std::array<Component, EntityController::MAX_ENTITIES>> m_componentArray;
+		Component m_entityData[EntityController::MAX_COMPONENTS][EntityController::MAX_ENTITIES];
 	};
 
 	template<typename T>
@@ -37,6 +37,7 @@ namespace Ark {
 		m_availableIds.pop_back();
 
 		m_componentTypes[pos] = typeid(T).name();
+
 		return true;
 	}
 
@@ -45,7 +46,9 @@ namespace Ark {
 	{
 		for (int i = 0; i < EntityController::MAX_COMPONENTS; i++) {
 			
-			if (m_componentTypes[i] == typeid(T).name) {
+			std::string typeNameStr = typeid(T).name();
+
+			if (m_componentTypes[i] == typeNameStr) {
 				return i;
 			}
 		}

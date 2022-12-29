@@ -8,13 +8,14 @@ namespace Ark {
 	void GameEngine::Initialise(HWND windowHWND)
 	{		
 		m_renderSystem.SetHWND(windowHWND);
-		m_renderSystem.Initialise();	
+		m_renderSystem.Initialise();
 
-		/*
+		m_componentManager.RegisterComponent<Transform>();
+		
 		wchar_t text[256];
 
-		swprintf_s(text, L"%d", cube.m_id);
-		MessageBox(NULL, text, text, 0);*/		
+		swprintf_s(text, L"%d", m_componentManager.GetComponentID<Transform>());
+		MessageBox(NULL, text, text, 0);		
 	}
 
 	void GameEngine::Update()
