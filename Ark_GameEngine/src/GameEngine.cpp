@@ -14,7 +14,7 @@ namespace Ark {
 		
 		wchar_t text[256];
 
-		swprintf_s(text, L"%d", m_componentManager.GetComponentID<Transform>());
+		swprintf_s(text, L"%d", m_componentManager.GetRegisterCount());
 		MessageBox(NULL, text, text, 0);		
 	}
 

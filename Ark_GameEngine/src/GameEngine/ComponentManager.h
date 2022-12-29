@@ -15,6 +15,8 @@ namespace Ark {
 		template <typename T>
 		unsigned int GetComponentID();
 
+		int GetRegisterCount();
+
 		bool AddComponent(Ark::Entity tgtEntity, Ark::Component newComponent);
 
 	private:
@@ -22,7 +24,7 @@ namespace Ark {
 
 		std::string m_componentTypes[EntityController::MAX_COMPONENTS];
 	
-		Component m_entityData[EntityController::MAX_COMPONENTS][EntityController::MAX_ENTITIES];
+		std::vector<std::vector<Component>> m_componentData = std::vector<std::vector<Component>>(EntityController::MAX_COMPONENTS);
 	};
 
 	template<typename T>
@@ -37,6 +39,9 @@ namespace Ark {
 		m_availableIds.pop_back();
 
 		m_componentTypes[pos] = typeid(T).name();
+
+		std::vector<Component> entityData(EntityController::MAX_ENTITIES);
+		m_componentData[pos] = entityData;
 
 		return true;
 	}
@@ -55,7 +60,7 @@ namespace Ark {
 
 		//Type is not registered yet.
 		return UINT_MAX;
-	}
+	}	
 }
 
 
