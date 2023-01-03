@@ -8,21 +8,14 @@ Ark::ComponentManager::ComponentManager()
 }
 
 int Ark::ComponentManager::GetRegisterCount()
-{
+{	
 	int componentSum = 0;
-
+	
 	for (int c = 0; c < m_componentData.size(); c++) {
-		if (m_componentData[c].size() > 0) {
-			componentSum += 1;
+		if (m_componentData[c]) {
+			componentSum++;
 		}
 	}
-
+	
 	return componentSum;
-}
-
-bool Ark::ComponentManager::AddComponent(Ark::Entity tgtEntity, Ark::Component newComponent)
-{
-
-
-	return false;
 }
