@@ -22,6 +22,9 @@ namespace Ark {
 		template <typename T>
 		bool GetComponent(Ark::Entity tgtEntity, T &newComponent);
 
+		template <typename T>
+		bool RemoveComponent(Ark::Entity tgtEntity);
+
 	private:
 		template <typename T>
 		unsigned int GetBitPos();
@@ -88,6 +91,17 @@ namespace Ark {
 
 		std::shared_ptr<ComponentList<T>> listPtr = std::static_pointer_cast<ComponentList<T>>(m_componentData[componentID]);
 		listPtr->Get(tgtEntity, tgtComponent);
+
+		return true;
+	}
+
+	template<typename T>
+	inline bool ComponentManager::RemoveComponent(Ark::Entity tgtEntity)
+	{
+		unsigned int componentID = this->GetBitPos<T>();
+
+		std::shared_ptr<ComponentList<T>> listPtr = std::static_pointer_cast<ComponentList<T>>(m_componentData[componentID]);
+		listPtr->Remove(tgtEntity);
 
 		return true;
 	}

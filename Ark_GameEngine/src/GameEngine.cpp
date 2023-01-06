@@ -14,6 +14,8 @@ namespace Ark {
 		
 		Entity entityA = m_entityController.NewEntity();
 		Entity entityB = m_entityController.NewEntity();
+		Entity entityC = m_entityController.NewEntity();
+		Entity entityD = m_entityController.NewEntity();
 
 		Transform entityAtransform;
 		entityAtransform.ChangePos(2, -1, 2);
@@ -23,9 +25,15 @@ namespace Ark {
 		entityBtransform.ChangePos(3, 7, 3);
 		m_componentManager.AddComponent<Transform>(entityB, entityBtransform);
 
-		Transform recordTransform;
-		m_componentManager.GetComponent<Transform>(entityA, recordTransform);
+		Transform entityCtransform;
+		entityCtransform.ChangePos(1, 2, 5);
+		m_componentManager.AddComponent<Transform>(entityC, entityCtransform);
 
+		Transform entityDtransform;
+		entityDtransform.ChangePos(2, 2, 2);
+		m_componentManager.AddComponent<Transform>(entityD, entityDtransform);
+
+		m_componentManager.RemoveComponent<Transform>(entityA);
 
 		wchar_t text[256];
 
