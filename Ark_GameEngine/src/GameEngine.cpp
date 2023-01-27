@@ -10,38 +10,13 @@ namespace Ark {
 		m_renderSystem.SetHWND(windowHWND);
 		m_renderSystem.Initialise();
 
-		m_componentManager.RegisterComponent<Transform>();
+		//Register components to use in the engine.
+		m_componentManager.RegisterComponent<Transform>();	
 		
-		Entity entityA = m_entityController.NewEntity();
-		Entity entityB = m_entityController.NewEntity();
-		Entity entityC = m_entityController.NewEntity();
-		Entity entityD = m_entityController.NewEntity();
-
-		Transform entityAtransform;
-		entityAtransform.ChangePos(2, -1, 2);
-		m_componentManager.AddComponent<Transform>(entityA, entityAtransform);
-
-		Transform entityBtransform;
-		entityBtransform.ChangePos(3, 7, 3);
-		m_componentManager.AddComponent<Transform>(entityB, entityBtransform);
-
-		Transform entityCtransform;
-		entityCtransform.ChangePos(1, 2, 5);
-		m_componentManager.AddComponent<Transform>(entityC, entityCtransform);
-
-		Transform entityDtransform;
-		entityDtransform.ChangePos(2, 2, 2);
-		m_componentManager.AddComponent<Transform>(entityD, entityDtransform);
-
-		m_componentManager.RemoveComponent<Transform>(entityA);
-
 		wchar_t text[256];
 
 		swprintf_s(text, L"Registered Components: %d", m_componentManager.GetRegisterCount());
-		MessageBox(NULL, text, text, 0);
-
-		swprintf_s(text, L"Total Entities: %d", m_entityController.GetEntityCount());
-		MessageBox(NULL, text, text, 0);
+		MessageBox(NULL, text, text, 0);		
 	}
 
 	void GameEngine::Update()

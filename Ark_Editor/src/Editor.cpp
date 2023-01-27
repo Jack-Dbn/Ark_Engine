@@ -8,13 +8,36 @@ int Editor::OnInit()
 {
 	m_engineInst.Initialise(this->m_wndHandle);
 
-	Ark::Entity cube = m_engineInst.GetEC()->NewEntity();
-	Ark::Entity cube2 = m_engineInst.GetEC()->NewEntity();
+	Ark::Entity entityA = m_engineInst.GetEC()->NewEntity();
+	Ark::Entity entityB = m_engineInst.GetEC()->NewEntity();
+	Ark::Entity entityC = m_engineInst.GetEC()->NewEntity();
+	Ark::Entity entityD = m_engineInst.GetEC()->NewEntity();
 
-	Ark::Transform cubeTransform;
-	cubeTransform.ChangePos(1, 1, 1);
+	Ark::Transform entityAtransform;
+	entityAtransform.ChangePos(2, -1, 2);
+	m_engineInst.GetCM()->AddComponent<Ark::Transform>(entityA, entityAtransform);
+
+	Ark::Transform entityBtransform;
+	entityBtransform.ChangePos(3, 7, 3);
+	m_engineInst.GetCM()->AddComponent<Ark::Transform>(entityB, entityBtransform);
+
+	Ark::Transform entityCtransform;
+	entityCtransform.ChangePos(1, 2, 5);
+	m_engineInst.GetCM()->AddComponent<Ark::Transform>(entityC, entityCtransform);
+
+	Ark::Transform entityDtransform;
+	entityDtransform.ChangePos(2, 2, 2);
+	m_engineInst.GetCM()->AddComponent<Ark::Transform>(entityD, entityDtransform);
+
+	m_engineInst.GetCM()->RemoveComponent<Ark::Transform>(entityA);
 
 	//MessageBox(NULL, L"Editor OnInit", L"Editor OnInit", 0);
+
+	wchar_t text[256];
+
+	swprintf_s(text, L"Total Entities: %d", m_engineInst.GetEC()->GetEntityCount());
+	MessageBox(NULL, text, text, 0);
+
 	return 0;
 }
 
