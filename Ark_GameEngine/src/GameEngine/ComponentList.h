@@ -15,6 +15,8 @@ class ComponentList : public IComponentList
 public:
 	bool Add(Ark::Entity entity, T newComponent);
 
+	bool Set(Ark::Entity entity, T newComponent);
+
 	bool Get(Ark::Entity entity, T& tgtComponent);
 
 	bool Remove(Ark::Entity entity);
@@ -39,6 +41,19 @@ inline bool ComponentList<T>::Add(Ark::Entity entity, T newComponent)
 	m_idMap[m_componentData.size()] = entity;
 
 	m_componentData.push_back(newComponent);
+
+	return true;
+}
+
+template<typename T>
+inline bool ComponentList<T>::Set(Ark::Entity entity, T newComponent)
+{
+	if (!EntityExists(entity)) {
+		return this->Add(entity, newComponent);
+	}
+
+	unsigned int id = m_entityMap[entity];
+	m_componentData[id] = newComponent;
 
 	return true;
 }

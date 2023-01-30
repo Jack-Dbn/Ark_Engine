@@ -17,7 +17,7 @@ namespace Ark {
 		int GetRegisterCount();
 
 		template <typename T>
-		bool AddComponent(Ark::Entity tgtEntity, T newComponent);
+		bool SetComponent(Ark::Entity tgtEntity, T newComponent);
 
 		template <typename T>
 		bool GetComponent(Ark::Entity tgtEntity, T &newComponent);
@@ -75,7 +75,7 @@ namespace Ark {
 	}
 
 	template<typename T>
-	inline bool ComponentManager::AddComponent(Ark::Entity tgtEntity, T newComponent)
+	inline bool ComponentManager::SetComponent(Ark::Entity tgtEntity, T newComponent)
 	{
 		unsigned int componentID = this->GetBitPos<T>();
 		std::shared_ptr<ComponentList<T>> listPtr = std::static_pointer_cast<ComponentList<T>>(m_componentData[componentID]);

@@ -15,19 +15,19 @@ int Editor::OnInit()
 
 	Ark::Transform entityAtransform;
 	entityAtransform.ChangePos(2, -1, 2);
-	m_engineInst.GetCM()->AddComponent<Ark::Transform>(entityA, entityAtransform);
+	m_engineInst.GetCM()->SetComponent<Ark::Transform>(entityA, entityAtransform);
 
 	Ark::Transform entityBtransform;
 	entityBtransform.ChangePos(3, 7, 3);
-	m_engineInst.GetCM()->AddComponent<Ark::Transform>(entityB, entityBtransform);
+	m_engineInst.GetCM()->SetComponent<Ark::Transform>(entityB, entityBtransform);
 
 	Ark::Transform entityCtransform;
 	entityCtransform.ChangePos(1, 2, 5);
-	m_engineInst.GetCM()->AddComponent<Ark::Transform>(entityC, entityCtransform);
+	m_engineInst.GetCM()->SetComponent<Ark::Transform>(entityC, entityCtransform);
 
 	Ark::Transform entityDtransform;
 	entityDtransform.ChangePos(2, 2, 2);
-	m_engineInst.GetCM()->AddComponent<Ark::Transform>(entityD, entityDtransform);
+	m_engineInst.GetCM()->SetComponent<Ark::Transform>(entityD, entityDtransform);
 
 	m_engineInst.GetCM()->RemoveComponent<Ark::Transform>(entityA);
 
