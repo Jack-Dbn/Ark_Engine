@@ -2,6 +2,8 @@
 #include <vector>
 #include "GameEngine/Systems/RenderSystem.h"
 #include "GameEngine/Components/Transform.h"
+#include "GameEngine/Components/Model.h"
+#include "GameEngine/Components/Material.h"
 #include "GameEngine/EntityController.h"
 #include "GameEngine/ComponentManager.h"
 

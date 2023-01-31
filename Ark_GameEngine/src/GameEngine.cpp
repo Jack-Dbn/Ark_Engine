@@ -12,6 +12,8 @@ namespace Ark {
 
 		//Register components to use in the engine.
 		m_componentManager.RegisterComponent<Transform>();	
+		m_componentManager.RegisterComponent<Model>();
+		m_componentManager.RegisterComponent<Material>();
 		
 		wchar_t text[256];
 

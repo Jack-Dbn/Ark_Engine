@@ -17,13 +17,19 @@ int Editor::OnInit()
 	entityAtransform.ChangePos(2, -1, 2);
 	m_engineInst.GetCM()->SetComponent<Ark::Transform>(entityA, entityAtransform);
 
+	Ark::Material entityBmaterial;
+	Ark::Model entityBmodel;
 	Ark::Transform entityBtransform;
 	entityBtransform.ChangePos(3, 7, 3);
 	m_engineInst.GetCM()->SetComponent<Ark::Transform>(entityB, entityBtransform);
+	m_engineInst.GetCM()->SetComponent<Ark::Material>(entityB, entityBmaterial);
+	m_engineInst.GetCM()->SetComponent<Ark::Model>(entityB, entityBmodel);
 
+	Ark::Material entityCmaterial;
 	Ark::Transform entityCtransform;
 	entityCtransform.ChangePos(1, 2, 5);
 	m_engineInst.GetCM()->SetComponent<Ark::Transform>(entityC, entityCtransform);
+	m_engineInst.GetCM()->SetComponent<Ark::Material>(entityC, entityCmaterial);
 
 	Ark::Transform entityDtransform;
 	entityDtransform.ChangePos(2, 2, 2);
