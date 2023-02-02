@@ -15,7 +15,7 @@ namespace Ark {
 
 		GameEngine();
 		
-		void Initialise(HWND windowHWND, std::wstring assetFolderPath = L"Assets/");
+		void Initialise(HWND windowHWND, std::wstring assetFolderPath = L"Debug/Assets/");
 
 		void Update();
 

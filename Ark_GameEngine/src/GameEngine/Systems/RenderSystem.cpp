@@ -22,6 +22,9 @@ int RenderSystem::Initialise()
 
 	CreateRenderTgtView();	
 
+	m_shaderManager.CompileVertexShader(L"Basic_VS.hlsl", m_d3dDevice);
+	m_shaderManager.CompilePixelShader(L"Colour_PS.hlsl", m_d3dDevice, "Colour_PS");
+
 	MessageBox(NULL, L"DirectX11 Initialised", L"DirectX11 Initialised", 0);
 	return 0;
 }
