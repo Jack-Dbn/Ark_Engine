@@ -12,6 +12,10 @@ int RenderSystem::Initialise()
 		return -1;
 	}
 
+	if (!m_shaderManager.SetShaderPath(m_assetFolderPath + L"Shaders/")) {
+		return -2;
+	}
+
 	CreateDevice();
 
 	CreateSwapChain();
@@ -212,9 +216,10 @@ bool RenderSystem::Resize(int newHeight, int newWidth)
 	return false;
 }
 
-void RenderSystem::SetHWND(HWND windowHWND)
+void RenderSystem::SetParam(HWND windowHWND, std::wstring assetFolderPath)
 {
 	m_tgtWindow = windowHWND;
+	m_assetFolderPath = assetFolderPath;
 }
 
 

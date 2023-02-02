@@ -5,9 +5,9 @@ namespace Ark {
 	{
 	}
 
-	void GameEngine::Initialise(HWND windowHWND)
+	void GameEngine::Initialise(HWND windowHWND, std::wstring assetFolderPath)
 	{		
-		m_renderSystem.SetHWND(windowHWND);
+		m_renderSystem.SetParam(windowHWND, assetFolderPath);
 		m_renderSystem.Initialise();
 
 		//Register components to use in the engine.
