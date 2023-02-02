@@ -143,12 +143,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\GameEngine\Systems\RenderSystem\ShaderManager.h" />
     <ClInclude Include="src\GameEngine\Components\Model.h" />
     <ClInclude Include="src\GameEngine\Components\Material.h" />
     <ClInclude Include="src\GameEngine\ComponentList.h" />
     <ClInclude Include="src\GameEngine\ComponentManager.h" />
     <ClInclude Include="src\GameEngine\Component.h" />
     <ClInclude Include="src\GameEngine\EntityController.h" />
+    <ClInclude Include="src\GameEngine\Math.h" />
     <ClInclude Include="src\GameEngine\Systems\RenderSystem.h" />
     <ClInclude Include="src\GameEngine.h" />
     <ClInclude Include="src\GameEngine\System.h" />
@@ -163,6 +165,7 @@
     <ClCompile Include="src\GameEngine\EntityController.cpp" />
     <ClCompile Include="src\GameEngine\Systems\RenderSystem.cpp" />
     <ClCompile Include="src\GameEngine.cpp" />
+    <ClCompile Include="src\GameEngine\Systems\RenderSystem\ShaderManager.cpp" />
     <ClCompile Include="src\Win32App.cpp" />
     <ClCompile Include="src\GameEngine\Components\Transform.cpp" />
   </ItemGroup>

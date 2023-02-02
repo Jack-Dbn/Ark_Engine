@@ -1,10 +1,11 @@
 #pragma once
-#include "../System.h"
 #include <d3d11.h>
 #include <d3d11_2.h>
 #include <Windows.h>
 #include <wrl.h>
 #include <vector>
+#include "../System.h"
+#include "RenderSystem/ShaderManager.h"
 
 
 class RenderSystem : public System
@@ -41,4 +42,6 @@ private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain1> m_swapChain;
 
 	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> m_RenderTgtView;
+
+	Ark::ShaderManager m_shaderManager;
 };
