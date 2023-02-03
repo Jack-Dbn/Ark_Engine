@@ -24,7 +24,7 @@ bool Ark::ShaderManager::CompileVertexShader(std::wstring shaderFileName, Micros
     std::wstring fullShaderPath = m_shaderFolder + shaderFileName;
 
     //Blobs
-    Microsoft::WRL::ComPtr <ID3DBlob> errorBlob = nullptr;
+    Microsoft::WRL::ComPtr<ID3DBlob> errorBlob = nullptr;
     Microsoft::WRL::ComPtr<ID3DBlob> vtxShaderBlob = nullptr;
 
     HRESULT compileResult = D3DCompileFromFile(fullShaderPath.c_str(), nullptr, nullptr, entryPoint.c_str(), "vs_5_0", shaderFlags, 0, &vtxShaderBlob, &errorBlob);
@@ -45,7 +45,7 @@ bool Ark::ShaderManager::CompileVertexShader(std::wstring shaderFileName, Micros
 
     m_vertexShaders.push_back(vertexShader);    
 
-    return true;
+    return this->CreateInputLayout(vtxShaderBlob, d3dDevice, false);
 }
 
 bool Ark::ShaderManager::CompilePixelShader(std::wstring shaderFileName, Microsoft::WRL::ComPtr<ID3D11Device> &d3dDevice, std::string entryPoint)
@@ -59,7 +59,7 @@ bool Ark::ShaderManager::CompilePixelShader(std::wstring shaderFileName, Microso
     std::wstring fullShaderPath = m_shaderFolder + shaderFileName;
 
     //Blobs
-    Microsoft::WRL::ComPtr <ID3DBlob> errorBlob = nullptr;
+    Microsoft::WRL::ComPtr<ID3DBlob> errorBlob = nullptr;
     Microsoft::WRL::ComPtr<ID3DBlob> pxlShaderBlob = nullptr;
 
     HRESULT compileResult = D3DCompileFromFile(fullShaderPath.c_str(), nullptr, nullptr, entryPoint.c_str(), "ps_5_0", shaderFlags, 0, &pxlShaderBlob, &errorBlob);
@@ -79,6 +79,28 @@ bool Ark::ShaderManager::CompilePixelShader(std::wstring shaderFileName, Microso
     }
 
     m_pixelShaders.push_back(pixelShader);
+
+    return true;
+}
+
+bool Ark::ShaderManager::CreateInputLayout(Microsoft::WRL::ComPtr<ID3DBlob> &vtxShaderBlob, Microsoft::WRL::ComPtr<ID3D11Device>& d3dDevice, bool isTextureLayout)
+{
+    Microsoft::WRL::ComPtr<ID3D11InputLayout> inputLayout;
+
+    const D3D11_INPUT_ELEMENT_DESC vertexLayoutDesc[] =
+    {
+        {"POSITION", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0}
+    };
+
+    d3dDevice->CreateInputLayout(
+        vertexLayoutDesc,
+        ARRAYSIZE(vertexLayoutDesc),
+        vtxShaderBlob->GetBufferPointer(),
+        vtxShaderBlob->GetBufferSize(),
+        &inputLayout
+        );
+
+    m_inputLayouts.push_back(inputLayout);
 
     return true;
 }

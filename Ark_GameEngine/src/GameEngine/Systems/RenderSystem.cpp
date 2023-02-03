@@ -22,8 +22,12 @@ int RenderSystem::Initialise()
 
 	CreateRenderTgtView();	
 
-	m_shaderManager.CompileVertexShader(L"Basic_VS.hlsl", m_d3dDevice);
-	m_shaderManager.CompilePixelShader(L"Colour_PS.hlsl", m_d3dDevice, "Colour_PS");
+	bool compileSuccess = m_shaderManager.CompileVertexShader(L"Basic_VS.hlsl", m_d3dDevice);
+	compileSuccess = compileSuccess && m_shaderManager.CompilePixelShader(L"Colour_PS.hlsl", m_d3dDevice, "Colour_PS");
+
+	if (!compileSuccess) {
+		return -3;
+	}
 
 	MessageBox(NULL, L"DirectX11 Initialised", L"DirectX11 Initialised", 0);
 	return 0;
@@ -162,6 +166,11 @@ void RenderSystem::SetViewPort(float viewPortWidth, float viewPortHeight) {
 int RenderSystem::Update()
 {
 	SetupFrame();
+
+	/*
+	for (int i = 0; i < 2; i++) {
+
+	}*/
 
 	PresentFrame(false);
 	//MessageBox(NULL, L"DirectX11 Frame", L"DirectX11 Frame", 0);

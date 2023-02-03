@@ -20,7 +20,11 @@ namespace Ark {
 	private:
 		std::vector<Microsoft::WRL::ComPtr<ID3D11VertexShader>> m_vertexShaders;
 		std::vector<Microsoft::WRL::ComPtr<ID3D11PixelShader>> m_pixelShaders;
+
+		std::vector<Microsoft::WRL::ComPtr<ID3D11InputLayout>> m_inputLayouts;
 	
 		std::wstring m_shaderFolder;
+
+		bool CreateInputLayout(Microsoft::WRL::ComPtr<ID3DBlob> &vtxShaderBlob, Microsoft::WRL::ComPtr<ID3D11Device>& d3dDevice, bool isTextureLayout = false);
 	};
 }
