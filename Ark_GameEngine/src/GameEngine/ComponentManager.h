@@ -16,6 +16,8 @@ namespace Ark {
 
 		int GetRegisterCount();
 
+		std::unordered_map<std::string, unsigned int>* GetRegister();
+
 		template <typename T>
 		bool SetComponent(Ark::Entity tgtEntity, T newComponent);
 
@@ -31,7 +33,7 @@ namespace Ark {
 
 		std::vector<unsigned int> m_availableIds;
 
-		std::string m_componentTypes[EntityController::MAX_COMPONENTS];
+		std::unordered_map<std::string, unsigned int> m_componentMap;
 	
 		std::vector<std::shared_ptr<IComponentList>> m_componentData = std::vector<std::shared_ptr<IComponentList>>(EntityController::MAX_COMPONENTS);
 	};
@@ -49,7 +51,7 @@ namespace Ark {
 			return false;//Already registered
 		}
 
-		m_componentTypes[pos] = typeid(T).name();
+		m_componentMap[typeid(T).name()] = pos;
 
 		m_componentData[pos] = std::make_shared<ComponentList<T>>();
 
@@ -63,15 +65,11 @@ namespace Ark {
 	{
 		std::string typeNameStr = typeid(T).name();
 
-		for (int i = 0; i < EntityController::MAX_COMPONENTS; i++) {	
-			
-			if (m_componentTypes[i] == typeNameStr) {
-				return i;
-			}
-		}
+		unsigned int bitPos = UINT_MAX;//Type is not registered yet.
 
-		//Type is not registered yet.
-		return UINT_MAX;
+		bitPos = m_componentMap[typeNameStr];
+				
+		return bitPos;
 	}
 
 	template<typename T>

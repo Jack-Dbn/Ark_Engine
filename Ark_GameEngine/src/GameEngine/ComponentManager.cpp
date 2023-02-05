@@ -19,3 +19,8 @@ int Ark::ComponentManager::GetRegisterCount()
 	
 	return componentSum;
 }
+
+std::unordered_map<std::string, unsigned int>* Ark::ComponentManager::GetRegister()
+{
+	return &m_componentMap;
+}

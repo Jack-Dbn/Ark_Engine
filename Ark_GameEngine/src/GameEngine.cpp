@@ -6,14 +6,18 @@ namespace Ark {
 	}
 
 	void GameEngine::Initialise(HWND windowHWND, std::wstring assetFolderPath)
-	{		
-		m_renderSystem.SetParam(windowHWND, assetFolderPath);
-		m_renderSystem.Initialise();
-
+	{				
 		//Register components to use in the engine.
 		m_componentManager.RegisterComponent<Transform>();	
 		m_componentManager.RegisterComponent<Model>();
 		m_componentManager.RegisterComponent<Material>();
+
+		m_renderSystem.SetParam(windowHWND, assetFolderPath);
+		m_renderSystem.Initialise();
+
+		m_renderSystem.AddReqComponent<Transform>(m_componentManager.GetRegister());
+		m_renderSystem.AddReqComponent<Model>(m_componentManager.GetRegister());
+		m_renderSystem.AddReqComponent<Material>(m_componentManager.GetRegister());
 		
 		wchar_t text[256];
 
