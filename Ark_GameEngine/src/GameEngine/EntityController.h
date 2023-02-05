@@ -18,6 +18,7 @@ namespace Ark {
 		Entity NewEntity();
 
 		bool UpdateMask(Ark::Entity tgtEntity, unsigned int bitPos, bool bitState);
+		std::vector<Ark::Entity> EvalSysEntities(std::bitset<MAX_COMPONENTS> sysFilterMask);
 
 		unsigned int GetEntityCount();
 

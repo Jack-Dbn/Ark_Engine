@@ -1,17 +1,23 @@
 #pragma once
 #include "ComponentManager.h"
+#include "Components/Transform.h"
+#include "Components/Model.h"
+#include "Components/Material.h"
 
 class System
 {
 public:
 	virtual int Initialise() = 0;
-	virtual int Update() = 0;
+	virtual int Update(Ark::ComponentManager& engineCM) = 0;
 	virtual int Release() = 0;
 
 	template <typename T>
 	bool AddReqComponent(std::unordered_map<std::string, unsigned int>* registeredTypes);
 
-private:
+	std::bitset<Ark::EntityController::MAX_COMPONENTS> GetFilterMask();
+	bool SetEntityList(std::vector<unsigned int> newEntityList);
+
+protected:
 	std::vector<unsigned int> m_EntityList;
 
 	std::bitset<Ark::EntityController::MAX_COMPONENTS> m_filterMask;

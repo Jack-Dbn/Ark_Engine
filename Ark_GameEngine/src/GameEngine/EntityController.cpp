@@ -55,6 +55,19 @@ bool Ark::EntityController::UpdateMask(Ark::Entity tgtEntity, unsigned int bitPo
 	return true;
 }
 
+std::vector<Ark::Entity> Ark::EntityController::EvalSysEntities(std::bitset<MAX_COMPONENTS> sysFilterMask)
+{
+	std::vector<Ark::Entity> systemEntities;
+
+	for (Ark::Entity i = 0; i < m_entityMasks.size(); i++) {
+		if ((m_entityMasks[i] & sysFilterMask) == sysFilterMask) {
+			systemEntities.push_back(i);
+		}
+	}
+
+	return systemEntities;
+}
+
 unsigned int Ark::EntityController::GetEntityCount()
 {
 	return m_entityCount;

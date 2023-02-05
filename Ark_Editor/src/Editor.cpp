@@ -31,6 +31,8 @@ int Editor::OnInit()
 	Ark::Transform entityDtransform;
 	entityDtransform.ChangePos(2, 2, 2);
 	m_engineInst.SetComponent<Ark::Transform>(entityD, entityDtransform);
+	m_engineInst.AddComponent<Ark::Material>(entityD);
+	m_engineInst.AddComponent<Ark::Model>(entityD);
 
 	m_engineInst.RemoveComponent<Ark::Transform>(entityA);
 

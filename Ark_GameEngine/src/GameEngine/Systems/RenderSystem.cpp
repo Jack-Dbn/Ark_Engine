@@ -163,14 +163,22 @@ void RenderSystem::SetViewPort(float viewPortWidth, float viewPortHeight) {
 }
 
 // Update Stage
-int RenderSystem::Update()
+int RenderSystem::Update(Ark::ComponentManager& engineCM)
 {
 	SetupFrame();
+		
+	for (int i = 0; i < m_EntityList.size(); i++) {
+		Ark::Entity entityIn = m_EntityList[i];
 
-	/*
-	for (int i = 0; i < 2; i++) {
+		Ark::Transform entityTransform;
+		engineCM.GetComponent<Ark::Transform>(entityIn, entityTransform);
 
-	}*/
+		Ark::Model entityModel;
+		engineCM.GetComponent<Ark::Model>(entityIn, entityModel);
+
+		Ark::Material entityMaterial;
+		engineCM.GetComponent<Ark::Material>(entityIn, entityMaterial);
+	}
 
 	PresentFrame(false);
 	//MessageBox(NULL, L"DirectX11 Frame", L"DirectX11 Frame", 0);

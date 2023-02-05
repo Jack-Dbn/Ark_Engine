@@ -92,5 +92,8 @@
     <ClCompile Include="src\GameEngine\Systems\RenderSystem\ShaderManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\GameEngine\System.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

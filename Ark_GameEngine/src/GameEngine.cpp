@@ -27,8 +27,11 @@ namespace Ark {
 	}
 
 	void GameEngine::Update()
-	{		
-		m_renderSystem.Update();
+	{	
+		std::vector<Ark::Entity> sysEntities = m_entityController.EvalSysEntities(m_renderSystem.GetFilterMask());
+		m_renderSystem.SetEntityList(sysEntities);
+
+		m_renderSystem.Update(m_componentManager);
 	}
 
 	void GameEngine::Release()

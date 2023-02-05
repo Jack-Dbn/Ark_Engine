@@ -15,7 +15,7 @@ public:
 	RenderSystem();
 
 	int Initialise();
-	int Update();
+	int Update(Ark::ComponentManager& engineCM);
 	int Release();
 
 	bool Resize(int newHeight, int newWidth);

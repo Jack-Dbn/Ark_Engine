@@ -166,6 +166,7 @@
     <ClCompile Include="src\GameEngine\ComponentManager.cpp" />
     <ClCompile Include="src\GameEngine\Component.cpp" />
     <ClCompile Include="src\GameEngine\EntityController.cpp" />
+    <ClCompile Include="src\GameEngine\System.cpp" />
     <ClCompile Include="src\GameEngine\Systems\RenderSystem.cpp" />
     <ClCompile Include="src\GameEngine.cpp" />
     <ClCompile Include="src\GameEngine\Systems\RenderSystem\ShaderManager.cpp" />
