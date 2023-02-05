@@ -36,9 +36,23 @@ Ark::Entity Ark::EntityController::NewEntity()
 	Entity newEntity = m_availableIds.back();
 	m_availableIds.pop_back();
 
+	std::bitset<MAX_COMPONENTS> newMask;
+	m_entityMasks.push_back(newMask);
+
 	m_entityCount++;
 
 	return newEntity;
+}
+
+bool Ark::EntityController::UpdateMask(Ark::Entity tgtEntity, unsigned int bitPos, bool bitState)
+{
+	if (tgtEntity > m_entityMasks.size() || bitPos >= MAX_COMPONENTS) {
+		return false;
+	}
+
+	m_entityMasks[tgtEntity][bitPos] = bitState;
+
+	return true;
 }
 
 unsigned int Ark::EntityController::GetEntityCount()

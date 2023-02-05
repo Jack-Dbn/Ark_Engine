@@ -8,34 +8,31 @@ int Editor::OnInit()
 {
 	m_engineInst.Initialise(this->m_wndHandle);
 
-	Ark::Entity entityA = m_engineInst.GetEC()->NewEntity();
-	Ark::Entity entityB = m_engineInst.GetEC()->NewEntity();
-	Ark::Entity entityC = m_engineInst.GetEC()->NewEntity();
-	Ark::Entity entityD = m_engineInst.GetEC()->NewEntity();
+	Ark::Entity entityA = m_engineInst.NewEntity();
+	Ark::Entity entityB = m_engineInst.NewEntity();
+	Ark::Entity entityC = m_engineInst.NewEntity();
+	Ark::Entity entityD = m_engineInst.NewEntity();
 
 	Ark::Transform entityAtransform;
 	entityAtransform.ChangePos(2, -1, 2);
-	m_engineInst.GetCM()->SetComponent<Ark::Transform>(entityA, entityAtransform);
+	m_engineInst.SetComponent<Ark::Transform>(entityA, entityAtransform);
 
-	Ark::Material entityBmaterial;
-	Ark::Model entityBmodel;
 	Ark::Transform entityBtransform;
 	entityBtransform.ChangePos(3, 7, 3);
-	m_engineInst.GetCM()->SetComponent<Ark::Transform>(entityB, entityBtransform);
-	m_engineInst.GetCM()->SetComponent<Ark::Material>(entityB, entityBmaterial);
-	m_engineInst.GetCM()->SetComponent<Ark::Model>(entityB, entityBmodel);
+	m_engineInst.SetComponent<Ark::Transform>(entityB, entityBtransform);
+	m_engineInst.AddComponent<Ark::Material>(entityB);
+	m_engineInst.AddComponent<Ark::Model>(entityB);
 
-	Ark::Material entityCmaterial;
 	Ark::Transform entityCtransform;
 	entityCtransform.ChangePos(1, 2, 5);
-	m_engineInst.GetCM()->SetComponent<Ark::Transform>(entityC, entityCtransform);
-	m_engineInst.GetCM()->SetComponent<Ark::Material>(entityC, entityCmaterial);
+	m_engineInst.SetComponent<Ark::Transform>(entityC, entityCtransform);
+	m_engineInst.AddComponent<Ark::Material>(entityC);
 
 	Ark::Transform entityDtransform;
 	entityDtransform.ChangePos(2, 2, 2);
-	m_engineInst.GetCM()->SetComponent<Ark::Transform>(entityD, entityDtransform);
+	m_engineInst.SetComponent<Ark::Transform>(entityD, entityDtransform);
 
-	m_engineInst.GetCM()->RemoveComponent<Ark::Transform>(entityA);
+	m_engineInst.RemoveComponent<Ark::Transform>(entityA);
 
 	//MessageBox(NULL, L"Editor OnInit", L"Editor OnInit", 0);
 

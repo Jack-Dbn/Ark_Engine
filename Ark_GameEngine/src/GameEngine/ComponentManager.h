@@ -17,6 +17,8 @@ namespace Ark {
 		int GetRegisterCount();
 
 		std::unordered_map<std::string, unsigned int>* GetRegister();
+		template <typename T>
+		unsigned int GetBitPos();
 
 		template <typename T>
 		bool SetComponent(Ark::Entity tgtEntity, T newComponent);
@@ -27,9 +29,7 @@ namespace Ark {
 		template <typename T>
 		bool RemoveComponent(Ark::Entity tgtEntity);
 
-	private:
-		template <typename T>
-		unsigned int GetBitPos();
+	private:	
 
 		std::vector<unsigned int> m_availableIds;
 
@@ -79,7 +79,7 @@ namespace Ark {
 	{
 		unsigned int componentID = this->GetBitPos<T>();
 		std::shared_ptr<ComponentList<T>> listPtr = std::static_pointer_cast<ComponentList<T>>(m_componentData[componentID]);
-		listPtr->Add(tgtEntity, newComponent);
+		listPtr->Set(tgtEntity, newComponent);
 
 		return true;
 	}

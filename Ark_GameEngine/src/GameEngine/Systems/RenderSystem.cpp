@@ -29,7 +29,7 @@ int RenderSystem::Initialise()
 		return -3;
 	}
 
-	MessageBox(NULL, L"DirectX11 Initialised", L"DirectX11 Initialised", 0);
+	//MessageBox(NULL, L"DirectX11 Initialised", L"DirectX11 Initialised", 0);
 	return 0;
 }
 
@@ -204,7 +204,7 @@ bool RenderSystem::PresentFrame(bool vSyncOn)
 // Release Stage
 int RenderSystem::Release()
 {
-	MessageBox(NULL, L"DirectX11 Shutdown", L"DirectX11 Shutdown", 0);
+	//MessageBox(NULL, L"DirectX11 Shutdown", L"DirectX11 Shutdown", 0);
 	return 0;
 }
 

@@ -46,8 +46,8 @@ namespace Ark {
 		return &m_entityController;
 	}
 
-	Ark::ComponentManager* GameEngine::GetCM()
+	Ark::Entity GameEngine::NewEntity()
 	{
-		return &m_componentManager;
+		return m_entityController.NewEntity();
 	}
 }
