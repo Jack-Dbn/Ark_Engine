@@ -65,9 +65,11 @@ namespace Ark {
 	{
 		std::string typeNameStr = typeid(T).name();
 
-		unsigned int bitPos = UINT_MAX;//Type is not registered yet.
+		if (m_componentMap.find(typeNameStr) == m_componentMap.end()) {
+			return UINT_MAX;//Type is not registered yet.
+		}
 
-		bitPos = m_componentMap[typeNameStr];
+		unsigned int bitPos = m_componentMap[typeNameStr];
 				
 		return bitPos;
 	}

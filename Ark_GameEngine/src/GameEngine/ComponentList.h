@@ -105,7 +105,7 @@ inline bool ComponentList<T>::Remove(Ark::Entity entity)
 
 template<typename T>
 inline bool ComponentList<T>::EntityExists(Ark::Entity entity)
-{	
+{
 	if (m_entityMap.count(entity) == 0) {
 		return false;
 	}
