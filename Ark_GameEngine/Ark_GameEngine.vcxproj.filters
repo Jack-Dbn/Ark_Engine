@@ -57,6 +57,9 @@
     <ClInclude Include="src\GameEngine\Systems\RenderSystem\ShaderManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\GameEngine\Shapes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\GameEngine.cpp">

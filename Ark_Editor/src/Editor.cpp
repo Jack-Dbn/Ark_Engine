@@ -11,28 +11,26 @@ int Editor::OnInit()
 	Ark::Entity entityA = m_engineInst.NewEntity();
 	Ark::Entity entityB = m_engineInst.NewEntity();
 
+	Ark::Triangle triangle;
+	Ark::Square square;
+
+	//Entity A
 	Ark::Transform entityAtransform;
 	entityAtransform.ChangePos(2, -1, 2);
 	m_engineInst.SetComponent<Ark::Transform>(entityA, entityAtransform);
+	m_engineInst.AddComponent<Ark::Material>(entityA);
 
+	Ark::Model entityAmodel = m_engineInst.CreateModel(triangle.vertices, ARRAYSIZE(triangle.vertices), triangle.indexes, ARRAYSIZE(triangle.indexes));
+	m_engineInst.SetComponent<Ark::Model>(entityA, entityAmodel);
+
+	//Entity B
 	Ark::Transform entityBtransform;
 	entityBtransform.ChangePos(3, 7, 3);
 	m_engineInst.SetComponent<Ark::Transform>(entityB, entityBtransform);
 	m_engineInst.AddComponent<Ark::Material>(entityB);
-
-	Ark::vector2D entityBvtxs[] =
-	{
-		{-0.5f, -0.5f},
-		{0.0f,  0.5f},
-		{0.5f, -0.5f}
-	};
-	unsigned int entityBidxs[] =
-	{
-		0, 1, 2
-	};
-
-	Ark::Model entityBmodel = m_engineInst.CreateModel(entityBvtxs, ARRAYSIZE(entityBvtxs), entityBidxs, ARRAYSIZE(entityBidxs));
-	m_engineInst.SetComponent<Ark::Model>(entityB, entityBmodel);
+	
+	Ark::Model entityBmodel = m_engineInst.CreateModel(square.vertices, ARRAYSIZE(square.vertices), square.indexes, ARRAYSIZE(square.indexes));
+	//m_engineInst.SetComponent<Ark::Model>(entityB, entityBmodel);
 
 	//MessageBox(NULL, L"Editor OnInit", L"Editor OnInit", 0);
 

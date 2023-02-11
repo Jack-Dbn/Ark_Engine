@@ -3,6 +3,7 @@
 #include "GameEngine/Systems/RenderSystem.h"
 #include "GameEngine/EntityController.h"
 #include "GameEngine/ComponentManager.h"
+#include "GameEngine/Shapes.h"
 
 namespace Ark {	
 
