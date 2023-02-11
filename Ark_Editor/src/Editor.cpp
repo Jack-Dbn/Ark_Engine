@@ -10,8 +10,6 @@ int Editor::OnInit()
 
 	Ark::Entity entityA = m_engineInst.NewEntity();
 	Ark::Entity entityB = m_engineInst.NewEntity();
-	Ark::Entity entityC = m_engineInst.NewEntity();
-	Ark::Entity entityD = m_engineInst.NewEntity();
 
 	Ark::Transform entityAtransform;
 	entityAtransform.ChangePos(2, -1, 2);
@@ -21,20 +19,20 @@ int Editor::OnInit()
 	entityBtransform.ChangePos(3, 7, 3);
 	m_engineInst.SetComponent<Ark::Transform>(entityB, entityBtransform);
 	m_engineInst.AddComponent<Ark::Material>(entityB);
-	m_engineInst.AddComponent<Ark::Model>(entityB);
 
-	Ark::Transform entityCtransform;
-	entityCtransform.ChangePos(1, 2, 5);
-	m_engineInst.SetComponent<Ark::Transform>(entityC, entityCtransform);
-	m_engineInst.AddComponent<Ark::Material>(entityC);
+	Ark::vector2D entityBvtxs[] =
+	{
+		{-0.5f, -0.5f},
+		{0.0f,  0.5f},
+		{0.5f, -0.5f}
+	};
+	unsigned int entityBidxs[] =
+	{
+		0, 1, 2
+	};
 
-	Ark::Transform entityDtransform;
-	entityDtransform.ChangePos(2, 2, 2);
-	m_engineInst.SetComponent<Ark::Transform>(entityD, entityDtransform);
-	m_engineInst.AddComponent<Ark::Material>(entityD);
-	m_engineInst.AddComponent<Ark::Model>(entityD);
-
-	m_engineInst.RemoveComponent<Ark::Transform>(entityA);
+	Ark::Model entityBmodel = m_engineInst.CreateModel(entityBvtxs, ARRAYSIZE(entityBvtxs), entityBidxs, ARRAYSIZE(entityBidxs));
+	m_engineInst.SetComponent<Ark::Model>(entityB, entityBmodel);
 
 	//MessageBox(NULL, L"Editor OnInit", L"Editor OnInit", 0);
 

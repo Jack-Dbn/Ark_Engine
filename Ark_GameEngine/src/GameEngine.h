@@ -24,6 +24,11 @@ namespace Ark {
 		Ark::EntityController* GetEC();
 
 		Ark::Entity NewEntity();
+		Ark::Model CreateModel(
+			void* vtxArray,
+			unsigned int vtxArraySize,
+			unsigned int* idxArray,
+			unsigned int idxArraySize);
 
 		template <typename T>
 		bool AddComponent(Ark::Entity tgtEntity);
@@ -35,14 +40,14 @@ namespace Ark {
 		bool GetComponent(Ark::Entity tgtEntity, T& componentDest);
 
 		template <typename T>
-		bool RemoveComponent(Ark::Entity tgtEntity);
+		bool RemoveComponent(Ark::Entity tgtEntity);		
 
 	private:
 		std::vector<System> m_activeSystems;
 
 		EntityController m_entityController;
 		ComponentManager m_componentManager;
-
+		
 		RenderSystem m_renderSystem;
 	};
 

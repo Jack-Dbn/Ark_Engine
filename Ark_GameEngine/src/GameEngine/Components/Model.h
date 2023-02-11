@@ -10,11 +10,42 @@ namespace Ark {
 	class Model : Component
 	{
 	public:
-		Model();
+		Model(unsigned int vtxShader = 0);
+				
+		bool SetMeshManual(
+			void* vtxArray, 
+			unsigned int vtxArraySize, 
+			unsigned int* idxArray, 
+			unsigned int idxArraySize, 
+			Microsoft::WRL::ComPtr<ID3D11Device> &d3dDevice);
+
+		ID3D11Buffer** GetVtxBufferAddr();
+		ID3D11Buffer* GetIdxBuffer();
+
+		unsigned int GetIdxCount();
+		unsigned int GetVtxShaderId();
+
+		bool m_RenderReady;
+
+		Microsoft::WRL::ComPtr<ID3D11Buffer> m_vertexBuffer;
+
+		Microsoft::WRL::ComPtr<ID3D11Buffer> m_indexBuffer;
+		unsigned int m_indexCount;
 
 	private:
-		Microsoft::WRL::ComPtr<ID3D11Buffer> m_vertexBuffer;
-		Microsoft::WRL::ComPtr<ID3D11Buffer> m_indexBuffer;
+		static bool CreateVtxBuffer(
+			Microsoft::WRL::ComPtr<ID3D11Device>& d3dDevice, 
+			void* vtxArray, 
+			unsigned int vtxArraySize, 
+			Microsoft::WRL::ComPtr<ID3D11Buffer> &tgtBuffer);
+
+		static bool CreateIdxBuffer(
+			Microsoft::WRL::ComPtr<ID3D11Device>& d3dDevice, 
+			unsigned int* idxArray, 
+			unsigned int idxArraySize, 
+			Microsoft::WRL::ComPtr<ID3D11Buffer> &tgtBuffer);
+
+		unsigned int m_vtxShaderPos;		
 	};
 }
 

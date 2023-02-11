@@ -22,7 +22,7 @@ int RenderSystem::Initialise()
 
 	CreateRenderTgtView();	
 
-	bool compileSuccess = m_shaderManager.CompileVertexShader(L"Basic_VS.hlsl", m_d3dDevice);
+	bool compileSuccess = m_shaderManager.CompileVertexShader(L"Basic_VS.hlsl", m_d3dDevice, false);
 	compileSuccess = compileSuccess && m_shaderManager.CompilePixelShader(L"Colour_PS.hlsl", m_d3dDevice, "Colour_PS");
 
 	if (!compileSuccess) {
@@ -162,6 +162,14 @@ void RenderSystem::SetViewPort(float viewPortWidth, float viewPortHeight) {
 	m_d3dDeviceContext->RSSetViewports(1, &newViewPort);
 }
 
+void RenderSystem::SetupFrame(float redVal, float greenVal, float blueVal, float alphaVal)
+{
+	float backgrndColour[4] = { redVal, greenVal, blueVal, alphaVal };
+	m_d3dDeviceContext->ClearRenderTargetView(m_RenderTgtView.Get(), backgrndColour);
+
+	m_d3dDeviceContext->OMSetRenderTargets(1, m_RenderTgtView.GetAddressOf(), NULL);		
+}
+
 // Update Stage
 int RenderSystem::Update(Ark::ComponentManager& engineCM)
 {
@@ -173,24 +181,49 @@ int RenderSystem::Update(Ark::ComponentManager& engineCM)
 		Ark::Transform entityTransform;
 		engineCM.GetComponent<Ark::Transform>(entityIn, entityTransform);
 
+		Ark::Material entityMaterial;
+		engineCM.GetComponent<Ark::Material>(entityIn, entityMaterial);
+
 		Ark::Model entityModel;
 		engineCM.GetComponent<Ark::Model>(entityIn, entityModel);
 
-		Ark::Material entityMaterial;
-		engineCM.GetComponent<Ark::Material>(entityIn, entityMaterial);
+		if (!entityModel.m_RenderReady) {
+			continue;
+		}	
+							
+		DrawEntity(entityModel, entityMaterial);		
 	}
 
-	PresentFrame(false);
+	PresentFrame(true);
 	//MessageBox(NULL, L"DirectX11 Frame", L"DirectX11 Frame", 0);
 	return 0;
 }
 
-void RenderSystem::SetupFrame(float redVal, float greenVal, float blueVal, float alphaVal)
-{
-	m_d3dDeviceContext->OMSetRenderTargets(1, m_RenderTgtView.GetAddressOf(), nullptr);
+bool RenderSystem::DrawEntity(Ark::Model &tgtModel, Ark::Material &tgtMaterial)
+{	
+	ID3D11VertexShader* eVtxShader = m_shaderManager.GetVtxShader(tgtModel.GetVtxShaderId());
+	ID3D11PixelShader* ePxlShader = m_shaderManager.GetPxlShader(tgtMaterial.GetPxlShaderId());
+	ID3D11InputLayout* eInpLayout = m_shaderManager.GetInputLayout(tgtModel.GetVtxShaderId());
 
-	float backgrndColour[4] = {redVal, greenVal, blueVal, alphaVal};
-	m_d3dDeviceContext->ClearRenderTargetView(m_RenderTgtView.Get(), backgrndColour);
+	//Draw Entity
+	UINT stride = sizeof(Ark::vector2D);
+	UINT offset = 0;
+
+	m_d3dDeviceContext->IASetInputLayout(eInpLayout);
+
+	m_d3dDeviceContext->IASetVertexBuffers(0, 1, tgtModel.GetVtxBufferAddr(), &stride, &offset);
+
+	m_d3dDeviceContext->IASetIndexBuffer(tgtModel.GetIdxBuffer(), DXGI_FORMAT_R32_UINT, 0);
+
+	m_d3dDeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	m_d3dDeviceContext->VSSetShader(eVtxShader, nullptr, 0);
+
+	m_d3dDeviceContext->PSSetShader(ePxlShader, nullptr, 0);
+
+	m_d3dDeviceContext->DrawIndexed(tgtModel.GetIdxCount(), 0, 0);
+
+	return true;
 }
 
 bool RenderSystem::PresentFrame(bool vSyncOn)
@@ -228,7 +261,7 @@ bool RenderSystem::Resize(int newHeight, int newWidth)
 			return false;
 		}
 
-		CreateRenderTgtView();
+		bool a = CreateRenderTgtView();
 
 		return true;
 	}
@@ -240,6 +273,15 @@ void RenderSystem::SetParam(HWND windowHWND, std::wstring assetFolderPath)
 {
 	m_tgtWindow = windowHWND;
 	m_assetFolderPath = assetFolderPath;
+}
+
+Ark::Model RenderSystem::CreateDxModel(void* vtxArray, unsigned int vtxArraySize, unsigned int* idxArray, unsigned int idxArraySize)
+{
+	Ark::Model newModel;
+
+	newModel.SetMeshManual(vtxArray, vtxArraySize, idxArray, idxArraySize, m_d3dDevice);
+
+	return newModel;
 }
 
 

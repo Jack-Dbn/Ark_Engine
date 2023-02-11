@@ -7,11 +7,14 @@ namespace Ark {
 	class Material : Component
 	{
 	public:
-		Material(vector3D tgtColour = vector3D(128.0f, 128.0f, 128.0f), int tgtShaderID = 0);
+		Material(unsigned int tgtShaderID = 0, vector3D tgtColour = vector3D(128.0f, 128.0f, 128.0f), std::string textureFilePath = "");
+
+		unsigned int GetPxlShaderId();
 
 	private:
+
 		vector3D m_rgbColour;
-		int m_pixelShader;
+		unsigned int m_pixelShader;
 	};
 }
 

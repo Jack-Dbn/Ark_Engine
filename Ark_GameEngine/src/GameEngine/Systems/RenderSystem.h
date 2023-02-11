@@ -7,6 +7,7 @@
 #include <string>
 #include "../System.h"
 #include "RenderSystem/ShaderManager.h"
+#include "../Math.h"
 
 
 class RenderSystem : public System
@@ -23,6 +24,12 @@ public:
 	//Getters & Setters
 	void SetParam(HWND windowHWND, std::wstring assetFolderPath);
 
+	Ark::Model CreateDxModel(
+		void* vtxArray,
+		unsigned int vtxArraySize,
+		unsigned int* idxArray,
+		unsigned int idxArraySize);
+
 private:
 	//Init
 	bool CreateDevice();
@@ -32,8 +39,8 @@ private:
 
 	//Update
 	void SetupFrame(const float redVal = 0.0f, const float greenVal = 0.75f, const float blueVal = 0.75f, const float alphaVal = 1.0f);
-	bool PresentFrame(bool vSyncOn = true);
-
+	bool DrawEntity(Ark::Model& tgtModel, Ark::Material& tgtMaterial);
+	bool PresentFrame(bool vSyncOn = true);	
 
 	HWND m_tgtWindow = NULL;
 	std::wstring m_assetFolderPath = L"";

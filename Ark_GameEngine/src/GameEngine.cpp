@@ -53,4 +53,12 @@ namespace Ark {
 	{
 		return m_entityController.NewEntity();
 	}
+
+	Ark::Model GameEngine::CreateModel(void* vtxArray,
+		unsigned int vtxArraySize,
+		unsigned int* idxArray,
+		unsigned int idxArraySize)
+	{
+		return m_renderSystem.CreateDxModel(vtxArray, vtxArraySize, idxArray, idxArraySize);
+	}
 }

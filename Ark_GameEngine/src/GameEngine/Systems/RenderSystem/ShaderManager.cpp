@@ -8,12 +8,12 @@ bool Ark::ShaderManager::SetShaderPath(std::wstring shaderPath)
 {
     m_shaderFolder = shaderPath.c_str();
        
-    //TO DO: Check folder contains a pixel and vertex shader.
+    //TO DO: Check folder contains default pixel and vertex shader.
 
     return true;
 }
 
-bool Ark::ShaderManager::CompileVertexShader(std::wstring shaderFileName, Microsoft::WRL::ComPtr<ID3D11Device> &d3dDevice, std::string entryPoint)
+bool Ark::ShaderManager::CompileVertexShader(std::wstring shaderFileName, Microsoft::WRL::ComPtr<ID3D11Device>& d3dDevice, bool textureLayout, std::string entryPoint)
 {
     UINT shaderFlags = D3DCOMPILE_ENABLE_STRICTNESS;
 #if defined( DEBUG ) || defined( _DEBUG )
@@ -43,9 +43,9 @@ bool Ark::ShaderManager::CompileVertexShader(std::wstring shaderFileName, Micros
         return false;
     }
 
-    m_vertexShaders.push_back(vertexShader);    
+    m_vertexShaders.push_back(vertexShader);
 
-    return this->CreateInputLayout(vtxShaderBlob, d3dDevice, false);
+    return this->CreateInputLayout(vtxShaderBlob, d3dDevice, textureLayout);
 }
 
 bool Ark::ShaderManager::CompilePixelShader(std::wstring shaderFileName, Microsoft::WRL::ComPtr<ID3D11Device> &d3dDevice, std::string entryPoint)
@@ -92,7 +92,7 @@ bool Ark::ShaderManager::CreateInputLayout(Microsoft::WRL::ComPtr<ID3DBlob> &vtx
         {"POSITION", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0}
     };
 
-    d3dDevice->CreateInputLayout(
+    HRESULT res = d3dDevice->CreateInputLayout(
         vertexLayoutDesc,
         ARRAYSIZE(vertexLayoutDesc),
         vtxShaderBlob->GetBufferPointer(),
@@ -103,4 +103,19 @@ bool Ark::ShaderManager::CreateInputLayout(Microsoft::WRL::ComPtr<ID3DBlob> &vtx
     m_inputLayouts.push_back(inputLayout);
 
     return true;
+}
+
+ID3D11VertexShader* Ark::ShaderManager::GetVtxShader(unsigned int shaderPos)
+{
+    return m_vertexShaders[shaderPos].Get();
+}
+
+ID3D11PixelShader* Ark::ShaderManager::GetPxlShader(unsigned int shaderPos)
+{
+    return m_pixelShaders[shaderPos].Get();
+}
+
+ID3D11InputLayout* Ark::ShaderManager::GetInputLayout(unsigned int layoutPos)
+{
+    return m_inputLayouts[layoutPos].Get();
 }
