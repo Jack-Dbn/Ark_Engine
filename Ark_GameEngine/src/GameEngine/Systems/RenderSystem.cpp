@@ -206,7 +206,7 @@ bool RenderSystem::DrawEntity(Ark::Model &tgtModel, Ark::Material &tgtMaterial)
 	ID3D11InputLayout* eInpLayout = m_shaderManager.GetInputLayout(tgtModel.GetVtxShaderId());
 
 	//Draw Entity
-	UINT stride = sizeof(Ark::vector2D);
+	UINT stride = sizeof(Ark::vertex);
 	UINT offset = 0;
 
 	m_d3dDeviceContext->IASetInputLayout(eInpLayout);

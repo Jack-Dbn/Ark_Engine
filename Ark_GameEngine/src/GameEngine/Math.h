@@ -1,7 +1,9 @@
 #pragma once
 #include <math.h>
+#define PI_F 3.1415927f
 
-namespace Ark {
+namespace Ark {	
+
 	struct vector3D {
 		float x, y, z;
 
@@ -51,5 +53,101 @@ namespace Ark {
 			t_mtx[0][0] = t_mtx[1][1] = t_mtx[2][2] = t_mtx[3][3] = 1.0f;
 
 		}
+
+		inline matrix4x4 operator*(matrix4x4 A) {
+
+			matrix4x4 returnMtx;
+
+			for (int i = 0; i < 4; i++) {
+				for (int j = 0; j < 4; j++) {
+
+					returnMtx[i][j] = 0.0f;
+
+					for (int k = 0; k < 4; k++) {
+						returnMtx[i][j] += returnMtx[i][k] * returnMtx[k][j];
+					}
+				}
+			}
+
+			return returnMtx;
+		}
+
+		matrix4x4 TranslateMtx(float x, float y, float z) {
+			matrix4x4 returnMtx;
+			returnMtx.SetIdentity();
+
+			returnMtx[0][3] = x;
+			returnMtx[1][3] = y;
+			returnMtx[2][3] = z;
+
+			return returnMtx;
+		}
+
+		matrix4x4 RotateXmtx(float deg) {
+			matrix4x4 returnMtx;
+			returnMtx.SetIdentity();
+
+			float radVal = (PI_F / 180.0f);
+
+			float cosVal = cosf(deg * radVal);
+			float sinVal = sinf(deg * radVal);
+
+			returnMtx[1][1] = cosVal;
+			returnMtx[2][2] = cosVal;
+			returnMtx[2][1] = sinVal;
+			returnMtx[1][2] = -sinVal;
+
+			return returnMtx;
+		}
+
+		matrix4x4 RotateYmtx(float deg) {
+			matrix4x4 returnMtx;
+			returnMtx.SetIdentity();
+
+			float radVal = (PI_F / 180.0f);
+
+			float cosVal = cosf(deg * radVal);
+			float sinVal = sinf(deg * radVal);
+
+			returnMtx[0][0] = cosVal;
+			returnMtx[2][2] = cosVal;
+			returnMtx[0][2] = sinVal;
+			returnMtx[2][0] = -sinVal;
+
+			return returnMtx;
+		}
+
+		matrix4x4 RotateZmtx(float deg) {
+			matrix4x4 returnMtx;
+			returnMtx.SetIdentity();
+
+			float radVal = (PI_F / 180.0f);
+
+			float cosVal = cosf(deg * radVal);
+			float sinVal = sinf(deg * radVal);
+
+			returnMtx[0][0] = cosVal;
+			returnMtx[1][1] = cosVal;
+			returnMtx[1][0] = sinVal;
+			returnMtx[0][1] = -sinVal;
+
+			return returnMtx;
+		}
+
+		matrix4x4 ScaleMtx(float x, float y, float z) {
+			matrix4x4 returnMtx;
+			returnMtx.SetIdentity();
+
+			returnMtx[0][0] = x;
+			returnMtx[1][1] = y;
+			returnMtx[2][2] = z;
+
+			return returnMtx;
+		}
+	};
+
+	struct vertex {
+		vector2D pos;
+		vector3D colour;
 	};
 }

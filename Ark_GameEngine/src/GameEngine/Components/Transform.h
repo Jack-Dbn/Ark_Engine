@@ -9,10 +9,14 @@ namespace Ark {
 	public:
 		Transform();
 
-		void ChangePos(int x = 0, int y = 0, int z = 0);		
+		void ChangePos(float x = 0, float y = 0, float z = 0);
+
+		Ark::matrix4x4 GetModelMtx();
 
 	private:
-		int m_posX, m_posY, m_posZ;
+		float m_posX, m_posY, m_posZ;
+		float m_rotationX, m_rotationY, m_rotationZ;
+		float m_scaleX, m_scaleY, m_scaleZ;
 	};
 }
 

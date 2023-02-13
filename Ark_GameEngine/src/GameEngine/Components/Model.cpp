@@ -52,7 +52,7 @@ bool Ark::Model::CreateVtxBuffer(Microsoft::WRL::ComPtr<ID3D11Device>& d3dDevice
 {
     //Vertex Buffer Creation
     D3D11_BUFFER_DESC vtxBufferDesc = { 0 };
-    vtxBufferDesc.ByteWidth = sizeof(vector2D) * vtxArraySize;
+    vtxBufferDesc.ByteWidth = sizeof(Ark::vertex) * vtxArraySize;
     vtxBufferDesc.Usage = D3D11_USAGE_DEFAULT;
     vtxBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
     vtxBufferDesc.CPUAccessFlags = 0;
