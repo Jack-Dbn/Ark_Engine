@@ -16,12 +16,24 @@ int RenderSystem::Initialise()
 		return -2;
 	}
 
+	//Create Device & SwapChain
 	CreateDevice();
 
-	CreateSwapChain();
+	CreateSwapChain();	
 
-	CreateRenderTgtView();	
+	CreateRenderTgtView();
 
+	D3D11_TEXTURE2D_DESC backBufferDesc = GetBackBufferDesc();
+	CreateDepthStencilVw(backBufferDesc);
+
+	CreateConstBuffer();
+
+	m_constantBufferData.SetDefaults();
+	m_constantBufferData.setFov(backBufferDesc, 70.0f);
+
+	SetViewPort(backBufferDesc.Width, backBufferDesc.Height);
+
+	//Compile Shaders
 	bool compileSuccess = m_shaderManager.CompileVertexShader(L"Basic_VS.hlsl", m_d3dDevice, false);
 	compileSuccess = compileSuccess && m_shaderManager.CompilePixelShader(L"Colour_PS.hlsl", m_d3dDevice, "Colour_PS");
 
@@ -134,16 +146,71 @@ bool RenderSystem::CreateRenderTgtView()
 			return false;
 	}
 
-	HRESULT createRtvRes = m_d3dDevice->CreateRenderTargetView(backBuffer.Get(), nullptr, &m_RenderTgtView);
+	HRESULT createRtvRes = m_d3dDevice->CreateRenderTargetView(backBuffer.Get(), nullptr, &m_renderTgtView);
 
 	if (FAILED(createRtvRes)) {
 		return false;
+	}	
+
+	return true;
+}
+
+bool RenderSystem::CreateDepthStencilVw(D3D11_TEXTURE2D_DESC backBufferDesc)
+{
+
+	//Depth Stencil Desc
+	D3D11_TEXTURE2D_DESC depthStencilDesc;
+	depthStencilDesc.Height = backBufferDesc.Height;
+	depthStencilDesc.Width = backBufferDesc.Width;
+	depthStencilDesc.MipLevels = 1;
+	depthStencilDesc.ArraySize = 1;
+	depthStencilDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	depthStencilDesc.SampleDesc.Count = 1;
+	depthStencilDesc.SampleDesc.Quality = 0;
+	depthStencilDesc.Usage = D3D11_USAGE_DEFAULT;
+	depthStencilDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+	depthStencilDesc.CPUAccessFlags = 0;
+	depthStencilDesc.MiscFlags = 0;
+
+	Microsoft::WRL::ComPtr<ID3D11Texture2D> depthStencil;
+	HRESULT res = m_d3dDevice->CreateTexture2D(&depthStencilDesc, nullptr, &depthStencil);
+
+	if (FAILED(res)) {
+		return false;
 	}
 
-	D3D11_TEXTURE2D_DESC backBufferDesc = { 0 };
-	backBuffer->GetDesc(&backBufferDesc);
+	D3D11_DEPTH_STENCIL_VIEW_DESC dpthStencilVwDesc;
+	dpthStencilVwDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	dpthStencilVwDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+	dpthStencilVwDesc.Flags = 0;
+	dpthStencilVwDesc.Texture2D.MipSlice = 0;
 
-	SetViewPort(backBufferDesc.Width, backBufferDesc.Height);
+	res = m_d3dDevice->CreateDepthStencilView(depthStencil.Get(), &dpthStencilVwDesc, &m_depthStencilView);
+
+	if (FAILED(res)) {
+		return false;
+	}
+
+	return true;
+}
+
+bool RenderSystem::CreateConstBuffer()
+{
+	D3D11_BUFFER_DESC constBufferDesc = { 0 };
+	constBufferDesc.ByteWidth = sizeof(m_constantBufferData);
+	constBufferDesc.Usage = D3D11_USAGE_DEFAULT;
+	constBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	constBufferDesc.CPUAccessFlags = 0;
+	constBufferDesc.MiscFlags = 0;
+	constBufferDesc.StructureByteStride = 0;
+
+	HRESULT res = m_d3dDevice->CreateBuffer(&constBufferDesc, nullptr, &m_constantBuffer);
+
+	if (FAILED(res)) {
+		return false;
+	}
+
+	m_constantBufferData.SetDefaults();
 
 	return true;
 }
@@ -162,17 +229,35 @@ void RenderSystem::SetViewPort(float viewPortWidth, float viewPortHeight) {
 	m_d3dDeviceContext->RSSetViewports(1, &newViewPort);
 }
 
+D3D11_TEXTURE2D_DESC RenderSystem::GetBackBufferDesc()
+{
+	Microsoft::WRL::ComPtr<ID3D11Texture2D> backBuffer;
+	HRESULT getbufferRes = m_swapChain->GetBuffer(0, IID_PPV_ARGS(&backBuffer));
+
+	D3D11_TEXTURE2D_DESC backBufferDesc = { 0 };
+	backBuffer->GetDesc(&backBufferDesc);
+
+	return backBufferDesc;
+}
+
 void RenderSystem::SetupFrame(float redVal, float greenVal, float blueVal, float alphaVal)
 {
-	float backgrndColour[4] = { redVal, greenVal, blueVal, alphaVal };
-	m_d3dDeviceContext->ClearRenderTargetView(m_RenderTgtView.Get(), backgrndColour);
+	m_d3dDeviceContext->OMSetRenderTargets(1, m_renderTgtView.GetAddressOf(), m_depthStencilView.Get());
 
-	m_d3dDeviceContext->OMSetRenderTargets(1, m_RenderTgtView.GetAddressOf(), NULL);		
+	float backgrndColour[4] = { redVal, greenVal, blueVal, alphaVal };
+	m_d3dDeviceContext->ClearRenderTargetView(m_renderTgtView.Get(), backgrndColour);
+	m_d3dDeviceContext->ClearDepthStencilView(m_depthStencilView.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0);
 }
 
 // Update Stage
 int RenderSystem::Update(Ark::ComponentManager& engineCM)
 {
+	Ark::matrix4x4 newModelMtx;
+
+	//Simply to rotate model until input is added.
+	m_tempDegVar = m_tempDegVar + 1.0f;
+	m_constantBufferData.m_model = newModelMtx.RotateYmtx(m_tempDegVar);
+
 	SetupFrame();
 		
 	for (int i = 0; i < m_EntityList.size(); i++) {
@@ -209,6 +294,8 @@ bool RenderSystem::DrawEntity(Ark::Model &tgtModel, Ark::Material &tgtMaterial)
 	UINT stride = sizeof(Ark::vertex);
 	UINT offset = 0;
 
+	m_d3dDeviceContext->UpdateSubresource(m_constantBuffer.Get(), 0, nullptr, &m_constantBufferData, 0, 0);
+
 	m_d3dDeviceContext->IASetInputLayout(eInpLayout);
 
 	m_d3dDeviceContext->IASetVertexBuffers(0, 1, tgtModel.GetVtxBufferAddr(), &stride, &offset);
@@ -218,6 +305,8 @@ bool RenderSystem::DrawEntity(Ark::Model &tgtModel, Ark::Material &tgtMaterial)
 	m_d3dDeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	m_d3dDeviceContext->VSSetShader(eVtxShader, nullptr, 0);
+
+	m_d3dDeviceContext->VSSetConstantBuffers(0, 1, m_constantBuffer.GetAddressOf());
 
 	m_d3dDeviceContext->PSSetShader(ePxlShader, nullptr, 0);
 
@@ -253,7 +342,8 @@ bool RenderSystem::Resize(int newHeight, int newWidth)
 {
 	if (m_swapChain) {
 
-		m_RenderTgtView.Reset();
+		m_depthStencilView.Reset();
+		m_renderTgtView.Reset();		
 
 		HRESULT resizeRes = m_swapChain->ResizeBuffers(2, 0, 0, DXGI_FORMAT_B8G8R8A8_UNORM, 0);
 
@@ -261,7 +351,12 @@ bool RenderSystem::Resize(int newHeight, int newWidth)
 			return false;
 		}
 
+		D3D11_TEXTURE2D_DESC backBufferDesc = GetBackBufferDesc();
+
 		bool a = CreateRenderTgtView();
+		a = a && CreateDepthStencilVw(backBufferDesc);
+
+		SetViewPort(static_cast<float>(newWidth), static_cast<float>(newHeight));
 
 		return true;
 	}

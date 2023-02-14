@@ -48,6 +48,12 @@ namespace Ark {
 			m13(p_13), m23(p_23), m33(p_33), m43(p_43),
 			m14(p_14), m24(p_24), m34(p_34), m44(p_44) {}
 
+		matrix4x4(int identity) : m_array{ 0 } {
+			if (identity == 1) {
+				m11 = m22 = m33 = m44 = 1.0f;
+			}			
+		}
+
 		void SetIdentity() {
 			matrix4x4 t_mtx = matrix4x4();
 			t_mtx[0][0] = t_mtx[1][1] = t_mtx[2][2] = t_mtx[3][3] = 1.0f;
@@ -73,8 +79,7 @@ namespace Ark {
 		}
 
 		matrix4x4 TranslateMtx(float x, float y, float z) {
-			matrix4x4 returnMtx;
-			returnMtx.SetIdentity();
+			matrix4x4 returnMtx(1);
 
 			returnMtx[0][3] = x;
 			returnMtx[1][3] = y;
@@ -84,59 +89,55 @@ namespace Ark {
 		}
 
 		matrix4x4 RotateXmtx(float deg) {
-			matrix4x4 returnMtx;
-			returnMtx.SetIdentity();
 
 			float radVal = (PI_F / 180.0f);
 
 			float cosVal = cosf(deg * radVal);
 			float sinVal = sinf(deg * radVal);
 
-			returnMtx[1][1] = cosVal;
-			returnMtx[2][2] = cosVal;
-			returnMtx[2][1] = sinVal;
-			returnMtx[1][2] = -sinVal;
+			matrix4x4 returnMtx = {
+				1.0f, 0.0f, 0.0f, 0.0f,
+				0.0f, cosVal, -sinVal, 0.0f,
+				0.0f, sinVal, cosVal, 0.0f,
+				0.0f, 0.0f, 0.0f, 1.0f };
 
 			return returnMtx;
 		}
 
 		matrix4x4 RotateYmtx(float deg) {
-			matrix4x4 returnMtx;
-			returnMtx.SetIdentity();
-
+			
 			float radVal = (PI_F / 180.0f);
 
 			float cosVal = cosf(deg * radVal);
 			float sinVal = sinf(deg * radVal);
 
-			returnMtx[0][0] = cosVal;
-			returnMtx[2][2] = cosVal;
-			returnMtx[0][2] = sinVal;
-			returnMtx[2][0] = -sinVal;
+			matrix4x4 returnMtx = {
+				cosVal, 0.0f, sinVal, 0.0f,
+				0.0f, 1.0f, 0.0f, 0.0f,
+				-sinVal, 0.0f, cosVal, 0.0f,
+				0.0f, 0.0f, 0.0f, 1.0f };
 
 			return returnMtx;
 		}
 
 		matrix4x4 RotateZmtx(float deg) {
-			matrix4x4 returnMtx;
-			returnMtx.SetIdentity();
-
+			
 			float radVal = (PI_F / 180.0f);
 
 			float cosVal = cosf(deg * radVal);
 			float sinVal = sinf(deg * radVal);
 
-			returnMtx[0][0] = cosVal;
-			returnMtx[1][1] = cosVal;
-			returnMtx[1][0] = sinVal;
-			returnMtx[0][1] = -sinVal;
+			matrix4x4 returnMtx = {
+				cosVal, 0.0f, sinVal, 0.0f,
+				0.0f, 1.0f, 0.0f, 0.0f,
+				-sinVal, 0.0f, cosVal, 0.0f,
+				0.0f, 0.0f, 0.0f, 1.0f };
 
 			return returnMtx;
 		}
 
 		matrix4x4 ScaleMtx(float x, float y, float z) {
-			matrix4x4 returnMtx;
-			returnMtx.SetIdentity();
+			matrix4x4 returnMtx(1);
 
 			returnMtx[0][0] = x;
 			returnMtx[1][1] = y;
@@ -147,7 +148,7 @@ namespace Ark {
 	};
 
 	struct vertex {
-		vector2D pos;
+		vector3D pos;
 		vector3D colour;
 	};
 }

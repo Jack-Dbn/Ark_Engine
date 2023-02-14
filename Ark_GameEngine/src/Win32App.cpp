@@ -2,12 +2,11 @@
 
 namespace Ark {
 
+	float windowHeight, windowWidth;
+
 	LRESULT CALLBACK WindowProc(HWND wndHandle, UINT wndMsg, WPARAM wParam, LPARAM lParam) {
 
 		Win32App* tgtApp = reinterpret_cast<Win32App*>(GetWindowLongPtr(wndHandle, GWLP_USERDATA));
-
-		//int windowWidth = 1600.0f;
-		//int windowHeight = 900.0f;
 
 		switch (wndMsg) {
 
@@ -31,17 +30,17 @@ namespace Ark {
 			}
 			return 0;
 
-		/*
+		
 		case WM_SIZE:
 
 			windowHeight = HIWORD(lParam);
 			windowWidth = LOWORD(lParam);
 
-			return 0;*/
+			return 0;
 
 		case WM_EXITSIZEMOVE:
 
-			tgtApp->Resize();
+			tgtApp->Resize(windowHeight, windowWidth);
 
 			return 0;
 

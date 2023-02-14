@@ -7,7 +7,7 @@
 #include <string>
 #include "../System.h"
 #include "RenderSystem/ShaderManager.h"
-#include "../Math.h"
+#include "RenderSystem/ConstantBuffer.h"
 
 
 class RenderSystem : public System
@@ -35,7 +35,11 @@ private:
 	bool CreateDevice();
 	bool CreateSwapChain();
 	bool CreateRenderTgtView();
+	bool CreateDepthStencilVw(D3D11_TEXTURE2D_DESC backBufferDesc);
+	bool CreateConstBuffer();
 	void SetViewPort(float viewPortWidth = 1920.0f, float viewPortHeight = 1080.0f);
+
+	D3D11_TEXTURE2D_DESC GetBackBufferDesc();
 
 	//Update
 	void SetupFrame(const float redVal = 0.0f, const float greenVal = 0.75f, const float blueVal = 0.75f, const float alphaVal = 1.0f);
@@ -50,7 +54,14 @@ private:
 
 	Microsoft::WRL::ComPtr<IDXGISwapChain1> m_swapChain;
 
-	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> m_RenderTgtView;
+	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> m_renderTgtView;
+	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> m_depthStencilView;
+
+	Microsoft::WRL::ComPtr<ID3D11Buffer> m_constantBuffer;
+	Ark::ConstantBuffer m_constantBufferData;
 
 	Ark::ShaderManager m_shaderManager;
+
+	//Simply to rotate model until input is added.
+	float m_tempDegVar = 0.0f;
 };

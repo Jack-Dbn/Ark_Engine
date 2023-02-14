@@ -1,5 +1,12 @@
+cbuffer simpleConstantBuffer : register (b0)
+{
+	matrix model;
+	matrix view;
+	matrix projection;
+};
+
 struct VS_Input{
-	float2 pos : POSITION;
+	float3 pos : POSITION;
 	float3 color : COLOR;
 };
 
@@ -11,7 +18,13 @@ struct PS_Input {
 PS_Input Basic_VS(VS_Input input) {
 	PS_Input VS_Result;
 
-	VS_Result.pos = float4(input.pos, 0.5f, 1.0f);
+	float4 newPos = float4(input.pos, 1.0f);
+	
+	newPos = mul(newPos, model);
+	newPos = mul(newPos, view);
+	newPos = mul(newPos, projection);
+
+	VS_Result.pos = newPos;
 	VS_Result.color = input.color;
 
 	return VS_Result;

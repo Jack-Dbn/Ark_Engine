@@ -13,6 +13,7 @@ int Editor::OnInit()
 
 	Ark::Triangle triangle;
 	Ark::Square square;
+	Ark::Cube cube;
 
 	//Entity A
 	Ark::Transform entityAtransform;
@@ -21,7 +22,7 @@ int Editor::OnInit()
 	m_engineInst.AddComponent<Ark::Material>(entityA);
 
 	Ark::Model entityAmodel = m_engineInst.CreateModel(triangle.vertices, ARRAYSIZE(triangle.vertices), triangle.indexes, ARRAYSIZE(triangle.indexes));
-	m_engineInst.SetComponent<Ark::Model>(entityA, entityAmodel);
+	//m_engineInst.SetComponent<Ark::Model>(entityA, entityAmodel);
 
 	//Entity B
 	Ark::Transform entityBtransform;
@@ -29,8 +30,8 @@ int Editor::OnInit()
 	m_engineInst.SetComponent<Ark::Transform>(entityB, entityBtransform);
 	m_engineInst.AddComponent<Ark::Material>(entityB);
 	
-	Ark::Model entityBmodel = m_engineInst.CreateModel(square.vertices, ARRAYSIZE(square.vertices), square.indexes, ARRAYSIZE(square.indexes));
-	//m_engineInst.SetComponent<Ark::Model>(entityB, entityBmodel);
+	Ark::Model entityBmodel = m_engineInst.CreateModel(cube.vertices, ARRAYSIZE(cube.vertices), cube.indexes, ARRAYSIZE(cube.indexes));
+	m_engineInst.SetComponent<Ark::Model>(entityB, entityBmodel);
 
 	//MessageBox(NULL, L"Editor OnInit", L"Editor OnInit", 0);
 

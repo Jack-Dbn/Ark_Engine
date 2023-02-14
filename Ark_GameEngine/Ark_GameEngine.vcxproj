@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\GameEngine\Systems\RenderSystem\ConstantBuffer.h" />
     <ClInclude Include="src\GameEngine\Shapes.h" />
     <ClInclude Include="src\GameEngine\Systems\RenderSystem\ShaderManager.h" />
     <ClInclude Include="src\GameEngine\Components\Model.h" />
@@ -162,6 +163,7 @@
     <ClInclude Include="src\GameEngine\Components\Transform.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\GameEngine\Systems\RenderSystem\ConstantBuffer.cpp" />
     <ClCompile Include="src\GameEngine\Components\Model.cpp" />
     <ClCompile Include="src\GameEngine\Components\Material.cpp" />
     <ClCompile Include="src\GameEngine\ComponentManager.cpp" />
