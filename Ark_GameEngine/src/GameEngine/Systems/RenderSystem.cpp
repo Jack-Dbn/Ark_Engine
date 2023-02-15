@@ -251,13 +251,7 @@ void RenderSystem::SetupFrame(float redVal, float greenVal, float blueVal, float
 
 // Update Stage
 int RenderSystem::Update(Ark::ComponentManager& engineCM)
-{
-	Ark::matrix4x4 newModelMtx;
-
-	//Simply to rotate model until input is added.
-	m_tempDegVar = m_tempDegVar + 1.0f;
-	m_constantBufferData.m_model = newModelMtx.RotateYmtx(m_tempDegVar);
-
+{	
 	SetupFrame();
 		
 	for (int i = 0; i < m_EntityList.size(); i++) {
@@ -265,6 +259,14 @@ int RenderSystem::Update(Ark::ComponentManager& engineCM)
 
 		Ark::Transform entityTransform;
 		engineCM.GetComponent<Ark::Transform>(entityIn, entityTransform);
+		m_constantBufferData.m_model = entityTransform.GetModelMtx();
+
+		//Simply to rotate first model until input is added.		
+		if (i == 0) {
+			m_tempDegVar = m_tempDegVar + 1.0f;
+			Ark::matrix4x4 newModelMtx;
+			m_constantBufferData.m_model = m_constantBufferData.m_model * newModelMtx.RotateYmtx(m_tempDegVar);
+		}
 
 		Ark::Material entityMaterial;
 		engineCM.GetComponent<Ark::Material>(entityIn, entityMaterial);

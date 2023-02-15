@@ -16,17 +16,15 @@ int Editor::OnInit()
 	Ark::Cube cube;
 
 	//Entity A
-	Ark::Transform entityAtransform;
-	entityAtransform.ChangePos(2, -1, 2);
+	Ark::Transform entityAtransform(-1, -1, 1.5f);
 	m_engineInst.SetComponent<Ark::Transform>(entityA, entityAtransform);
 	m_engineInst.AddComponent<Ark::Material>(entityA);
 
-	Ark::Model entityAmodel = m_engineInst.CreateModel(triangle.vertices, ARRAYSIZE(triangle.vertices), triangle.indexes, ARRAYSIZE(triangle.indexes));
-	//m_engineInst.SetComponent<Ark::Model>(entityA, entityAmodel);
+	Ark::Model entityAmodel = m_engineInst.CreateModel(cube.vertices, ARRAYSIZE(cube.vertices), cube.indexes, ARRAYSIZE(cube.indexes));
+	m_engineInst.SetComponent<Ark::Model>(entityA, entityAmodel);
 
 	//Entity B
-	Ark::Transform entityBtransform;
-	entityBtransform.ChangePos(3, 7, 3);
+	Ark::Transform entityBtransform(1, -1, 1.5f);
 	m_engineInst.SetComponent<Ark::Transform>(entityB, entityBtransform);
 	m_engineInst.AddComponent<Ark::Material>(entityB);
 	

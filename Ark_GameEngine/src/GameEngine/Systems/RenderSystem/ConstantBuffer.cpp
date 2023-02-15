@@ -9,7 +9,7 @@ bool Ark::ConstantBuffer::SetDefaults()
         0.0f, 0.44721359f, -0.89442718f, -2.23606800f,
         0.0f, 0.0f, 0.0f, 1.0);
 
-    Ark::matrix4x4 modelMtx(1);
+    Ark::matrix4x4 modelMtx('i');
     m_model = modelMtx;
 
     return true;
