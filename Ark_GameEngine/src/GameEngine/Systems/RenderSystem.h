@@ -42,7 +42,7 @@ private:
 	D3D11_TEXTURE2D_DESC GetBackBufferDesc();
 
 	//Update
-	void SetupFrame(const float redVal = 0.0f, const float greenVal = 0.75f, const float blueVal = 0.75f, const float alphaVal = 1.0f);
+	void SetupFrame(const float redVal = 0.66f, const float greenVal = 0.73f, const float blueVal = 0.75f, const float alphaVal = 1.0f);
 	bool DrawEntity(Ark::Model& tgtModel, Ark::Material& tgtMaterial);
 	bool PresentFrame(bool vSyncOn = true);	
 

@@ -17,7 +17,6 @@ namespace Ark {
 		bool CompileVertexShader(
 			std::wstring shaderFileName, 
 			Microsoft::WRL::ComPtr<ID3D11Device> &d3dDevice,
-			bool textureLayout,
 			std::string entryPoint = "Basic_VS");
 
 		bool CompilePixelShader(std::wstring shaderFileName, Microsoft::WRL::ComPtr<ID3D11Device> &d3dDevice, std::string entryPoint = "Basic_PS");
@@ -36,7 +35,6 @@ namespace Ark {
 
 		bool CreateInputLayout(
 			Microsoft::WRL::ComPtr<ID3DBlob> &vtxShaderBlob, 
-			Microsoft::WRL::ComPtr<ID3D11Device>& d3dDevice, 
-			bool isTextureLayout = false);
+			Microsoft::WRL::ComPtr<ID3D11Device>& d3dDevice);
 	};
 }

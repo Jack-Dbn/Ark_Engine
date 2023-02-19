@@ -34,7 +34,7 @@ int RenderSystem::Initialise()
 	SetViewPort(backBufferDesc.Width, backBufferDesc.Height);
 
 	//Compile Shaders
-	bool compileSuccess = m_shaderManager.CompileVertexShader(L"Basic_VS.hlsl", m_d3dDevice, false);
+	bool compileSuccess = m_shaderManager.CompileVertexShader(L"Basic_VS.hlsl", m_d3dDevice);
 	compileSuccess = compileSuccess && m_shaderManager.CompilePixelShader(L"Colour_PS.hlsl", m_d3dDevice, "Colour_PS");
 
 	if (!compileSuccess) {

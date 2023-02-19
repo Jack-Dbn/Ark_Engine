@@ -13,7 +13,7 @@ bool Ark::ShaderManager::SetShaderPath(std::wstring shaderPath)
     return true;
 }
 
-bool Ark::ShaderManager::CompileVertexShader(std::wstring shaderFileName, Microsoft::WRL::ComPtr<ID3D11Device>& d3dDevice, bool textureLayout, std::string entryPoint)
+bool Ark::ShaderManager::CompileVertexShader(std::wstring shaderFileName, Microsoft::WRL::ComPtr<ID3D11Device>& d3dDevice, std::string entryPoint)
 {
     UINT shaderFlags = D3DCOMPILE_ENABLE_STRICTNESS;
 #if defined( DEBUG ) || defined( _DEBUG )
@@ -45,7 +45,7 @@ bool Ark::ShaderManager::CompileVertexShader(std::wstring shaderFileName, Micros
 
     m_vertexShaders.push_back(vertexShader);
 
-    return this->CreateInputLayout(vtxShaderBlob, d3dDevice, textureLayout);
+    return this->CreateInputLayout(vtxShaderBlob, d3dDevice);
 }
 
 bool Ark::ShaderManager::CompilePixelShader(std::wstring shaderFileName, Microsoft::WRL::ComPtr<ID3D11Device> &d3dDevice, std::string entryPoint)
@@ -83,7 +83,7 @@ bool Ark::ShaderManager::CompilePixelShader(std::wstring shaderFileName, Microso
     return true;
 }
 
-bool Ark::ShaderManager::CreateInputLayout(Microsoft::WRL::ComPtr<ID3DBlob> &vtxShaderBlob, Microsoft::WRL::ComPtr<ID3D11Device>& d3dDevice, bool isTextureLayout)
+bool Ark::ShaderManager::CreateInputLayout(Microsoft::WRL::ComPtr<ID3DBlob> &vtxShaderBlob, Microsoft::WRL::ComPtr<ID3D11Device>& d3dDevice)
 {
     Microsoft::WRL::ComPtr<ID3D11InputLayout> inputLayout;
 
