@@ -26,6 +26,8 @@ int RenderSystem::Initialise()
 	D3D11_TEXTURE2D_DESC backBufferDesc = GetBackBufferDesc();
 	CreateDepthStencilVw(backBufferDesc);
 
+	CreateSampler();
+
 	CreateConstBuffer();
 
 	m_constantBufferData.SetDefaults();
@@ -215,6 +217,46 @@ bool RenderSystem::CreateConstBuffer()
 	return true;
 }
 
+bool RenderSystem::CreateSampler()
+{
+	D3D11_SAMPLER_DESC samplerDesc;
+	ZeroMemory(&samplerDesc, sizeof(samplerDesc));
+
+	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+
+	//No anisotropic filtering so ignored.
+	samplerDesc.MaxAnisotropy = 0;
+
+	//Specify how tex coords beyond boundaries are handled.
+	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+
+	//No Mip clamping or bias
+	samplerDesc.MipLODBias = 0.0f;
+
+	samplerDesc.MinLOD = 0;
+	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
+
+	//No comp functoion
+	samplerDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
+
+	//Border address mode is not used so this is ignored.
+	samplerDesc.BorderColor[0] = 0.0f;
+	samplerDesc.BorderColor[1] = 0.0f;
+	samplerDesc.BorderColor[2] = 0.0f;
+	samplerDesc.BorderColor[3] = 0.0f;
+
+	HRESULT res = m_d3dDevice->CreateSamplerState(&samplerDesc, &m_sampler);
+
+	if (FAILED(res)) {
+		MessageBoxA(NULL, "Sampler Creation Error", "Sampler Creation Error", MB_OK);
+		return false;
+	}
+
+	return true;
+}
+
 void RenderSystem::SetViewPort(float viewPortWidth, float viewPortHeight) {
 
 	D3D11_VIEWPORT newViewPort;
@@ -299,18 +341,17 @@ bool RenderSystem::DrawEntity(Ark::Model &tgtModel, Ark::Material &tgtMaterial)
 	m_d3dDeviceContext->UpdateSubresource(m_constantBuffer.Get(), 0, nullptr, &m_constantBufferData, 0, 0);
 
 	m_d3dDeviceContext->IASetInputLayout(eInpLayout);
-
 	m_d3dDeviceContext->IASetVertexBuffers(0, 1, tgtModel.GetVtxBufferAddr(), &stride, &offset);
-
 	m_d3dDeviceContext->IASetIndexBuffer(tgtModel.GetIdxBuffer(), DXGI_FORMAT_R32_UINT, 0);
 
 	m_d3dDeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	m_d3dDeviceContext->VSSetShader(eVtxShader, nullptr, 0);
-
 	m_d3dDeviceContext->VSSetConstantBuffers(0, 1, m_constantBuffer.GetAddressOf());
 
 	m_d3dDeviceContext->PSSetShader(ePxlShader, nullptr, 0);
+	m_d3dDeviceContext->PSSetShaderResources(0, 1, tgtMaterial.GetTextureView().GetAddressOf());
+	m_d3dDeviceContext->PSSetSamplers(0, 1, m_sampler.GetAddressOf());
 
 	m_d3dDeviceContext->DrawIndexed(tgtModel.GetIdxCount(), 0, 0);
 
@@ -379,6 +420,15 @@ Ark::Model RenderSystem::CreateDxModel(void* vtxArray, unsigned int vtxArraySize
 	newModel.SetMeshManual(vtxArray, vtxArraySize, idxArray, idxArraySize, m_d3dDevice);
 
 	return newModel;
+}
+
+Ark::Material RenderSystem::CreateMaterial(std::wstring textureFilePath)
+{
+	Ark::Material newMaterial;
+
+	newMaterial.AddTextureDDS(m_d3dDevice, textureFilePath);
+
+	return newMaterial;
 }
 
 

@@ -4,7 +4,7 @@ bool Ark::ConstantBuffer::SetDefaults()
 {
     //Default from microsoft
     m_view = Ark::matrix4x4(
-        1.0, 0.0f, 0.0f, 0.0f,
+        -1.0, 0.0f, 0.0f, 0.0f,
         0.0f, 0.89442718f, 0.44721359f, 0.0f,
         0.0f, 0.44721359f, -0.89442718f, -2.23606800f,
         0.0f, 0.0f, 0.0f, 1.0);

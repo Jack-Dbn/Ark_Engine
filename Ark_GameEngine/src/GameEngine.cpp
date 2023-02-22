@@ -61,4 +61,9 @@ namespace Ark {
 	{
 		return m_renderSystem.CreateDxModel(vtxArray, vtxArraySize, idxArray, idxArraySize);
 	}
+
+	Ark::Material GameEngine::CreateMaterial(std::wstring textureFilePath)
+	{
+		return m_renderSystem.CreateMaterial(textureFilePath);
+	}
 }

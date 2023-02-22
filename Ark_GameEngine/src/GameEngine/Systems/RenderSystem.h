@@ -30,6 +30,8 @@ public:
 		unsigned int* idxArray,
 		unsigned int idxArraySize);
 
+	Ark::Material CreateMaterial(std::wstring textureFilePath);
+
 private:
 	//Init
 	bool CreateDevice();
@@ -37,6 +39,7 @@ private:
 	bool CreateRenderTgtView();
 	bool CreateDepthStencilVw(D3D11_TEXTURE2D_DESC backBufferDesc);
 	bool CreateConstBuffer();
+	bool CreateSampler();
 	void SetViewPort(float viewPortWidth = 1920.0f, float viewPortHeight = 1080.0f);
 
 	D3D11_TEXTURE2D_DESC GetBackBufferDesc();
@@ -56,6 +59,7 @@ private:
 
 	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> m_renderTgtView;
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> m_depthStencilView;
+	Microsoft::WRL::ComPtr<ID3D11SamplerState> m_sampler;
 
 	Microsoft::WRL::ComPtr<ID3D11Buffer> m_constantBuffer;
 	Ark::ConstantBuffer m_constantBufferData;

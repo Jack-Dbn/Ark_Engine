@@ -11,21 +11,24 @@ int Editor::OnInit()
 	Ark::Entity entityA = m_engineInst.NewEntity();
 	Ark::Entity entityB = m_engineInst.NewEntity();
 
-	Ark::Triangle triangle;
-	Ark::Square square;
+	//Ark::Triangle triangle;
+	Ark::Square plane;
 	Ark::Cube cube;
+
+	Ark::Model planeModel = m_engineInst.CreateModel(plane.vertices, ARRAYSIZE(plane.vertices), plane.indexes, ARRAYSIZE(plane.indexes));
 	Ark::Model cubeModel = m_engineInst.CreateModel(cube.vertices, ARRAYSIZE(cube.vertices), cube.indexes, ARRAYSIZE(cube.indexes));
+	Ark::Material rubiksMaterial = m_engineInst.CreateMaterial(L"Debug/Assets/Textures/RubikTexture.dds");
 
 	//Entity A
 	Ark::Transform entityAtransform(-1, -1, 1.5f);
 	m_engineInst.SetComponent<Ark::Transform>(entityA, entityAtransform);
-	m_engineInst.AddComponent<Ark::Material>(entityA);	
+	m_engineInst.SetComponent<Ark::Material>(entityA, rubiksMaterial);
 	m_engineInst.SetComponent<Ark::Model>(entityA, cubeModel);
 
 	//Entity B
 	Ark::Transform entityBtransform(1, -1, 1.5f);
 	m_engineInst.SetComponent<Ark::Transform>(entityB, entityBtransform);
-	m_engineInst.AddComponent<Ark::Material>(entityB);	
+	m_engineInst.SetComponent<Ark::Material>(entityB, rubiksMaterial);
 	m_engineInst.SetComponent<Ark::Model>(entityB, cubeModel);
 
 	//MessageBox(NULL, L"Editor OnInit", L"Editor OnInit", 0);

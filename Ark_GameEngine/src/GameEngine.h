@@ -31,6 +31,8 @@ namespace Ark {
 			unsigned int* idxArray,
 			unsigned int idxArraySize);
 
+		Ark::Material CreateMaterial(std::wstring textureFilePath);
+
 		template <typename T>
 		bool AddComponent(Ark::Entity tgtEntity);
 

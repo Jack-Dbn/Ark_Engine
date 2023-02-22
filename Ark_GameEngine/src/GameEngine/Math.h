@@ -142,7 +142,8 @@ namespace Ark {
 	};
 
 	struct vertex {
-		vector3D pos;
-		vector3D colour;
+		vector3D pos;//Position of vertex.
+		vector3D normal;//The direction the surface faces.
+		vector2D texCoord;//Texture coordinates.
 	};
 }
