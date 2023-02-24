@@ -24,11 +24,13 @@ public:
 	//Getters & Setters
 	void SetParam(HWND windowHWND, std::wstring assetFolderPath);
 
-	Ark::Model CreateDxModel(
+	Ark::Model CreateDxModelEx(
 		void* vtxArray,
 		unsigned int vtxArraySize,
 		unsigned int* idxArray,
 		unsigned int idxArraySize);
+
+	Ark::Model CreateDxModel(std::string filePath, bool CwWindingDir = false, bool LH_Convert = true);
 
 	Ark::Material CreateMaterial(std::wstring textureFilePath);
 

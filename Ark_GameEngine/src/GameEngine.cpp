@@ -54,12 +54,17 @@ namespace Ark {
 		return m_entityController.NewEntity();
 	}
 
-	Ark::Model GameEngine::CreateModel(void* vtxArray,
+	Ark::Model GameEngine::CreateModelEx(void* vtxArray,
 		unsigned int vtxArraySize,
 		unsigned int* idxArray,
 		unsigned int idxArraySize)
 	{
-		return m_renderSystem.CreateDxModel(vtxArray, vtxArraySize, idxArray, idxArraySize);
+		return m_renderSystem.CreateDxModelEx(vtxArray, vtxArraySize, idxArray, idxArraySize);
+	}
+
+	Ark::Model GameEngine::CreateModel(std::string filePath, bool CwWindingDir, bool LH_Convert)
+	{
+		return m_renderSystem.CreateDxModel(filePath, CwWindingDir, LH_Convert);
 	}
 
 	Ark::Material GameEngine::CreateMaterial(std::wstring textureFilePath)

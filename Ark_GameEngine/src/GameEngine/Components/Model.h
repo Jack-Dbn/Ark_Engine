@@ -12,12 +12,14 @@ namespace Ark {
 	public:
 		Model(unsigned int vtxShader = 0);
 				
-		bool SetMeshManual(
+		bool SetMeshEx(
 			void* vtxArray, 
 			unsigned int vtxArraySize, 
 			unsigned int* idxArray, 
 			unsigned int idxArraySize, 
 			Microsoft::WRL::ComPtr<ID3D11Device> &d3dDevice);
+
+		bool SetMeshFromFile(std::string filePath, Microsoft::WRL::ComPtr<ID3D11Device>& d3dDevice, bool CwWindingDir = false, bool LH_Convert = true);
 
 		ID3D11Buffer** GetVtxBufferAddr();
 		ID3D11Buffer* GetIdxBuffer();

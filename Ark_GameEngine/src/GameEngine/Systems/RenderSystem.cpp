@@ -413,11 +413,20 @@ void RenderSystem::SetParam(HWND windowHWND, std::wstring assetFolderPath)
 	m_assetFolderPath = assetFolderPath;
 }
 
-Ark::Model RenderSystem::CreateDxModel(void* vtxArray, unsigned int vtxArraySize, unsigned int* idxArray, unsigned int idxArraySize)
+Ark::Model RenderSystem::CreateDxModelEx(void* vtxArray, unsigned int vtxArraySize, unsigned int* idxArray, unsigned int idxArraySize)
 {
 	Ark::Model newModel;
 
-	newModel.SetMeshManual(vtxArray, vtxArraySize, idxArray, idxArraySize, m_d3dDevice);
+	newModel.SetMeshEx(vtxArray, vtxArraySize, idxArray, idxArraySize, m_d3dDevice);
+
+	return newModel;
+}
+
+Ark::Model RenderSystem::CreateDxModel(std::string filePath, bool CwWindingDir, bool LH_Convert)
+{
+	Ark::Model newModel;
+
+	newModel.SetMeshFromFile(filePath, m_d3dDevice, CwWindingDir, LH_Convert);
 
 	return newModel;
 }

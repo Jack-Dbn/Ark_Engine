@@ -25,12 +25,13 @@ namespace Ark {
 		Ark::EntityController* GetEC();
 
 		Ark::Entity NewEntity();
-		Ark::Model CreateModel(
+
+		Ark::Model CreateModelEx(
 			void* vtxArray,
 			unsigned int vtxArraySize,
 			unsigned int* idxArray,
 			unsigned int idxArraySize);
-
+		Ark::Model CreateModel(std::string filePath, bool CwWindingDir = false, bool LH_Convert = true);
 		Ark::Material CreateMaterial(std::wstring textureFilePath);
 
 		template <typename T>
