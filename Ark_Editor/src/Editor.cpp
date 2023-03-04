@@ -8,8 +8,8 @@ int Editor::OnInit()
 {
 	m_engineInst.Initialise(this->m_wndHandle);
 
-	Ark::Entity entityA = m_engineInst.NewEntity();
 	Ark::Entity entityB = m_engineInst.NewEntity();
+	Ark::Entity entityA = m_engineInst.NewEntity();
 
 	//Ark::Triangle triangle;
 	//Ark::Square plane;
