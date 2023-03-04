@@ -42,7 +42,7 @@ bool Ark::Model::SetMeshFromFile(std::string filePath, Microsoft::WRL::ComPtr<ID
     bool ret = tinyobj::LoadObj(&attributes, &shapes, &materials, &warning, &error, filePath.c_str());
 
     if (!warning.empty()) {
-        MessageBoxA(NULL, warning.c_str(), "Tiny Obj Loading Warning", MB_OK);
+        //MessageBoxA(NULL, warning.c_str(), "Tiny Obj Loading Warning", MB_OK);
     }
 
     if (!error.empty() || !ret) {

@@ -12,11 +12,11 @@ int Editor::OnInit()
 	Ark::Entity entityB = m_engineInst.NewEntity();
 
 	//Ark::Triangle triangle;
-	Ark::Square plane;
+	//Ark::Square plane;
 	Ark::Cube cube;
 
-	Ark::Model policeCarModel = m_engineInst.CreateModel("Debug/Assets/Models/PoliceCar.obj", false, true);
-	Ark::Material policeCarMaterial = m_engineInst.CreateMaterial(L"Debug/Assets/Textures/policeEG.dds");
+	Ark::Model helmetModel = m_engineInst.CreateModel("Debug/Assets/Models/Helmet.obj", false, true);
+	Ark::Material helmetMaterial = m_engineInst.CreateMaterial(L"Debug/Assets/Textures/Helmet.dds");
 	Ark::Model cubeModel = m_engineInst.CreateModelEx(cube.vertices, ARRAYSIZE(cube.vertices), cube.indexes, ARRAYSIZE(cube.indexes));
 	Ark::Material rubiksMaterial = m_engineInst.CreateMaterial(L"Debug/Assets/Textures/RubikTexture.dds");
 
@@ -27,11 +27,11 @@ int Editor::OnInit()
 	m_engineInst.SetComponent<Ark::Model>(entityA, cubeModel);
 
 	//Entity B
-	Ark::Transform entityBtransform(1, -1, 1.5f);
-	entityBtransform.Scale(0.5f, 0.5f, 0.5f);
+	Ark::Transform entityBtransform(1.0f, -1, 1.5f);
+	entityBtransform.Rotate(0.0f, 90.0f, 0.0f);
 	m_engineInst.SetComponent<Ark::Transform>(entityB, entityBtransform);
-	m_engineInst.SetComponent<Ark::Material>(entityB, policeCarMaterial);
-	m_engineInst.SetComponent<Ark::Model>(entityB, policeCarModel);
+	m_engineInst.SetComponent<Ark::Material>(entityB, helmetMaterial);
+	m_engineInst.SetComponent<Ark::Model>(entityB, helmetModel);
 
 	//MessageBox(NULL, L"Editor OnInit", L"Editor OnInit", 0);
 
