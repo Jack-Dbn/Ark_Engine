@@ -20,6 +20,8 @@ namespace Ark {
 		void Release();
 
 		void WindowResize(int newHeight, int newWidth);
+		void KeyUp(int key);
+		void KeyDown(int key);
 
 		//App ECS Methods
 		Ark::EntityController* GetEC();

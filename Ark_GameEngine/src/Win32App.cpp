@@ -11,11 +11,19 @@ namespace Ark {
 		switch (wndMsg) {
 
 		case WM_CREATE:
-		{
-			LPCREATESTRUCT createStruct = reinterpret_cast<LPCREATESTRUCT>(lParam);
-			SetWindowLongPtr(wndHandle, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(createStruct->lpCreateParams));
-		}
-		return 0;
+			{
+				LPCREATESTRUCT createStruct = reinterpret_cast<LPCREATESTRUCT>(lParam);
+				SetWindowLongPtr(wndHandle, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(createStruct->lpCreateParams));
+			}
+			return 0;
+
+		case WM_KEYDOWN:
+			tgtApp->KeyDown((int)wParam);
+			return 0;
+
+		case WM_KEYUP:
+			tgtApp->KeyUp((int)wParam);
+			return 0;
 
 		case WM_PAINT:
 			if (true) {
@@ -131,6 +139,14 @@ namespace Ark {
 
 	//App Events
 	void Win32App::Resize(int newHeight, int newWidth)
+	{
+	}
+
+	void Win32App::KeyDown(int key)
+	{
+	}
+
+	void Win32App::KeyUp(int key)
 	{
 	}
 	

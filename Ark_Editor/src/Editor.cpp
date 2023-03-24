@@ -66,3 +66,13 @@ void Editor::Resize(int newHeight, int newWidth)
 	//MessageBox(NULL, L"Editor Resize", L"Editor Resize", 0);
 }
 
+void Editor::KeyDown(int key)
+{
+	m_engineInst.KeyDown(key);
+}
+
+void Editor::KeyUp(int key)
+{
+	m_engineInst.KeyUp(key);
+}
+

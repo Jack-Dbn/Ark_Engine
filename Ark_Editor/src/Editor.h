@@ -16,6 +16,8 @@ public:
 
 	//App Events
 	void Resize(int newHeight, int newWidth);
+	void KeyDown(int key);
+	void KeyUp(int key);
 
 private:
 	Ark::GameEngine m_engineInst;

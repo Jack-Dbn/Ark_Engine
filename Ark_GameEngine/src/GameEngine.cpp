@@ -44,6 +44,16 @@ namespace Ark {
 		m_renderSystem.Resize(newHeight, newWidth);
 	}
 
+	void GameEngine::KeyUp(int key)
+	{
+		//MessageBox(NULL, L"Key Up", L"Key Up", 0);
+	}
+
+	void GameEngine::KeyDown(int key)
+	{
+		//MessageBox(NULL, L"Key Down", L"Key Down", 0);
+	}
+
 	Ark::EntityController* GameEngine::GetEC()
 	{
 		return &m_entityController;
