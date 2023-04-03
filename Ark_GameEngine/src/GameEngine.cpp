@@ -19,6 +19,11 @@ namespace Ark {
 			m_renderSystem.AddReqComponent<Model>(m_componentManager.GetRegister());
 			m_renderSystem.AddReqComponent<Material>(m_componentManager.GetRegister());
 		}
+
+		m_inputSystem.Initialise();
+		{
+			m_inputSystem.AddReqComponent<Transform>(m_componentManager.GetRegister());
+		}
 		
 		wchar_t text[256];
 
@@ -28,7 +33,14 @@ namespace Ark {
 
 	void GameEngine::Update()
 	{	
-		std::vector<Ark::Entity> sysEntities = m_entityController.EvalSysEntities(m_renderSystem.GetFilterMask());
+		//Input System
+		std::vector<Ark::Entity> sysEntities = m_entityController.EvalSysEntities(m_inputSystem.GetFilterMask());
+		m_inputSystem.SetEntityList(sysEntities);
+
+		m_inputSystem.Update(m_componentManager);
+
+		//Render System
+		sysEntities = m_entityController.EvalSysEntities(m_renderSystem.GetFilterMask());
 		m_renderSystem.SetEntityList(sysEntities);
 
 		m_renderSystem.Update(m_componentManager);
@@ -36,6 +48,7 @@ namespace Ark {
 
 	void GameEngine::Release()
 	{
+		m_inputSystem.Release();
 		m_renderSystem.Release();
 	}
 
@@ -46,12 +59,12 @@ namespace Ark {
 
 	void GameEngine::KeyUp(int key)
 	{
-		//MessageBox(NULL, L"Key Up", L"Key Up", 0);
+		m_inputSystem.KeyUp(key);
 	}
 
 	void GameEngine::KeyDown(int key)
 	{
-		//MessageBox(NULL, L"Key Down", L"Key Down", 0);
+		m_inputSystem.KeyDown(key);
 	}
 
 	Ark::EntityController* GameEngine::GetEC()

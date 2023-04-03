@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "GameEngine/Systems/RenderSystem.h"
+#include "GameEngine/Systems/InputSystem.h"
 #include "GameEngine/EntityController.h"
 #include "GameEngine/ComponentManager.h"
 #include "GameEngine/Shapes.h"
@@ -49,11 +50,11 @@ namespace Ark {
 		bool RemoveComponent(Ark::Entity tgtEntity);		
 
 	private:
-		std::vector<System> m_activeSystems;
 
 		EntityController m_entityController;
 		ComponentManager m_componentManager;
 		
+		InputSystem m_inputSystem;
 		RenderSystem m_renderSystem;
 	};
 

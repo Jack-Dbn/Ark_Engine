@@ -17,6 +17,16 @@ namespace Ark {
 			}
 			return 0;
 
+		case WM_RBUTTONDOWN:
+			::ShowCursor(false);
+			tgtApp->KeyDown(VK_RBUTTON);
+			return 0;
+
+		case WM_RBUTTONUP:
+			::ShowCursor(true);
+			tgtApp->KeyUp(VK_RBUTTON);
+			return 0;
+
 		case WM_KEYDOWN:
 			tgtApp->KeyDown((int)wParam);
 			return 0;
