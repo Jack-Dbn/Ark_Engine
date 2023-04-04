@@ -413,6 +413,11 @@ void RenderSystem::SetParam(HWND windowHWND, std::wstring assetFolderPath)
 	m_assetFolderPath = assetFolderPath;
 }
 
+Ark::ConstantBuffer* RenderSystem::GetConstBuffer()
+{
+	return &m_constantBufferData;
+}
+
 Ark::Model RenderSystem::CreateDxModelEx(void* vtxArray, unsigned int vtxArraySize, unsigned int* idxArray, unsigned int idxArraySize)
 {
 	Ark::Model newModel;

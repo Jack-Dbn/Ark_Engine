@@ -20,6 +20,7 @@ namespace Ark {
 			m_renderSystem.AddReqComponent<Material>(m_componentManager.GetRegister());
 		}
 
+		m_inputSystem.SetCamera(m_renderSystem.GetConstBuffer());
 		m_inputSystem.Initialise();
 		{
 			m_inputSystem.AddReqComponent<Transform>(m_componentManager.GetRegister());

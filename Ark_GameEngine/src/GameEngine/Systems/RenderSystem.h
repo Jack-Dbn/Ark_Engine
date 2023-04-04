@@ -23,6 +23,7 @@ public:
 
 	//Getters & Setters
 	void SetParam(HWND windowHWND, std::wstring assetFolderPath);
+	Ark::ConstantBuffer* GetConstBuffer();
 
 	Ark::Model CreateDxModelEx(
 		void* vtxArray,
