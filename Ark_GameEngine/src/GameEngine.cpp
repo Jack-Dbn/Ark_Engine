@@ -68,7 +68,7 @@ namespace Ark {
 		m_inputSystem.KeyDown(key);
 	}
 
-	Ark::EntityController* GameEngine::GetEC()
+	Ark::EntityManager* GameEngine::GetEC()
 	{
 		return &m_entityController;
 	}

@@ -1,6 +1,6 @@
-#include "EntityController.h"
+#include "EntityManager.h"
 
-Ark::EntityController::EntityController()
+Ark::EntityManager::EntityManager()
 {
 	for(unsigned int i = MAX_ENTITIES-1; m_availableIds.size() < MAX_ENTITIES; i--) {
 		m_availableIds.push_back(i);
@@ -10,7 +10,7 @@ Ark::EntityController::EntityController()
 	m_entityCount = 0;
 }
 
-Ark::Entity Ark::EntityController::NewEntity()
+Ark::Entity Ark::EntityManager::NewEntity()
 {
 	if (m_availableIds.size() <= 0) {
 		MessageBox(NULL, L"Max Entities Reached", L"Max Entities Reached", 0);
@@ -31,7 +31,7 @@ Ark::Entity Ark::EntityController::NewEntity()
 	return newEntity;
 }
 
-bool Ark::EntityController::UpdateMask(Ark::Entity tgtEntity, unsigned int bitPos, bool bitState)
+bool Ark::EntityManager::UpdateMask(Ark::Entity tgtEntity, unsigned int bitPos, bool bitState)
 {
 	if (tgtEntity > m_entityMasks.size() || bitPos >= MAX_COMPONENTS) {
 		return false;
@@ -42,7 +42,7 @@ bool Ark::EntityController::UpdateMask(Ark::Entity tgtEntity, unsigned int bitPo
 	return true;
 }
 
-std::vector<Ark::Entity> Ark::EntityController::EvalSysEntities(std::bitset<MAX_COMPONENTS> sysFilterMask)
+std::vector<Ark::Entity> Ark::EntityManager::EvalSysEntities(std::bitset<MAX_COMPONENTS> sysFilterMask)
 {
 	std::vector<Ark::Entity> systemEntities;
 
@@ -55,7 +55,7 @@ std::vector<Ark::Entity> Ark::EntityController::EvalSysEntities(std::bitset<MAX_
 	return systemEntities;
 }
 
-unsigned int Ark::EntityController::GetEntityCount()
+unsigned int Ark::EntityManager::GetEntityCount()
 {
 	return m_entityCount;
 }

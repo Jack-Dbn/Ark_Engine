@@ -27,7 +27,7 @@
     <ClInclude Include="src\Win32App.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameEngine\EntityController.h">
+    <ClInclude Include="src\GameEngine\EntityManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\GameEngine\Component.h">
@@ -80,7 +80,7 @@
     <ClCompile Include="src\Win32App.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameEngine\EntityController.cpp">
+    <ClCompile Include="src\GameEngine\EntityManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\GameEngine\Component.cpp">

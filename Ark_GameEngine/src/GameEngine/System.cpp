@@ -1,6 +1,6 @@
 #include "System.h"
 
-std::bitset<Ark::EntityController::MAX_COMPONENTS> System::GetFilterMask()
+std::bitset<Ark::EntityManager::MAX_COMPONENTS> System::GetFilterMask()
 {
     return m_filterMask;
 }

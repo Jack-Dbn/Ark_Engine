@@ -1,7 +1,7 @@
 #pragma once
 #include <typeinfo>
 #include <memory>
-#include "EntityController.h"
+#include "EntityManager.h"
 #include "Component.h"
 #include "ComponentList.h"
 
@@ -35,7 +35,7 @@ namespace Ark {
 
 		std::unordered_map<std::string, unsigned int> m_componentMap;
 	
-		std::vector<std::shared_ptr<IComponentList>> m_componentData = std::vector<std::shared_ptr<IComponentList>>(EntityController::MAX_COMPONENTS);
+		std::vector<std::shared_ptr<IComponentList>> m_componentListData = std::vector<std::shared_ptr<IComponentList>>(EntityManager::MAX_COMPONENTS);
 	};
 
 	template<typename T>
@@ -43,7 +43,7 @@ namespace Ark {
 	{
 		unsigned int pos = m_availableIds.back();
 
-		if (pos >= EntityController::MAX_COMPONENTS) {
+		if (pos >= EntityManager::MAX_COMPONENTS) {
 			return false;
 		}
 
@@ -53,7 +53,7 @@ namespace Ark {
 
 		m_componentMap[typeid(T).name()] = pos;
 
-		m_componentData[pos] = std::make_shared<ComponentList<T>>();
+		m_componentListData[pos] = std::make_shared<ComponentList<T>>();
 
 		m_availableIds.pop_back();
 
@@ -78,7 +78,7 @@ namespace Ark {
 	inline bool ComponentManager::SetComponent(Ark::Entity tgtEntity, T newComponent)
 	{
 		unsigned int componentID = this->GetBitPos<T>();
-		std::shared_ptr<ComponentList<T>> listPtr = std::static_pointer_cast<ComponentList<T>>(m_componentData[componentID]);
+		std::shared_ptr<ComponentList<T>> listPtr = std::static_pointer_cast<ComponentList<T>>(m_componentListData[componentID]);
 		listPtr->Set(tgtEntity, newComponent);
 
 		return true;
@@ -89,7 +89,7 @@ namespace Ark {
 	{
 		unsigned int componentID = this->GetBitPos<T>();
 
-		std::shared_ptr<ComponentList<T>> listPtr = std::static_pointer_cast<ComponentList<T>>(m_componentData[componentID]);
+		std::shared_ptr<ComponentList<T>> listPtr = std::static_pointer_cast<ComponentList<T>>(m_componentListData[componentID]);
 		listPtr->Get(tgtEntity, tgtComponent);
 
 		return true;
@@ -100,7 +100,7 @@ namespace Ark {
 	{
 		unsigned int componentID = this->GetBitPos<T>();
 
-		std::shared_ptr<ComponentList<T>> listPtr = std::static_pointer_cast<ComponentList<T>>(m_componentData[componentID]);
+		std::shared_ptr<ComponentList<T>> listPtr = std::static_pointer_cast<ComponentList<T>>(m_componentListData[componentID]);
 		listPtr->Remove(tgtEntity);
 
 		return true;

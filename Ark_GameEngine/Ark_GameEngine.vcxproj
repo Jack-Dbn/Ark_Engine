@@ -157,7 +157,7 @@
     <ClInclude Include="src\GameEngine\ComponentList.h" />
     <ClInclude Include="src\GameEngine\ComponentManager.h" />
     <ClInclude Include="src\GameEngine\Component.h" />
-    <ClInclude Include="src\GameEngine\EntityController.h" />
+    <ClInclude Include="src\GameEngine\EntityManager.h" />
     <ClInclude Include="src\GameEngine\Math.h" />
     <ClInclude Include="src\GameEngine\Systems\RenderSystem.h" />
     <ClInclude Include="src\GameEngine.h" />
@@ -173,7 +173,7 @@
     <ClCompile Include="src\GameEngine\Components\Material.cpp" />
     <ClCompile Include="src\GameEngine\ComponentManager.cpp" />
     <ClCompile Include="src\GameEngine\Component.cpp" />
-    <ClCompile Include="src\GameEngine\EntityController.cpp" />
+    <ClCompile Include="src\GameEngine\EntityManager.cpp" />
     <ClCompile Include="src\GameEngine\System.cpp" />
     <ClCompile Include="src\GameEngine\Systems\RenderSystem.cpp" />
     <ClCompile Include="src\GameEngine.cpp" />

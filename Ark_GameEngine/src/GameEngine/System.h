@@ -14,13 +14,13 @@ public:
 	template <typename T>
 	bool AddReqComponent(std::unordered_map<std::string, unsigned int>* registeredTypes);
 
-	std::bitset<Ark::EntityController::MAX_COMPONENTS> GetFilterMask();
+	std::bitset<Ark::EntityManager::MAX_COMPONENTS> GetFilterMask();
 	bool SetEntityList(std::vector<unsigned int> newEntityList);
 
 protected:
 	std::vector<unsigned int> m_EntityList;
 
-	std::bitset<Ark::EntityController::MAX_COMPONENTS> m_filterMask;
+	std::bitset<Ark::EntityManager::MAX_COMPONENTS> m_filterMask;
 };
 
 template<typename T>

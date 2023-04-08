@@ -5,8 +5,6 @@ class IComponentList
 {
 public:
 	virtual ~IComponentList() = default;
-
-	//virtual unsigned int GetSize() = 0;
 };
 
 template<typename T>

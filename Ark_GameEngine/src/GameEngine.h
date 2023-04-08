@@ -2,7 +2,7 @@
 #include <vector>
 #include "GameEngine/Systems/RenderSystem.h"
 #include "GameEngine/Systems/InputSystem.h"
-#include "GameEngine/EntityController.h"
+#include "GameEngine/EntityManager.h"
 #include "GameEngine/ComponentManager.h"
 #include "GameEngine/Shapes.h"
 
@@ -25,7 +25,7 @@ namespace Ark {
 		void KeyDown(int key);
 
 		//App ECS Methods
-		Ark::EntityController* GetEC();
+		Ark::EntityManager* GetEC();
 
 		Ark::Entity NewEntity();
 
@@ -51,7 +51,7 @@ namespace Ark {
 
 	private:
 
-		EntityController m_entityController;
+		EntityManager m_entityController;
 		ComponentManager m_componentManager;
 		
 		InputSystem m_inputSystem;
