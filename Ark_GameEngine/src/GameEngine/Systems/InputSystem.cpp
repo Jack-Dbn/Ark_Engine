@@ -17,7 +17,6 @@ bool InputSystem::SetCamera(Ark::ConstantBuffer* camera)
 int InputSystem::Initialise()
 {
     m_designPreview = true;
-    m_freeLookEnabled = false;
 
     if (!m_engineCamera) {
         return -1;
@@ -28,37 +27,21 @@ int InputSystem::Initialise()
 
 int InputSystem::Update(Ark::ComponentManager& engineCM)
 {
-    if (m_a) {
-        Ark::matrix4x4 tmp('i');
-        tmp = tmp.TranslateMtx(0.05f, 0.0f, 0.0f);
-        m_engineCamera->m_view = tmp * m_engineCamera->m_view;
-    }
-    if (m_d) {
-        Ark::matrix4x4 tmp('i');
-        tmp = tmp.TranslateMtx(-0.05f, 0.0f, 0.0f);
-        m_engineCamera->m_view = tmp * m_engineCamera->m_view;
-    }
-    if (m_w) {
-        Ark::matrix4x4 tmp('i');
-        tmp = tmp.TranslateMtx(0.0f, 0.0f, 0.05f);
-        m_engineCamera->m_view = tmp * m_engineCamera->m_view;
-    }
-    if (m_s) {
-        Ark::matrix4x4 tmp('i');
-        tmp = tmp.TranslateMtx(0.0f, 0.0f, -0.05f);
-        m_engineCamera->m_view = tmp * m_engineCamera->m_view;
-    }
-    if (m_space) {
-        Ark::matrix4x4 tmp('i');
-        tmp = tmp.TranslateMtx(0.0f, -0.05f, 0.0f);
-        m_engineCamera->m_view = tmp * m_engineCamera->m_view;
-    }
-    if (m_shift) {
-        Ark::matrix4x4 tmp('i');
-        tmp = tmp.TranslateMtx(0.0f, 0.05f, 0.0f);
-        m_engineCamera->m_view = tmp * m_engineCamera->m_view;
-    }
+    if (m_designPreview) {
 
+        for (const auto& key : m_keyMap) {
+            if (key.second) {                
+                PreviewInput(key.first);
+            }
+        }        
+    }
+    else {
+        for (const auto& key : m_keyMap) {
+            if (key.second) {                
+                GameInput(key.first);
+            }
+        }
+    }
     return 0;
 }
 
@@ -69,85 +52,79 @@ int InputSystem::Release()
 
 void InputSystem::KeyUp(int keyCode)
 {
-    if (m_designPreview) {
-        switch (keyCode) {
-
-        case VK_RBUTTON:
-            m_freeLookEnabled = false;
-            MessageBox(NULL, L"Camera Released", L"Camera Released", 0);
-            return;
-
-        case 'W':
-            m_w = false;
-            return;
-
-        case 'A':
-            m_a = false;
-            return;
-
-        case 'S':
-            m_s = false;
-            return;
-
-        case 'D':
-            m_d = false;
-            return;
-
-        case VK_SPACE:
-            m_space = false;
-            return;
-
-        case VK_SHIFT:
-            m_shift = false;
-            return;
-        }
-    }
-    
+    m_keyMap[keyCode] = false;    
 }
 
 void InputSystem::KeyDown(int keyCode)
 {
-    if (m_designPreview) {
-        switch (keyCode) {
+    m_keyMap[keyCode] = true;
+}
 
-            case 'P':
+void InputSystem::PreviewInput(int keyCode)
+{
+    switch (keyCode) {
+        case 'P':
+            if (m_designPreview) {
                 m_designPreview = false;
                 MessageBox(NULL, L"Game Started", L"Game Started", 0);
-                return;
+                m_keyMap[keyCode] = false;
+            }            
+            return;
 
-            case VK_RBUTTON:
-                m_freeLookEnabled = true;
-                return;
+        case 'W':
+            if (m_keyMap[VK_RBUTTON]) {
+                TranslateCamera(0.0f, 0.0f, 0.05f);
+            }
+            return;
 
-            case 'W':
-                m_w = true;
-                return;
+        case 'A':
+            if (m_keyMap[VK_RBUTTON]) {
+                TranslateCamera(0.05f, 0.0f, 0.0f);
+            }
+            return;
 
-            case 'A':
-                m_a = true;
-                return;
+        case 'S':
+            if (m_keyMap[VK_RBUTTON]) {
+                TranslateCamera(0.0f, 0.0f, -0.05f);
+            }
+            return;
 
-            case 'S':
-                m_s = true;
-                return;
+        case 'D':
+            if (m_keyMap[VK_RBUTTON]) {
+                TranslateCamera(-0.05f, 0.0f, 0.0f);
+            }
+            return;
 
-            case 'D':
-                m_d = true;
-                return;
+        case VK_SPACE:
+            if (m_keyMap[VK_RBUTTON]) {
+                TranslateCamera(0.0f, -0.05f, 0.0f);
+            }
+            return;
 
-            case VK_SPACE:
-                m_space = true;
-                return;
-
-            case VK_SHIFT:
-                m_shift = true;
-                return;
-        }
-    }   
-
-    if (keyCode == VK_ESCAPE) {
-        m_designPreview = true;
-        MessageBox(NULL, L"Game Stopped", L"Game Stopped", 0);
-        return;
+        case VK_SHIFT:
+            if (m_keyMap[VK_RBUTTON]) {
+                TranslateCamera(0.0f, 0.05f, 0.0f);
+            }
+            return;
     }
+}
+
+void InputSystem::GameInput(int keyCode)
+{
+    switch (keyCode) {
+        case VK_ESCAPE:
+            if (!m_designPreview) {
+                m_designPreview = true;
+                MessageBox(NULL, L"Game Stopped", L"Game Stopped", 0);
+                m_keyMap[keyCode] = false;
+            }            
+            return;
+    }
+}
+
+void InputSystem::TranslateCamera(float x, float y, float z)
+{
+    Ark::matrix4x4 tmp('i');
+    tmp = tmp.TranslateMtx(x, y, z);
+    m_engineCamera->m_view = tmp * m_engineCamera->m_view;
 }

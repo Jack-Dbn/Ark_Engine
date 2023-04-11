@@ -18,11 +18,14 @@ public:
 	void KeyDown(int keyCode);
 
 private:
-	bool m_designPreview;
-	bool m_freeLookEnabled;
+	void PreviewInput(int keyCode);
+	void GameInput(int keyCode);
 
-	bool m_w, m_s, m_a, m_d;
-	bool m_space, m_shift;
+	void TranslateCamera(float x, float y, float z);
+
+	bool m_designPreview;
+
+	std::unordered_map<int, bool> m_keyMap;
 
 	Ark::ConstantBuffer* m_engineCamera;
 };
