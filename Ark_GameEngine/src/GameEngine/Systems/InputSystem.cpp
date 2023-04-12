@@ -17,6 +17,8 @@ bool InputSystem::SetCamera(Ark::ConstantBuffer* camera)
 int InputSystem::Initialise()
 {
     m_designPreview = true;
+    m_screenHeight = GetSystemMetrics(SM_CYSCREEN);
+    m_screenWidth = GetSystemMetrics(SM_CXSCREEN);
 
     if (!m_engineCamera) {
         return -1;
@@ -42,6 +44,17 @@ int InputSystem::Update(Ark::ComponentManager& engineCM)
             }
         }
     }
+
+    if (m_keyMap[VK_RBUTTON]) {
+        POINT cursorPos = {};
+        ::GetCursorPos(&cursorPos);
+
+        if ((m_screenWidth/2) != cursorPos.x || (m_screenHeight/2) != cursorPos.y) {
+
+            ::SetCursorPos(m_screenWidth / 2, m_screenHeight / 2);
+        }      
+    }  
+
     return 0;
 }
 

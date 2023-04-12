@@ -28,5 +28,7 @@ private:
 	std::unordered_map<int, bool> m_keyMap;
 
 	Ark::ConstantBuffer* m_engineCamera;
+
+	int m_screenHeight, m_screenWidth;
 };
 

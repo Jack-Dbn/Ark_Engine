@@ -146,4 +146,8 @@ namespace Ark {
 		vector3D normal;//The direction the surface faces.
 		vector2D texCoord;//Texture coordinates.
 	};
+
+	struct quaternion {
+		float s, x, y, z;
+	};
 }
