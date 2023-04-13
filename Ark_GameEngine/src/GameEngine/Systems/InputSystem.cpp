@@ -14,6 +14,16 @@ bool InputSystem::SetCamera(Ark::ConstantBuffer* camera)
     return false;
 }
 
+bool InputSystem::SetDeltaTime(float* deltaTimePtr)
+{
+    if (deltaTimePtr) {
+        m_engineDeltaTime = deltaTimePtr;
+        return true;
+    }
+
+    return false;
+}
+
 int InputSystem::Initialise()
 {
     m_designPreview = true;

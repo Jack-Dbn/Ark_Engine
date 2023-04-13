@@ -56,6 +56,10 @@ namespace Ark {
 		
 		InputSystem m_inputSystem;
 		RenderSystem m_renderSystem;
+
+		float m_deltaTime;
+		DWORD m_lastTickCount;
+		DWORD m_newTickCount;
 	};
 
 	template<typename T>

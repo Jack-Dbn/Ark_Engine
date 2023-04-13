@@ -8,6 +8,7 @@ public:
 	InputSystem();
 
 	bool SetCamera(Ark::ConstantBuffer* camera);
+	bool SetDeltaTime(float* deltaTimePtr);
 
 	int Initialise();
 	int Update(Ark::ComponentManager& engineCM);
@@ -30,5 +31,8 @@ private:
 	Ark::ConstantBuffer* m_engineCamera;
 
 	int m_screenHeight, m_screenWidth;
+
+	float m_mouseSensitivity;
+	float* m_engineDeltaTime;
 };
 

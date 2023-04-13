@@ -6,7 +6,11 @@ namespace Ark {
 	}
 
 	void GameEngine::Initialise(HWND windowHWND, std::wstring assetFolderPath)
-	{				
+	{
+		m_deltaTime = 0.0f;
+		m_lastTickCount = 0;
+		m_newTickCount = 0;
+
 		//Register components to use in the engine.
 		m_componentManager.RegisterComponent<Transform>();	
 		m_componentManager.RegisterComponent<Model>();
@@ -34,6 +38,13 @@ namespace Ark {
 
 	void GameEngine::Update()
 	{	
+		//Delta time calculation
+		m_lastTickCount = m_newTickCount;
+		m_newTickCount = ::GetTickCount();
+
+		m_deltaTime = (m_newTickCount - m_lastTickCount) / 1000.0f;
+
+
 		//Input System
 		std::vector<Ark::Entity> sysEntities = m_entityController.EvalSysEntities(m_inputSystem.GetFilterMask());
 		m_inputSystem.SetEntityList(sysEntities);
