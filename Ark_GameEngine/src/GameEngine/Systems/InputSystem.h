@@ -1,6 +1,6 @@
 #pragma once
 #include "../System.h"
-#include "../Systems/RenderSystem/ConstantBuffer.h"
+#include "../Systems/GraphicsSystem/ConstantBuffer.h"
 
 class InputSystem : public System
 {

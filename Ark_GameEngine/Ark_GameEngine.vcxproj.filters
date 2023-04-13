@@ -18,13 +18,13 @@
     <ClInclude Include="src\GameEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameEngine\Systems\RenderSystem.h">
+    <ClInclude Include="src\GameEngine\Systems\GraphicsSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\GameEngine\System.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Win32App.h">
+    <ClInclude Include="src\WindowApp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\GameEngine\EntityManager.h">
@@ -51,7 +51,7 @@
     <ClInclude Include="src\GameEngine\Math.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameEngine\Systems\RenderSystem\ShaderManager.h">
+    <ClInclude Include="src\GameEngine\Systems\GraphicsSystem\ShaderManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\GameEngine\Systems\RenderSystem\ShaderManager.h">
@@ -60,7 +60,7 @@
     <ClInclude Include="src\GameEngine\Shapes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameEngine\Systems\RenderSystem\ConstantBuffer.h">
+    <ClInclude Include="src\GameEngine\Systems\GraphicsSystem\ConstantBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\GameEngine\include\DDSTextureLoader11.h">
@@ -74,10 +74,10 @@
     <ClCompile Include="src\GameEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameEngine\Systems\RenderSystem.cpp">
+    <ClCompile Include="src\GameEngine\Systems\GraphicsSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Win32App.cpp">
+    <ClCompile Include="src\WindowApp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\GameEngine\EntityManager.cpp">
@@ -98,7 +98,7 @@
     <ClCompile Include="src\GameEngine\Components\Model.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameEngine\Systems\RenderSystem\ShaderManager.cpp">
+    <ClCompile Include="src\GameEngine\Systems\GraphicsSystem\ShaderManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\GameEngine\Systems\RenderSystem\ShaderManager.cpp">
@@ -107,7 +107,7 @@
     <ClCompile Include="src\GameEngine\System.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameEngine\Systems\RenderSystem\ConstantBuffer.cpp">
+    <ClCompile Include="src\GameEngine\Systems\GraphicsSystem\ConstantBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\GameEngine\include\DDSTextureLoader11.cpp">

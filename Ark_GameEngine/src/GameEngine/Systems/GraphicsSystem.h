@@ -6,14 +6,14 @@
 #include <vector>
 #include <string>
 #include "../System.h"
-#include "RenderSystem/ShaderManager.h"
-#include "RenderSystem/ConstantBuffer.h"
+#include "GraphicsSystem/ShaderManager.h"
+#include "GraphicsSystem/ConstantBuffer.h"
 
 
-class RenderSystem : public System
+class GraphicsSystem : public System
 {
 public:
-	RenderSystem();
+	GraphicsSystem();
 
 	int Initialise();
 	int Update(Ark::ComponentManager& engineCM);

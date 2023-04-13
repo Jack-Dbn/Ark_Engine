@@ -1,4 +1,4 @@
-#include "Win32App.h"
+#include "WindowApp.h"
 
 namespace Ark {
 
@@ -6,7 +6,7 @@ namespace Ark {
 
 	LRESULT CALLBACK WindowProc(HWND wndHandle, UINT wndMsg, WPARAM wParam, LPARAM lParam) {
 
-		Win32App* tgtApp = reinterpret_cast<Win32App*>(GetWindowLongPtr(wndHandle, GWLP_USERDATA));
+		WindowApp* tgtApp = reinterpret_cast<WindowApp*>(GetWindowLongPtr(wndHandle, GWLP_USERDATA));
 
 		switch (wndMsg) {
 
@@ -74,7 +74,7 @@ namespace Ark {
 		return DefWindowProc(wndHandle, wndMsg, wParam, lParam);
 	}
 
-	Win32App::Win32App(HINSTANCE instHandle, LPCWSTR windowText, LPCWSTR className)
+	WindowApp::WindowApp(HINSTANCE instHandle, LPCWSTR windowText, LPCWSTR className)
 	{
 
 		WNDCLASS newWndClass = {};
@@ -105,7 +105,7 @@ namespace Ark {
 		);
 	}
 
-	bool Win32App::DisplayWindow(int displayMode)
+	bool WindowApp::DisplayWindow(int displayMode)
 	{
 		//Check handle has been created sucessfully.
 		if (m_wndHandle == NULL) {
@@ -120,7 +120,7 @@ namespace Ark {
 		return true;
 	}
 
-	int Win32App::Run(int displayMode)
+	int WindowApp::Run(int displayMode)
 	{
 		this->OnInit();
 
@@ -148,15 +148,15 @@ namespace Ark {
 	}
 
 	//App Events
-	void Win32App::Resize(int newHeight, int newWidth)
+	void WindowApp::Resize(int newHeight, int newWidth)
 	{
 	}
 
-	void Win32App::KeyDown(int key)
+	void WindowApp::KeyDown(int key)
 	{
 	}
 
-	void Win32App::KeyUp(int key)
+	void WindowApp::KeyUp(int key)
 	{
 	}
 	

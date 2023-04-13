@@ -1,6 +1,6 @@
 #include "Editor.h"
 
-Editor::Editor(HINSTANCE instHandle, LPCWSTR windowText, LPCWSTR className) : Ark::Win32App(instHandle, windowText, className)
+Editor::Editor(HINSTANCE instHandle, LPCWSTR windowText, LPCWSTR className) : Ark::WindowApp(instHandle, windowText, className)
 {
 }
 

@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include "GameEngine/Systems/RenderSystem.h"
+#include "GameEngine/Systems/GraphicsSystem.h"
 #include "GameEngine/Systems/InputSystem.h"
 #include "GameEngine/EntityManager.h"
 #include "GameEngine/ComponentManager.h"
@@ -55,7 +55,7 @@ namespace Ark {
 		ComponentManager m_componentManager;
 		
 		InputSystem m_inputSystem;
-		RenderSystem m_renderSystem;
+		GraphicsSystem m_renderSystem;
 
 		float m_deltaTime;
 		DWORD m_lastTickCount;

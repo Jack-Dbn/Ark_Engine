@@ -1,12 +1,12 @@
-#include "RenderSystem.h"
+#include "GraphicsSystem.h"
 
 // Constructor
-RenderSystem::RenderSystem()
+GraphicsSystem::GraphicsSystem()
 {
 }
 
 // Initialise Stage
-int RenderSystem::Initialise()
+int GraphicsSystem::Initialise()
 {
 	if (m_tgtWindow == NULL) {
 		return -1;
@@ -47,7 +47,7 @@ int RenderSystem::Initialise()
 	return 0;
 }
 
-bool RenderSystem::CreateDevice()
+bool GraphicsSystem::CreateDevice()
 {
 	//For direct2d support
 	UINT createFlags = D3D11_CREATE_DEVICE_BGRA_SUPPORT;
@@ -90,7 +90,7 @@ bool RenderSystem::CreateDevice()
 	return true;
 }
 
-bool RenderSystem::CreateSwapChain()
+bool GraphicsSystem::CreateSwapChain()
 {
 	DXGI_SWAP_CHAIN_DESC1 swapChainDesc = { 0 };
 	swapChainDesc.Stereo = false;
@@ -139,7 +139,7 @@ bool RenderSystem::CreateSwapChain()
 	return true;
 }
 
-bool RenderSystem::CreateRenderTgtView()
+bool GraphicsSystem::CreateRenderTgtView()
 {
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> backBuffer;
 	HRESULT getbufferRes = m_swapChain->GetBuffer(0, IID_PPV_ARGS(&backBuffer));
@@ -157,7 +157,7 @@ bool RenderSystem::CreateRenderTgtView()
 	return true;
 }
 
-bool RenderSystem::CreateDepthStencilVw(D3D11_TEXTURE2D_DESC backBufferDesc)
+bool GraphicsSystem::CreateDepthStencilVw(D3D11_TEXTURE2D_DESC backBufferDesc)
 {
 
 	//Depth Stencil Desc
@@ -196,7 +196,7 @@ bool RenderSystem::CreateDepthStencilVw(D3D11_TEXTURE2D_DESC backBufferDesc)
 	return true;
 }
 
-bool RenderSystem::CreateConstBuffer()
+bool GraphicsSystem::CreateConstBuffer()
 {
 	D3D11_BUFFER_DESC constBufferDesc = { 0 };
 	constBufferDesc.ByteWidth = sizeof(m_constantBufferData);
@@ -217,7 +217,7 @@ bool RenderSystem::CreateConstBuffer()
 	return true;
 }
 
-bool RenderSystem::CreateSampler()
+bool GraphicsSystem::CreateSampler()
 {
 	D3D11_SAMPLER_DESC samplerDesc;
 	ZeroMemory(&samplerDesc, sizeof(samplerDesc));
@@ -257,7 +257,7 @@ bool RenderSystem::CreateSampler()
 	return true;
 }
 
-void RenderSystem::SetViewPort(float viewPortWidth, float viewPortHeight) {
+void GraphicsSystem::SetViewPort(float viewPortWidth, float viewPortHeight) {
 
 	D3D11_VIEWPORT newViewPort;
 
@@ -271,7 +271,7 @@ void RenderSystem::SetViewPort(float viewPortWidth, float viewPortHeight) {
 	m_d3dDeviceContext->RSSetViewports(1, &newViewPort);
 }
 
-D3D11_TEXTURE2D_DESC RenderSystem::GetBackBufferDesc()
+D3D11_TEXTURE2D_DESC GraphicsSystem::GetBackBufferDesc()
 {
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> backBuffer;
 	HRESULT getbufferRes = m_swapChain->GetBuffer(0, IID_PPV_ARGS(&backBuffer));
@@ -282,7 +282,7 @@ D3D11_TEXTURE2D_DESC RenderSystem::GetBackBufferDesc()
 	return backBufferDesc;
 }
 
-void RenderSystem::SetupFrame(float redVal, float greenVal, float blueVal, float alphaVal)
+void GraphicsSystem::SetupFrame(float redVal, float greenVal, float blueVal, float alphaVal)
 {
 	m_d3dDeviceContext->OMSetRenderTargets(1, m_renderTgtView.GetAddressOf(), m_depthStencilView.Get());
 
@@ -292,7 +292,7 @@ void RenderSystem::SetupFrame(float redVal, float greenVal, float blueVal, float
 }
 
 // Update Stage
-int RenderSystem::Update(Ark::ComponentManager& engineCM)
+int GraphicsSystem::Update(Ark::ComponentManager& engineCM)
 {	
 	SetupFrame();
 		
@@ -328,7 +328,7 @@ int RenderSystem::Update(Ark::ComponentManager& engineCM)
 	return 0;
 }
 
-bool RenderSystem::DrawEntity(Ark::Model &tgtModel, Ark::Material &tgtMaterial)
+bool GraphicsSystem::DrawEntity(Ark::Model &tgtModel, Ark::Material &tgtMaterial)
 {	
 	ID3D11VertexShader* eVtxShader = m_shaderManager.GetVtxShader(tgtModel.GetVtxShaderId());
 	ID3D11PixelShader* ePxlShader = m_shaderManager.GetPxlShader(tgtMaterial.GetPxlShaderId());
@@ -358,7 +358,7 @@ bool RenderSystem::DrawEntity(Ark::Model &tgtModel, Ark::Material &tgtMaterial)
 	return true;
 }
 
-bool RenderSystem::PresentFrame(bool vSyncOn)
+bool GraphicsSystem::PresentFrame(bool vSyncOn)
 {
 	int syncInterval = 0;
 	if (vSyncOn) {
@@ -375,13 +375,13 @@ bool RenderSystem::PresentFrame(bool vSyncOn)
 }
 
 // Release Stage
-int RenderSystem::Release()
+int GraphicsSystem::Release()
 {
 	//MessageBox(NULL, L"DirectX11 Shutdown", L"DirectX11 Shutdown", 0);
 	return 0;
 }
 
-bool RenderSystem::Resize(int newHeight, int newWidth)
+bool GraphicsSystem::Resize(int newHeight, int newWidth)
 {
 	if (m_swapChain) {
 
@@ -407,18 +407,18 @@ bool RenderSystem::Resize(int newHeight, int newWidth)
 	return false;
 }
 
-void RenderSystem::SetParam(HWND windowHWND, std::wstring assetFolderPath)
+void GraphicsSystem::SetParam(HWND windowHWND, std::wstring assetFolderPath)
 {
 	m_tgtWindow = windowHWND;
 	m_assetFolderPath = assetFolderPath;
 }
 
-Ark::ConstantBuffer* RenderSystem::GetConstBuffer()
+Ark::ConstantBuffer* GraphicsSystem::GetConstBuffer()
 {
 	return &m_constantBufferData;
 }
 
-Ark::Model RenderSystem::CreateDxModelEx(void* vtxArray, unsigned int vtxArraySize, unsigned int* idxArray, unsigned int idxArraySize)
+Ark::Model GraphicsSystem::CreateDxModelEx(void* vtxArray, unsigned int vtxArraySize, unsigned int* idxArray, unsigned int idxArraySize)
 {
 	Ark::Model newModel;
 
@@ -427,7 +427,7 @@ Ark::Model RenderSystem::CreateDxModelEx(void* vtxArray, unsigned int vtxArraySi
 	return newModel;
 }
 
-Ark::Model RenderSystem::CreateDxModel(std::string filePath, bool CwWindingDir, bool LH_Convert)
+Ark::Model GraphicsSystem::CreateDxModel(std::string filePath, bool CwWindingDir, bool LH_Convert)
 {
 	Ark::Model newModel;
 
@@ -436,7 +436,7 @@ Ark::Model RenderSystem::CreateDxModel(std::string filePath, bool CwWindingDir, 
 	return newModel;
 }
 
-Ark::Material RenderSystem::CreateMaterial(std::wstring textureFilePath)
+Ark::Material GraphicsSystem::CreateMaterial(std::wstring textureFilePath)
 {
 	Ark::Material newMaterial;
 

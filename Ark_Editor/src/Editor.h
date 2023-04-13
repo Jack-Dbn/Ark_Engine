@@ -1,9 +1,9 @@
 #pragma once
 #include <Windows.h>
-#include "Win32App.h"
+#include "WindowApp.h"
 #include "GameEngine.h"
 
-class Editor : public Ark::Win32App
+class Editor : public Ark::WindowApp
 {
 public:
 

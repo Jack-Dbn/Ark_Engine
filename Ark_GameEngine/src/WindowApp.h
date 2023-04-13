@@ -3,10 +3,10 @@
 
 namespace Ark {
 
-	class Win32App
+	class WindowApp
 	{
 	public:
-		Win32App(HINSTANCE instHandle, LPCWSTR windowText = L"", LPCWSTR className = L"Window Class Name");
+		WindowApp(HINSTANCE instHandle, LPCWSTR windowText = L"", LPCWSTR className = L"Window Class Name");
 
 		int Run(int displayMode = SW_NORMAL);
 

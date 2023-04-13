@@ -1,6 +1,6 @@
 #include "Game.h"
 
-Game::Game(HINSTANCE instHandle, LPCWSTR windowText, LPCWSTR className) : Ark::Win32App(instHandle, windowText, className)
+Game::Game(HINSTANCE instHandle, LPCWSTR windowText, LPCWSTR className) : Ark::WindowApp(instHandle, windowText, className)
 {
 	//MessageBox(NULL, L"Game Constructed", L"Game Constructed", 0);
 }
