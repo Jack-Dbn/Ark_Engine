@@ -64,7 +64,6 @@ namespace Ark {
 
 		case WM_DESTROY:
 			tgtApp->m_WndActive = false;
-			//PostQuitMessage(0);
 			return 0;
 
 		default:
@@ -84,7 +83,7 @@ namespace Ark {
 		newWndClass.lpfnWndProc = WindowProc;
 
 		m_wndClass = newWndClass;
-		m_wndText = windowText;
+		m_wndText = windowText;//Text thats displayed in header.
 
 		RegisterClass(&m_wndClass);
 
@@ -101,7 +100,7 @@ namespace Ark {
 			NULL,
 			NULL,
 			m_wndClass.hInstance,
-			this //Change to external app
+			this
 		);
 	}
 
@@ -122,16 +121,19 @@ namespace Ark {
 
 	int WindowApp::Run(int displayMode)
 	{
+		//Invoke initialise stage of child class.
 		this->OnInit();
 
+		//Show the window to user.
 		this->DisplayWindow(displayMode);
 
-		//Local version of message queue.
+		//Queue to store windows messages.
 		MSG msgQueue = {};
 
+		//Update Loop, runs whilst window is displayed.
 		while (m_WndActive) {
 
-			//Copy window messages to local queue and while messages exist loop...
+			//While there are windows messages in Queue.
 			while (PeekMessage(&msgQueue, NULL, 0, 0, PM_REMOVE)) {
 
 				//Translate and Process messages.
@@ -139,11 +141,14 @@ namespace Ark {
 				DispatchMessage(&msgQueue);
 			}
 
+			//Invoke tick of update stage in child class.
 			this->OnUpdate();
 		}		
 
+		//Invoke release stage
 		this->OnDestroy();
 
+		//Return with no errors recorded.
 		return 0;
 	}
 
