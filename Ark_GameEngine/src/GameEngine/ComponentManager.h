@@ -41,20 +41,26 @@ namespace Ark {
 	template<typename T>
 	inline bool ComponentManager::RegisterComponent()
 	{
+		//Get an available component id.
 		unsigned int pos = m_availableIds.back();
 
+		//If id out of range invalidate register attempt.
 		if (pos >= EntityManager::MAX_COMPONENTS) {
 			return false;
 		}
 
+		//Check if component type is already registered.
 		if (this->GetBitPos<T>() != UINT_MAX) {
-			return false;//Already registered
+			return false;
 		}
 
+		//Add type to component-index map.
 		m_componentMap[typeid(T).name()] = pos;
 
+		//Create component list.
 		m_componentListData[pos] = std::make_shared<ComponentList<T>>();
 
+		//Remove id so it cannot be reused.
 		m_availableIds.pop_back();
 
 		return true;

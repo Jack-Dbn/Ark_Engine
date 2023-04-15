@@ -26,14 +26,17 @@ protected:
 template<typename T>
 inline bool System::AddReqComponent(std::unordered_map<std::string, unsigned int>* registeredTypes)
 {
+	//Find the string name of the type specified.
 	std::string typeName = typeid(T).name();
 
+	//Check the type is registered.
 	if ((*registeredTypes).find(typeName) == (*registeredTypes).end()) {
 		return false;
 	}
 
+	//Get index of component type.
 	unsigned int bitPos = (*registeredTypes)[typeName];
-	m_filterMask[bitPos] = 1;
+	m_filterMask[bitPos] = 1;//Switch bit on in filter mask to show component type is required.
 
 	return true;
 }
