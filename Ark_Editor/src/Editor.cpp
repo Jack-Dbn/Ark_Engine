@@ -6,38 +6,38 @@ Editor::Editor(HINSTANCE instHandle, LPCWSTR windowText, LPCWSTR className) : Ar
 
 int Editor::OnInit()
 {
-	m_engineInst.Initialise(this->m_wndHandle);
+	m_gameEngine.Initialise(this->m_wndHandle);
 
-	Ark::Entity entityB = m_engineInst.NewEntity();
-	Ark::Entity entityA = m_engineInst.NewEntity();
+	Ark::Entity entityB = m_gameEngine.NewEntity();
+	Ark::Entity entityA = m_gameEngine.NewEntity();
 
 	//Ark::Triangle triangle;
 	//Ark::Square plane;
 	Ark::Cube cube;
 
-	Ark::Model helmetModel = m_engineInst.CreateModel("Debug/Assets/Models/Helmet.obj", false, true);
-	Ark::Material helmetMaterial = m_engineInst.CreateMaterial(L"Debug/Assets/Textures/Helmet.dds");
-	Ark::Model cubeModel = m_engineInst.CreateModelEx(cube.vertices, ARRAYSIZE(cube.vertices), cube.indexes, ARRAYSIZE(cube.indexes));
-	Ark::Material rubiksMaterial = m_engineInst.CreateMaterial(L"Debug/Assets/Textures/RubikTexture.dds");
+	Ark::Model helmetModel = m_gameEngine.CreateModel("Debug/Assets/Models/Helmet.obj", false, true);
+	Ark::Material helmetMaterial = m_gameEngine.CreateMaterial(L"Debug/Assets/Textures/Helmet.dds");
+	Ark::Model cubeModel = m_gameEngine.CreateModelEx(cube.vertices, ARRAYSIZE(cube.vertices), cube.indexes, ARRAYSIZE(cube.indexes));
+	Ark::Material rubiksMaterial = m_gameEngine.CreateMaterial(L"Debug/Assets/Textures/RubikTexture.dds");
 
 	//Entity A
 	Ark::Transform entityAtransform(-1, -1, 1.5f);
-	m_engineInst.SetComponent<Ark::Transform>(entityA, entityAtransform);
-	m_engineInst.SetComponent<Ark::Material>(entityA, rubiksMaterial);
-	m_engineInst.SetComponent<Ark::Model>(entityA, cubeModel);
+	m_gameEngine.SetComponent<Ark::Transform>(entityA, entityAtransform);
+	m_gameEngine.SetComponent<Ark::Material>(entityA, rubiksMaterial);
+	m_gameEngine.SetComponent<Ark::Model>(entityA, cubeModel);
 
 	//Entity B
 	Ark::Transform entityBtransform(1.0f, -1, 1.5f);
 	entityBtransform.Rotate(0.0f, 90.0f, 0.0f);
-	m_engineInst.SetComponent<Ark::Transform>(entityB, entityBtransform);
-	m_engineInst.SetComponent<Ark::Material>(entityB, helmetMaterial);
-	m_engineInst.SetComponent<Ark::Model>(entityB, helmetModel);
+	m_gameEngine.SetComponent<Ark::Transform>(entityB, entityBtransform);
+	m_gameEngine.SetComponent<Ark::Material>(entityB, helmetMaterial);
+	m_gameEngine.SetComponent<Ark::Model>(entityB, helmetModel);
 
 	//MessageBox(NULL, L"Editor OnInit", L"Editor OnInit", 0);
 
 	wchar_t text[256];
 
-	swprintf_s(text, L"Total Entities: %d", m_engineInst.GetEC()->GetEntityCount());
+	swprintf_s(text, L"Total Entities: %d", m_gameEngine.GetEC()->GetEntityCount());
 	MessageBox(NULL, text, text, 0);
 
 	return 0;
@@ -45,7 +45,7 @@ int Editor::OnInit()
 
 int Editor::OnUpdate()
 {
-	m_engineInst.Update();
+	m_gameEngine.Update();
 
 	//MessageBox(NULL, L"Editor OnUpdate", L"Editor OnUpdate", 0);
 	return 0;
@@ -53,7 +53,7 @@ int Editor::OnUpdate()
 
 int Editor::OnDestroy()
 {
-	m_engineInst.Release();
+	m_gameEngine.Release();
 
 	//MessageBox(NULL, L"Editor OnDestroy", L"Editor OnDestroy", 0);
 	return 0;
@@ -62,17 +62,17 @@ int Editor::OnDestroy()
 
 void Editor::Resize(int newHeight, int newWidth)
 {
-	m_engineInst.WindowResize(newHeight, newWidth);
+	m_gameEngine.WindowResize(newHeight, newWidth);
 	//MessageBox(NULL, L"Editor Resize", L"Editor Resize", 0);
 }
 
 void Editor::KeyDown(int key)
 {
-	m_engineInst.KeyDown(key);
+	m_gameEngine.KeyDown(key);
 }
 
 void Editor::KeyUp(int key)
 {
-	m_engineInst.KeyUp(key);
+	m_gameEngine.KeyUp(key);
 }
 

@@ -12,22 +12,27 @@ Ark::EntityManager::EntityManager()
 
 Ark::Entity Ark::EntityManager::NewEntity()
 {
+	//Check to ensure at least one id is free to be assigned.
 	if (m_availableIds.size() <= 0) {
 		MessageBox(NULL, L"Max Entities Reached", L"Max Entities Reached", 0);
 		return UINT_MAX;
 	}
 
+	//Assign entity id as back element.
 	Entity newEntity = m_availableIds.back();
-	m_availableIds.pop_back();
+	m_availableIds.pop_back();//Remove back element.
 
+	//Create entity's component mask.
 	std::bitset<MAX_COMPONENTS> newMask;
 	if (m_entityMasks.size() < newEntity+1) {
 		m_entityMasks.resize(newEntity+1);
 	}
 	m_entityMasks[newEntity] = newMask;
 
+	//Increase entity count.
 	m_entityCount++;
-
+	
+	//Return new entity id.
 	return newEntity;
 }
 

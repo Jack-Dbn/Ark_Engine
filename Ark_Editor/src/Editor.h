@@ -20,6 +20,6 @@ public:
 	void KeyUp(int key);
 
 private:
-	Ark::GameEngine m_engineInst;
+	Ark::GameEngine m_gameEngine;
 };
 
