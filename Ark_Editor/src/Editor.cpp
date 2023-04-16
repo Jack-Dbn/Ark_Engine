@@ -6,6 +6,7 @@ Editor::Editor(HINSTANCE instHandle, LPCWSTR windowText, LPCWSTR className) : Ar
 
 int Editor::OnInit()
 {
+	//Initialise Game Engine
 	m_gameEngine.Initialise(this->m_wndHandle);
 
 	Ark::Entity entityB = m_gameEngine.NewEntity();
@@ -45,6 +46,7 @@ int Editor::OnInit()
 
 int Editor::OnUpdate()
 {
+	//Update Game Engine, Perform tick/render frame
 	m_gameEngine.Update();
 
 	//MessageBox(NULL, L"Editor OnUpdate", L"Editor OnUpdate", 0);
@@ -53,6 +55,7 @@ int Editor::OnUpdate()
 
 int Editor::OnDestroy()
 {
+	//Close Game Engine
 	m_gameEngine.Release();
 
 	//MessageBox(NULL, L"Editor OnDestroy", L"Editor OnDestroy", 0);

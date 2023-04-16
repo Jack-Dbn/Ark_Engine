@@ -72,30 +72,40 @@ inline bool ComponentList<T>::Get(Ark::Entity entity, T &tgtComponent)
 template<typename T>
 inline bool ComponentList<T>::Remove(Ark::Entity entity)
 {
+	//If entity doesnt exist, no reason to continue
 	if (!EntityExists(entity)) {
 		return false;
 	}	
 	
+	//If more than one component exists, optimisation is required
 	if (m_componentData.size() > 1) {
 
+		//Get index of component to remove.
 		unsigned int id = m_entityMap[entity];
 
+		//Get index of last component in vector.
 		unsigned int swapId = m_componentData.size() - 1;
-		Ark::Entity swapEntity = m_idMap[swapId];//Find entity id of back element.
+		Ark::Entity swapEntity = m_idMap[swapId];//Find entity id of last element.
 
-		m_componentData[id] = m_componentData.back();//Data of compontent to be removed is set to back element
+		//Component getting deleted is overwritten with back element.
+		m_componentData[id] = m_componentData.back();
+		//Back element is removed.
 		m_componentData.pop_back();
 
-		m_entityMap[swapEntity] = id;//Former back entity now says id is old deleted components id.
-		m_entityMap.erase(entity);//Delete component from entity map.
+		//Former back element is set to new position.
+		m_entityMap[swapEntity] = id;
+		m_entityMap.erase(entity);//Delete removed component from entity map.
 
+		//Old entity position is set to old back entity.
 		m_idMap[id] = swapEntity;
-		m_idMap.erase(swapId);		
+		m_idMap.erase(swapId);//Remove index of last element.	
 		
 	}
 	else {
+		//Only component left can be removed by clearing data structures.
 		m_componentData.clear();
 		m_entityMap.clear();
+		m_idMap.clear();
 	}
 
 	return true;

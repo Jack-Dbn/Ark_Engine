@@ -25,6 +25,7 @@ namespace Ark {
 		}
 
 		m_inputSystem.SetCamera(m_renderSystem.GetConstBuffer());
+		m_inputSystem.SetDeltaTime(&m_deltaTime);
 		m_inputSystem.Initialise();
 		{
 			m_inputSystem.AddReqComponent<Transform>(m_componentManager.GetRegister());

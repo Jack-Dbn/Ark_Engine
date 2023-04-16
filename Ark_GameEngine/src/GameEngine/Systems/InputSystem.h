@@ -24,6 +24,8 @@ private:
 
 	void TranslateCamera(float x, float y, float z);
 
+	void RotateCamera(float yaw, float pitch);
+
 	bool m_designPreview;
 
 	std::unordered_map<int, bool> m_keyMap;
@@ -34,5 +36,8 @@ private:
 
 	float m_mouseSensitivity;
 	float* m_engineDeltaTime;
+
+	float m_cameraYaw;
+	float m_cameraPitch;
 };
 

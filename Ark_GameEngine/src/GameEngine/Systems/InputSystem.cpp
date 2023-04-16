@@ -30,8 +30,17 @@ int InputSystem::Initialise()
     m_screenHeight = GetSystemMetrics(SM_CYSCREEN);
     m_screenWidth = GetSystemMetrics(SM_CXSCREEN);
 
+    m_mouseSensitivity = 0.1f;
+
+    m_cameraYaw = 0.0f;
+    m_cameraPitch = 0.0f;
+
     if (!m_engineCamera) {
         return -1;
+    }
+
+    if (!m_engineDeltaTime) {
+        return -2;
     }
 
     return 0;
@@ -59,9 +68,21 @@ int InputSystem::Update(Ark::ComponentManager& engineCM)
         POINT cursorPos = {};
         ::GetCursorPos(&cursorPos);
 
-        if ((m_screenWidth/2) != cursorPos.x || (m_screenHeight/2) != cursorPos.y) {
+        int screenCentreX = m_screenWidth / 2;
+        int screenCentreY = m_screenHeight / 2;
+
+        if (screenCentreX != cursorPos.x || screenCentreY != cursorPos.y) {
+
+            m_cameraYaw += (cursorPos.x - screenCentreX) * (*m_engineDeltaTime) * m_mouseSensitivity;
+            m_cameraPitch += (cursorPos.y - screenCentreY) * (*m_engineDeltaTime) * m_mouseSensitivity;
+
+            RotateCamera(m_cameraYaw, m_cameraPitch);
 
             ::SetCursorPos(m_screenWidth / 2, m_screenHeight / 2);
+
+            if (m_cameraPitch > -90.0f || m_cameraPitch < 90.0f) {
+                m_cameraPitch = 0.0f;
+            }
         }      
     }  
 
@@ -150,4 +171,14 @@ void InputSystem::TranslateCamera(float x, float y, float z)
     Ark::matrix4x4 tmp('i');
     tmp = tmp.TranslateMtx(x, y, z);
     m_engineCamera->m_view = tmp * m_engineCamera->m_view;
+}
+
+void InputSystem::RotateCamera(float yaw, float pitch)
+{
+    Ark::matrix4x4 newViewMtx('i');
+
+    newViewMtx = newViewMtx.RotateYmtx(yaw);
+    newViewMtx = newViewMtx * newViewMtx.RotateXmtx(pitch);
+
+    m_engineCamera->m_view = newViewMtx * m_engineCamera->m_view;
 }
