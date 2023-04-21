@@ -8,6 +8,7 @@
 #include "../System.h"
 #include "GraphicsSystem/ShaderManager.h"
 #include "GraphicsSystem/ConstantBuffer.h"
+#include "GraphicsSystem/Camera.h"
 
 
 class GraphicsSystem : public System
@@ -23,7 +24,7 @@ public:
 
 	//Getters & Setters
 	void SetParam(HWND windowHWND, std::wstring assetFolderPath);
-	Ark::ConstantBuffer* GetConstBuffer();
+	Ark::Camera* GetCamera();
 
 	Ark::Model CreateDxModelEx(
 		void* vtxArray,
@@ -66,6 +67,9 @@ private:
 
 	Microsoft::WRL::ComPtr<ID3D11Buffer> m_constantBuffer;
 	Ark::ConstantBuffer m_constantBufferData;
+
+	//Cameras
+	Ark::Camera m_camera;
 
 	Ark::ShaderManager m_shaderManager;
 

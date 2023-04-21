@@ -51,7 +51,7 @@ namespace Ark {
 
 	private:
 
-		EntityManager m_entityController;
+		EntityManager m_entityManager;
 		ComponentManager m_componentManager;
 		
 		InputSystem m_inputSystem;
@@ -68,7 +68,7 @@ namespace Ark {
 		T newComponent;
 		bool res = m_componentManager.SetComponent<T>(tgtEntity, newComponent);
 
-		res = res && m_entityController.UpdateMask(tgtEntity, m_componentManager.GetBitPos<T>(), true);
+		res = res && m_entityManager.UpdateMask(tgtEntity, m_componentManager.GetBitPos<T>(), true);
 
 		return res;
 	}
@@ -77,7 +77,7 @@ namespace Ark {
 	inline bool GameEngine::SetComponent(Ark::Entity tgtEntity, T newComponent)
 	{
 		bool res = m_componentManager.SetComponent<T>(tgtEntity, newComponent);
-		res = res && m_entityController.UpdateMask(tgtEntity, m_componentManager.GetBitPos<T>(), true);
+		res = res && m_entityManager.UpdateMask(tgtEntity, m_componentManager.GetBitPos<T>(), true);
 
 		return res;
 	}
@@ -92,7 +92,7 @@ namespace Ark {
 	inline bool GameEngine::RemoveComponent(Ark::Entity tgtEntity)
 	{
 		bool res = m_componentManager.RemoveComponent<T>(tgtEntity);
-		res = res && m_entityController.UpdateMask(tgtEntity, m_componentManager.GetBitPos<T>(), false);
+		res = res && m_entityManager.UpdateMask(tgtEntity, m_componentManager.GetBitPos<T>(), false);
 
 		return res;
 	}

@@ -24,7 +24,7 @@ namespace Ark {
 			m_renderSystem.AddReqComponent<Material>(m_componentManager.GetRegister());
 		}
 
-		m_inputSystem.SetCamera(m_renderSystem.GetConstBuffer());
+		m_inputSystem.SetCamera(m_renderSystem.GetCamera());
 		m_inputSystem.SetDeltaTime(&m_deltaTime);
 		m_inputSystem.Initialise();
 		{
@@ -47,13 +47,13 @@ namespace Ark {
 
 
 		//Input System
-		std::vector<Ark::Entity> sysEntities = m_entityController.EvalSysEntities(m_inputSystem.GetFilterMask());
+		std::vector<Ark::Entity> sysEntities = m_entityManager.EvalSysEntities(m_inputSystem.GetFilterMask());
 		m_inputSystem.SetEntityList(sysEntities);
 
 		m_inputSystem.Update(m_componentManager);
 
 		//Render System
-		sysEntities = m_entityController.EvalSysEntities(m_renderSystem.GetFilterMask());
+		sysEntities = m_entityManager.EvalSysEntities(m_renderSystem.GetFilterMask());
 		m_renderSystem.SetEntityList(sysEntities);
 
 		m_renderSystem.Update(m_componentManager);
@@ -82,12 +82,12 @@ namespace Ark {
 
 	Ark::EntityManager* GameEngine::GetEC()
 	{
-		return &m_entityController;
+		return &m_entityManager;
 	}
 
 	Ark::Entity GameEngine::NewEntity()
 	{
-		return m_entityController.NewEntity();
+		return m_entityManager.NewEntity();
 	}
 
 	Ark::Model GameEngine::CreateModelEx(void* vtxArray,

@@ -30,8 +30,8 @@ int GraphicsSystem::Initialise()
 
 	CreateConstBuffer();
 
-	m_constantBufferData.SetDefaults();
-	m_constantBufferData.setFov(backBufferDesc, 70.0f);
+	m_constantBufferData.m_proj = m_camera.GetProjectionMatrix(static_cast<float>(backBufferDesc.Height), static_cast<float>(backBufferDesc.Width));
+	m_constantBufferData.m_view = m_camera.GetViewMatrix();
 
 	SetViewPort(backBufferDesc.Width, backBufferDesc.Height);
 
@@ -212,8 +212,6 @@ bool GraphicsSystem::CreateConstBuffer()
 		return false;
 	}
 
-	m_constantBufferData.SetDefaults();
-
 	return true;
 }
 
@@ -289,6 +287,11 @@ void GraphicsSystem::SetupFrame(float redVal, float greenVal, float blueVal, flo
 	float backgrndColour[4] = { redVal, greenVal, blueVal, alphaVal };
 	m_d3dDeviceContext->ClearRenderTargetView(m_renderTgtView.Get(), backgrndColour);
 	m_d3dDeviceContext->ClearDepthStencilView(m_depthStencilView.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0);
+
+	//Set up constant buffer.
+	D3D11_TEXTURE2D_DESC backBufferDesc = GetBackBufferDesc();
+	m_constantBufferData.m_proj = m_camera.GetProjectionMatrix(static_cast<float>(backBufferDesc.Height), static_cast<float>(backBufferDesc.Width));
+	m_constantBufferData.m_view = m_camera.GetViewMatrix();
 }
 
 // Update Stage
@@ -330,29 +333,37 @@ int GraphicsSystem::Update(Ark::ComponentManager& engineCM)
 
 bool GraphicsSystem::DrawEntity(Ark::Model &tgtModel, Ark::Material &tgtMaterial)
 {	
+	//Create pointers to the shaders and input layout.
 	ID3D11VertexShader* eVtxShader = m_shaderManager.GetVtxShader(tgtModel.GetVtxShaderId());
 	ID3D11PixelShader* ePxlShader = m_shaderManager.GetPxlShader(tgtMaterial.GetPxlShaderId());
 	ID3D11InputLayout* eInpLayout = m_shaderManager.GetInputLayout(tgtModel.GetVtxShaderId());
 
-	//Draw Entity
+	//Number of bytes between vertices.
 	UINT stride = sizeof(Ark::vertex);
+	//Number of bytes from start of the buffer to first vertex.
 	UINT offset = 0;
 
+	//Load constant buffer (pipeline buffer)
 	m_d3dDeviceContext->UpdateSubresource(m_constantBuffer.Get(), 0, nullptr, &m_constantBufferData, 0, 0);
 
+	//Set buffers and input layout.
 	m_d3dDeviceContext->IASetInputLayout(eInpLayout);
 	m_d3dDeviceContext->IASetVertexBuffers(0, 1, tgtModel.GetVtxBufferAddr(), &stride, &offset);
 	m_d3dDeviceContext->IASetIndexBuffer(tgtModel.GetIdxBuffer(), DXGI_FORMAT_R32_UINT, 0);
 
+	//Set draw method.
 	m_d3dDeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
+	//Set vertex shader.
 	m_d3dDeviceContext->VSSetShader(eVtxShader, nullptr, 0);
 	m_d3dDeviceContext->VSSetConstantBuffers(0, 1, m_constantBuffer.GetAddressOf());
 
+	//Set pixel shader.
 	m_d3dDeviceContext->PSSetShader(ePxlShader, nullptr, 0);
 	m_d3dDeviceContext->PSSetShaderResources(0, 1, tgtMaterial.GetTextureView().GetAddressOf());
 	m_d3dDeviceContext->PSSetSamplers(0, 1, m_sampler.GetAddressOf());
 
+	//Render entity.
 	m_d3dDeviceContext->DrawIndexed(tgtModel.GetIdxCount(), 0, 0);
 
 	return true;
@@ -400,6 +411,7 @@ bool GraphicsSystem::Resize(int newHeight, int newWidth)
 		a = a && CreateDepthStencilVw(backBufferDesc);
 
 		SetViewPort(static_cast<float>(newWidth), static_cast<float>(newHeight));
+		m_constantBufferData.m_proj = m_camera.GetProjectionMatrix(static_cast<float>(backBufferDesc.Height), static_cast<float>(backBufferDesc.Width));
 
 		return true;
 	}
@@ -413,9 +425,9 @@ void GraphicsSystem::SetParam(HWND windowHWND, std::wstring assetFolderPath)
 	m_assetFolderPath = assetFolderPath;
 }
 
-Ark::ConstantBuffer* GraphicsSystem::GetConstBuffer()
+Ark::Camera* GraphicsSystem::GetCamera()
 {
-	return &m_constantBufferData;
+	return &m_camera;
 }
 
 Ark::Model GraphicsSystem::CreateDxModelEx(void* vtxArray, unsigned int vtxArraySize, unsigned int* idxArray, unsigned int idxArraySize)

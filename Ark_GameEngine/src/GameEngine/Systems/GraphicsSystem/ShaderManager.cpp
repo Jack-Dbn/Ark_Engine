@@ -87,6 +87,7 @@ bool Ark::ShaderManager::CreateInputLayout(Microsoft::WRL::ComPtr<ID3DBlob> &vtx
 {
     Microsoft::WRL::ComPtr<ID3D11InputLayout> inputLayout;
 
+    //Describe vertex format.
     const D3D11_INPUT_ELEMENT_DESC vertexLayoutDesc[] =
     {
         {"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
@@ -94,6 +95,7 @@ bool Ark::ShaderManager::CreateInputLayout(Microsoft::WRL::ComPtr<ID3DBlob> &vtx
         {"TEXCOORD",    0, DXGI_FORMAT_R32G32_FLOAT, 0, 24, D3D11_INPUT_PER_VERTEX_DATA, 0 }//Offset 24 bytes, so its after position & normal data.
     };
 
+    //Create the layout with the description.
     HRESULT res = d3dDevice->CreateInputLayout(
         vertexLayoutDesc,
         ARRAYSIZE(vertexLayoutDesc),
@@ -102,6 +104,7 @@ bool Ark::ShaderManager::CreateInputLayout(Microsoft::WRL::ComPtr<ID3DBlob> &vtx
         &inputLayout
         );
 
+    //Add layout to vector.
     m_inputLayouts.push_back(inputLayout);
 
     return true;

@@ -4,7 +4,7 @@ InputSystem::InputSystem()
 {
 }
 
-bool InputSystem::SetCamera(Ark::ConstantBuffer* camera)
+bool InputSystem::SetCamera(Ark::Camera* camera)
 {
     if (camera) {
         m_engineCamera = camera;
@@ -31,9 +31,6 @@ int InputSystem::Initialise()
     m_screenWidth = GetSystemMetrics(SM_CXSCREEN);
 
     m_mouseSensitivity = 0.1f;
-
-    m_cameraYaw = 0.0f;
-    m_cameraPitch = 0.0f;
 
     if (!m_engineCamera) {
         return -1;
@@ -73,16 +70,12 @@ int InputSystem::Update(Ark::ComponentManager& engineCM)
 
         if (screenCentreX != cursorPos.x || screenCentreY != cursorPos.y) {
 
-            m_cameraYaw += (cursorPos.x - screenCentreX) * (*m_engineDeltaTime) * m_mouseSensitivity;
-            m_cameraPitch += (cursorPos.y - screenCentreY) * (*m_engineDeltaTime) * m_mouseSensitivity;
+            float cameraYawDelta = (cursorPos.x - screenCentreX) * (*m_engineDeltaTime) * m_mouseSensitivity;
+            float cameraPitchDelta = (cursorPos.y - screenCentreY) * (*m_engineDeltaTime) * m_mouseSensitivity;
 
-            RotateCamera(m_cameraYaw, m_cameraPitch);
+            m_engineCamera->Rotate(cameraPitchDelta, cameraYawDelta);
 
             ::SetCursorPos(m_screenWidth / 2, m_screenHeight / 2);
-
-            if (m_cameraPitch > -90.0f || m_cameraPitch < 90.0f) {
-                m_cameraPitch = 0.0f;
-            }
         }      
     }  
 
@@ -117,37 +110,37 @@ void InputSystem::PreviewInput(int keyCode)
 
         case 'W':
             if (m_keyMap[VK_RBUTTON]) {
-                TranslateCamera(0.0f, 0.0f, 0.05f);
+                m_engineCamera->Translate(0.0f, 0.0f, 0.05f);
             }
             return;
 
         case 'A':
             if (m_keyMap[VK_RBUTTON]) {
-                TranslateCamera(0.05f, 0.0f, 0.0f);
+                m_engineCamera->Translate(0.05f, 0.0f, 0.0f);
             }
             return;
 
         case 'S':
             if (m_keyMap[VK_RBUTTON]) {
-                TranslateCamera(0.0f, 0.0f, -0.05f);
+                m_engineCamera->Translate(0.0f, 0.0f, -0.05f);
             }
             return;
 
         case 'D':
             if (m_keyMap[VK_RBUTTON]) {
-                TranslateCamera(-0.05f, 0.0f, 0.0f);
+                m_engineCamera->Translate(-0.05f, 0.0f, 0.0f);
             }
             return;
 
         case VK_SPACE:
             if (m_keyMap[VK_RBUTTON]) {
-                TranslateCamera(0.0f, -0.05f, 0.0f);
+                m_engineCamera->Translate(0.0f, -0.05f, 0.0f);
             }
             return;
 
         case VK_SHIFT:
             if (m_keyMap[VK_RBUTTON]) {
-                TranslateCamera(0.0f, 0.05f, 0.0f);
+                m_engineCamera->Translate(0.0f, 0.05f, 0.0f);
             }
             return;
     }
@@ -164,21 +157,4 @@ void InputSystem::GameInput(int keyCode)
             }            
             return;
     }
-}
-
-void InputSystem::TranslateCamera(float x, float y, float z)
-{
-    Ark::matrix4x4 tmp('i');
-    tmp = tmp.TranslateMtx(x, y, z);
-    m_engineCamera->m_view = tmp * m_engineCamera->m_view;
-}
-
-void InputSystem::RotateCamera(float yaw, float pitch)
-{
-    Ark::matrix4x4 newViewMtx('i');
-
-    newViewMtx = newViewMtx.RotateYmtx(yaw);
-    newViewMtx = newViewMtx * newViewMtx.RotateXmtx(pitch);
-
-    m_engineCamera->m_view = newViewMtx * m_engineCamera->m_view;
 }
