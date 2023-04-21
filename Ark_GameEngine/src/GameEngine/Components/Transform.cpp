@@ -66,40 +66,23 @@ Ark::matrix4x4 Ark::Transform::GetModelMtx()
 
 bool Ark::Transform::UpdateTransformMtx()
 {
-	Ark::matrix4x4 modelMtx('i');
-
-	Ark::matrix4x4 translateMtx = {
-		1.0f, 0.0f, 0.0f, m_posX,
-		0.0f, 1.0f, 0.0f, m_posY,
-		0.0f, 0.0f, 1.0f, m_posZ,
-		0.0f, 0.0f, 0.0f, 1.0f
-	};
-
-	Ark::matrix4x4 rotateMtx('i');
+	//Create matrix that stores combination of rotations.
+	Ark::matrix4x4 rotateMtx = Ark::matrix4x4::RotateZmtx(m_rotationZ);
+	rotateMtx = rotateMtx * Ark::matrix4x4::RotateXmtx(m_rotationX);
+	rotateMtx = rotateMtx * Ark::matrix4x4::RotateYmtx(m_rotationY);
 	
-	Ark::matrix4x4 rotateTemp('i');
-	rotateTemp = rotateTemp.RotateZmtx(m_rotationZ);
-	rotateMtx = rotateMtx * rotateTemp;
+	//Form model matrix through Scaling-Rotation-Translation
 
-	rotateTemp = rotateTemp.RotateXmtx(m_rotationX);
-	rotateMtx = rotateMtx * rotateTemp;
+	//Start with scale matrix.
+	Ark::matrix4x4 modelMtx = Ark::matrix4x4::ScaleMtx(m_scaleX, m_scaleY, m_scaleZ);
 
-	rotateTemp = rotateTemp.RotateYmtx(m_rotationY);
-	rotateMtx = rotateMtx * rotateTemp;
+	//Apply rotation matrix.
+	modelMtx = rotateMtx * modelMtx;
 
-	Ark::matrix4x4 scaleMtx = {
-		m_scaleX, 0.0f, 0.0f, 0.0f,
-		0.0f, m_scaleY, 0.0f, 0.0f,
-		0.0f, 0.0f, m_scaleZ, 0.0f,
-		0.0f, 0.0f, 0.0f, 1.0f
-	};
-	
-	modelMtx = modelMtx * translateMtx;	
-	modelMtx = modelMtx * rotateMtx;
-	modelMtx = modelMtx * scaleMtx;
-	
-	
+	//Apply translation matrix.
+	modelMtx = Ark::matrix4x4::TranslateMtx(m_posX, m_posY, m_posZ) * modelMtx;
 
+	//Store model matrix in transform
 	m_transformMtx = modelMtx;
 
 	return true;
