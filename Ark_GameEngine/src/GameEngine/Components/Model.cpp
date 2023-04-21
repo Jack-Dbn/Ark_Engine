@@ -32,25 +32,32 @@ bool Ark::Model::SetMeshEx(
 
 bool Ark::Model::SetMeshFromFile(std::string filePath, Microsoft::WRL::ComPtr<ID3D11Device>& d3dDevice, bool CwWindingDir, bool LH_Convert)
 {
+    //Initialise tinyobj objects.
     tinyobj::attrib_t attributes;
     std::vector<tinyobj::shape_t> shapes;
     std::vector<tinyobj::material_t> materials;
 
+    //Strings to store possible warnings and errors.
     std::string warning;
     std::string error;
 
+    //Load .obj file into tinyobj objects.
     bool ret = tinyobj::LoadObj(&attributes, &shapes, &materials, &warning, &error, filePath.c_str());
 
+    // Output warnings - only used during debugging.
     if (!warning.empty()) {
         //MessageBoxA(NULL, warning.c_str(), "Tiny Obj Loading Warning", MB_OK);
     }
 
+    //Output errors & return if any are found.
     if (!error.empty() || !ret) {
         MessageBoxA(NULL, error.c_str(), "Tiny Obj Loading Error", MB_OK);
         return false;
     }
 
+    //Vector to store vertices
     std::vector<Ark::vertex> vertexVector;
+    //Vector to store indexes.
     std::vector<unsigned int> indexVector;
 
     size_t shapeOffset = 0;
@@ -137,7 +144,7 @@ bool Ark::Model::SetMeshFromFile(std::string filePath, Microsoft::WRL::ComPtr<ID
         shapeOffset = indexVector.size();
     }
 
-
+    //Create vertex and index buffers.
     bool res = CreateVtxBuffer(d3dDevice, &vertexVector[0], vertexVector.size(), m_vertexBuffer);
     res = res && CreateIdxBuffer(d3dDevice, &indexVector[0], indexVector.size(), m_indexBuffer);
 
@@ -145,7 +152,10 @@ bool Ark::Model::SetMeshFromFile(std::string filePath, Microsoft::WRL::ComPtr<ID
         return false;
     }
 
+    //Set index count
     m_indexCount = indexVector.size();
+
+    //Allow model component to be rendered in pipeline.
     m_RenderReady = true;
     
     return true;

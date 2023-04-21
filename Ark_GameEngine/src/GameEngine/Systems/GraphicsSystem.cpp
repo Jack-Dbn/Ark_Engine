@@ -297,13 +297,19 @@ void GraphicsSystem::SetupFrame(float redVal, float greenVal, float blueVal, flo
 // Update Stage
 int GraphicsSystem::Update(Ark::ComponentManager& engineCM)
 {	
+	//Initialise frame ready for drawing.
 	SetupFrame();
-		
+	
+	//Iterate through compatible entities.
 	for (int i = 0; i < m_EntityList.size(); i++) {
+		//Note entity id.
 		Ark::Entity entityIn = m_EntityList[i];
 
+		//Get transform of entity.
 		Ark::Transform entityTransform;
 		engineCM.GetComponent<Ark::Transform>(entityIn, entityTransform);
+
+		//Replace old model matrix with entity's.
 		m_constantBufferData.m_model = entityTransform.GetModelMtx();
 
 		//Simply to rotate first model until input is added.		
@@ -313,21 +319,26 @@ int GraphicsSystem::Update(Ark::ComponentManager& engineCM)
 			m_constantBufferData.m_model = m_constantBufferData.m_model * newModelMtx.RotateYmtx(m_tempDegVar);
 		}
 
+		//Get material of entity.
 		Ark::Material entityMaterial;
 		engineCM.GetComponent<Ark::Material>(entityIn, entityMaterial);
 
+		//Get model of entity.
 		Ark::Model entityModel;
 		engineCM.GetComponent<Ark::Model>(entityIn, entityModel);
 
+		//Check model is ready to be rendered before drawing.
 		if (!entityModel.m_RenderReady) {
 			continue;
 		}	
-							
+		
+		//Render entity onto pending frame.
 		DrawEntity(entityModel, entityMaterial);		
 	}
 
+	//Send frame to window.
 	PresentFrame(true);
-	//MessageBox(NULL, L"DirectX11 Frame", L"DirectX11 Frame", 0);
+
 	return 0;
 }
 

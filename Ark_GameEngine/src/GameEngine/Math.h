@@ -58,7 +58,9 @@ namespace Ark {
 
 			matrix4x4 returnMtx;
 
+			//Iterate through rows.
 			for (int i = 0; i < 4; i++) {
+				//Iterate through columns.
 				for (int j = 0; j < 4; j++) {
 
 					returnMtx[i][j] = 0.0f;
@@ -72,7 +74,7 @@ namespace Ark {
 			return returnMtx;
 		}
 
-		matrix4x4 TranslateMtx(float x, float y, float z) {
+		static matrix4x4 TranslateMtx(float x, float y, float z) {
 			matrix4x4 returnMtx('i');
 
 			returnMtx[0][3] = x;
@@ -82,7 +84,7 @@ namespace Ark {
 			return returnMtx;
 		}
 
-		matrix4x4 RotateXmtx(float deg) {
+		static matrix4x4 RotateXmtx(float deg) {
 
 			float radVal = (PI_F / 180.0f);
 
@@ -98,7 +100,7 @@ namespace Ark {
 			return returnMtx;
 		}
 
-		matrix4x4 RotateYmtx(float deg) {
+		static matrix4x4 RotateYmtx(float deg) {
 			
 			float radVal = (PI_F / 180.0f);
 
@@ -114,7 +116,7 @@ namespace Ark {
 			return returnMtx;
 		}
 
-		matrix4x4 RotateZmtx(float deg) {
+		static matrix4x4 RotateZmtx(float deg) {
 			
 			float radVal = (PI_F / 180.0f);
 
@@ -130,7 +132,7 @@ namespace Ark {
 			return returnMtx;
 		}
 
-		matrix4x4 ScaleMtx(float x, float y, float z) {
+		static matrix4x4 ScaleMtx(float x, float y, float z) {
 			matrix4x4 returnMtx('i');
 
 			returnMtx[0][0] = x;
