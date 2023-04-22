@@ -62,7 +62,7 @@ int InputSystem::Update(Ark::ComponentManager& engineCM)
         }
     }
 
-    if (m_keyMap[VK_RBUTTON]) {
+    if (m_designPreview && m_keyMap[VK_RBUTTON]) {
         POINT cursorPos = {};
         ::GetCursorPos(&cursorPos);
 
