@@ -27,9 +27,16 @@ int Editor::OnInit()
 	m_gameEngine.SetComponent<Ark::Material>(entityA, rubiksMaterial);
 	m_gameEngine.SetComponent<Ark::Model>(entityA, cubeModel);
 
+	Ark::InputRig entityAinputRig;
+	entityAinputRig.SetPositionInput(VK_LEFT, Ark::x, 0.05f);
+	entityAinputRig.SetPositionInput(VK_RIGHT, Ark::x, -0.05f);
+	entityAinputRig.SetPositionInput(VK_UP, Ark::z, 0.05f);
+	entityAinputRig.SetPositionInput(VK_DOWN, Ark::z, -0.05f);
+	m_gameEngine.SetComponent<Ark::InputRig>(entityA, entityAinputRig);
+
 	//Entity B
 	Ark::Transform entityBtransform(1.0f, -1, 1.5f);
-	entityBtransform.Rotate(0.0f, 90.0f, 0.0f);
+	entityBtransform.SetOrientation(0.0f, 90.0f, 0.0f);
 	m_gameEngine.SetComponent<Ark::Transform>(entityB, entityBtransform);
 	m_gameEngine.SetComponent<Ark::Material>(entityB, helmetMaterial);
 	m_gameEngine.SetComponent<Ark::Model>(entityB, helmetModel);

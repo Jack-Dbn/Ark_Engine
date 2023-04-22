@@ -19,7 +19,7 @@ Ark::Transform::Transform() : Component()
 
 Ark::Transform::Transform(float x, float y, float z)
 {
-	Translate(x,y,z);
+	SetPosition(x,y,z);
 
 	m_rotationX = 0.0f;
 	m_rotationY = 0.0f;
@@ -32,7 +32,7 @@ Ark::Transform::Transform(float x, float y, float z)
 	UpdateTransformMtx();
 }
 
-void Ark::Transform::Translate(float x, float y, float z)
+void Ark::Transform::SetPosition(float x, float y, float z)
 {
 	m_posX = x;
 	m_posY = y;
@@ -41,7 +41,7 @@ void Ark::Transform::Translate(float x, float y, float z)
 	UpdateTransformMtx();
 }
 
-void Ark::Transform::Rotate(float x, float y, float z)
+void Ark::Transform::SetOrientation(float x, float y, float z)
 {
 	m_rotationX = x;
 	m_rotationY = y;
@@ -50,11 +50,38 @@ void Ark::Transform::Rotate(float x, float y, float z)
 	UpdateTransformMtx();
 }
 
-void Ark::Transform::Scale(float x, float y, float z)
+void Ark::Transform::SetScale(float x, float y, float z)
 {
 	m_scaleX = x;
 	m_scaleY = y;
 	m_scaleZ = z;
+
+	UpdateTransformMtx();
+}
+
+void Ark::Transform::Translate(float x, float y, float z)
+{
+	m_posX += x;
+	m_posY += y;
+	m_posZ += z;
+
+	UpdateTransformMtx();
+}
+
+void Ark::Transform::Rotate(float x, float y, float z)
+{
+	m_rotationX += x;
+	m_rotationY += y;
+	m_rotationZ += z;
+
+	UpdateTransformMtx();
+}
+
+void Ark::Transform::Resize(float x, float y, float z)
+{
+	m_scaleX += x;
+	m_scaleY += y;
+	m_scaleZ += z;
 
 	UpdateTransformMtx();
 }

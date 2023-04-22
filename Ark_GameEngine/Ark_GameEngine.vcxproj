@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\GameEngine\Components\InputRig.h" />
     <ClInclude Include="src\GameEngine\Systems\GraphicsSystem\Camera.h" />
     <ClInclude Include="src\GameEngine\Systems\InputSystem.h" />
     <ClInclude Include="src\GameEngine\include\DDSTextureLoader11.h" />
@@ -167,6 +168,7 @@
     <ClInclude Include="src\GameEngine\Components\Transform.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\GameEngine\Components\InputRig.cpp" />
     <ClCompile Include="src\GameEngine\Systems\GraphicsSystem\Camera.cpp" />
     <ClCompile Include="src\GameEngine\Systems\InputSystem.cpp" />
     <ClCompile Include="src\GameEngine\include\DDSTextureLoader11.cpp" />

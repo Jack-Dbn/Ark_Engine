@@ -312,13 +312,6 @@ int GraphicsSystem::Update(Ark::ComponentManager& engineCM)
 		//Replace old model matrix with entity's.
 		m_constantBufferData.m_model = entityTransform.GetModelMtx();
 
-		//Simply to rotate first model until input is added.		
-		if (i == 0) {
-			m_tempDegVar = m_tempDegVar + 1.0f;
-			Ark::matrix4x4 newModelMtx;
-			m_constantBufferData.m_model = m_constantBufferData.m_model * newModelMtx.RotateYmtx(m_tempDegVar);
-		}
-
 		//Get material of entity.
 		Ark::Material entityMaterial;
 		engineCM.GetComponent<Ark::Material>(entityIn, entityMaterial);

@@ -15,6 +15,7 @@ namespace Ark {
 		m_componentManager.RegisterComponent<Transform>();	
 		m_componentManager.RegisterComponent<Model>();
 		m_componentManager.RegisterComponent<Material>();
+		m_componentManager.RegisterComponent<InputRig>();
 
 		m_renderSystem.SetParam(windowHWND, assetFolderPath);
 		m_renderSystem.Initialise();
@@ -29,6 +30,7 @@ namespace Ark {
 		m_inputSystem.Initialise();
 		{
 			m_inputSystem.AddReqComponent<Transform>(m_componentManager.GetRegister());
+			m_inputSystem.AddReqComponent<InputRig>(m_componentManager.GetRegister());
 		}
 		
 		wchar_t text[256];

@@ -10,9 +10,13 @@ namespace Ark {
 		Transform();
 		Transform(float x, float y, float z);
 
+		void SetPosition(float x = 0, float y = 0, float z = 0);
+		void SetOrientation(float x = 0, float y = 0, float z = 0);
+		void SetScale(float x = 1.0, float y = 1.0, float z = 1.0);
+
 		void Translate(float x = 0, float y = 0, float z = 0);
 		void Rotate(float x = 0, float y = 0, float z = 0);
-		void Scale(float x = 1.0, float y = 1.0, float z = 1.0);
+		void Resize(float x = 0, float y = 0, float z = 0);
 
 		Ark::matrix4x4 GetModelMtx();
 

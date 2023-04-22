@@ -58,6 +58,8 @@ int InputSystem::Update(Ark::ComponentManager& engineCM)
         for (const auto& key : m_keyMap) {
             if (key.second) {                
                 GameInput(key.first);
+
+                RigInput(key.first, engineCM);
             }
         }
     }
@@ -165,3 +167,53 @@ void InputSystem::GameInput(int keyCode)
             return;
     }
 }
+
+void InputSystem::RigInput(int keyCode, Ark::ComponentManager& engineCM)
+{
+    for (int i = 0; i < m_EntityList.size(); i++) {
+        //Note entity id.
+        Ark::Entity entityIn = m_EntityList[i];
+
+        //Get transform of entity.
+        Ark::Transform entityTransform;
+        engineCM.GetComponent<Ark::Transform>(entityIn, entityTransform);
+
+        //Get input rig of entity.
+        Ark::InputRig entityInputRig;
+        engineCM.GetComponent<Ark::InputRig>(entityIn, entityInputRig);
+
+        std::unordered_map<char, Ark::Action> rigKeyMap = entityInputRig.GetKeyMap();
+
+        for (const auto& rigKey : rigKeyMap) {
+            if (rigKey.first == keyCode) {
+                Ark::Action action = rigKey.second;
+
+                float deltaX = 0.0f, deltaY = 0.0f, deltaZ = 0.0f;
+                if (action.axis == Ark::x) {
+                    deltaX = action.inputSize;
+                }
+                else if (action.axis == Ark::y) {
+                    deltaY = action.inputSize;
+                }
+                else {
+                    deltaZ = action.inputSize;
+                }
+
+                if (action.action == Ark::Position) {
+                    entityTransform.Translate(deltaX, deltaY, deltaZ);
+                }
+                else if (action.action == Ark::Rotation) {
+                    entityTransform.Rotate(deltaX, deltaY, deltaZ);
+                }
+                else {
+                    entityTransform.Resize(deltaX, deltaY, deltaZ);
+                }
+
+                engineCM.SetComponent<Ark::Transform>(entityIn, entityTransform);
+
+                break;
+            }
+        }
+    }
+}
+

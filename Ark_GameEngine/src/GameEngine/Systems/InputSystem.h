@@ -1,6 +1,7 @@
 #pragma once
 #include "../System.h"
 #include "../Systems/GraphicsSystem/Camera.h"
+#include "../Components/InputRig.h"
 
 class InputSystem : public System
 {
@@ -22,6 +23,8 @@ private:
 	void PreviewInput(int keyCode);
 	void GameInput(int keyCode);
 
+	void RigInput(int keyCode, Ark::ComponentManager& engineCM);
+
 	bool m_designPreview;
 
 	std::unordered_map<int, bool> m_keyMap;
@@ -34,8 +37,5 @@ private:
 	float m_cameraSpeed;
 
 	float* m_engineDeltaTime;
-
-	//float m_cameraYaw;
-	//float m_cameraPitch;
 };
 
