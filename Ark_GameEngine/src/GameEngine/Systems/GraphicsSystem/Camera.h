@@ -19,6 +19,7 @@ namespace Ark {
 
 		//Camera position
 		Ark::vector3D m_position;
+		Ark::vector3D m_deltaPosition;
 
 		//Camera's field of view
 		float m_fov;

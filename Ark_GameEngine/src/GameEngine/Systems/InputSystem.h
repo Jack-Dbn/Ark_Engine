@@ -31,6 +31,8 @@ private:
 	int m_screenHeight, m_screenWidth;
 
 	float m_mouseSensitivity;
+	float m_cameraSpeed;
+
 	float* m_engineDeltaTime;
 
 	//float m_cameraYaw;

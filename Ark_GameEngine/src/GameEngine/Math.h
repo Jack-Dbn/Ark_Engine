@@ -75,11 +75,12 @@ namespace Ark {
 		}
 
 		static matrix4x4 TranslateMtx(float x, float y, float z) {
-			matrix4x4 returnMtx('i');
 
-			returnMtx[0][3] = x;
-			returnMtx[1][3] = y;
-			returnMtx[2][3] = z;
+			matrix4x4 returnMtx = {
+				1.0f, 0.0f, 0.0f, x,
+				0.0f, 1.0f, 0.0f, y,
+				0.0f, 0.0f, 1.0f, z,
+				0.0f, 0.0f, 0.0f, 1.0f};
 
 			return returnMtx;
 		}

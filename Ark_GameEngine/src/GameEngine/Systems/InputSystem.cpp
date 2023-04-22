@@ -30,7 +30,8 @@ int InputSystem::Initialise()
     m_screenHeight = GetSystemMetrics(SM_CYSCREEN);
     m_screenWidth = GetSystemMetrics(SM_CXSCREEN);
 
-    m_mouseSensitivity = 0.1f;
+    m_mouseSensitivity = 10.0f;
+    m_cameraSpeed = 75.0f;
 
     if (!m_engineCamera) {
         return -1;
@@ -110,37 +111,43 @@ void InputSystem::PreviewInput(int keyCode)
 
         case 'W':
             if (m_keyMap[VK_RBUTTON]) {
-                m_engineCamera->Translate(0.0f, 0.0f, 0.05f);
+                float deltaPosZ = (*m_engineDeltaTime) * m_cameraSpeed * 0.05f;
+                m_engineCamera->Translate(0.0f, 0.0f, deltaPosZ);
             }
             return;
 
         case 'A':
             if (m_keyMap[VK_RBUTTON]) {
-                m_engineCamera->Translate(0.05f, 0.0f, 0.0f);
+                float deltaPosX = (*m_engineDeltaTime) * m_cameraSpeed * 0.05f;
+                m_engineCamera->Translate(deltaPosX, 0.0f, 0.0f);
             }
             return;
 
         case 'S':
             if (m_keyMap[VK_RBUTTON]) {
-                m_engineCamera->Translate(0.0f, 0.0f, -0.05f);
+                float deltaPosZ = (*m_engineDeltaTime) * m_cameraSpeed * -0.05f;
+                m_engineCamera->Translate(0.0f, 0.0f, deltaPosZ);
             }
             return;
 
         case 'D':
             if (m_keyMap[VK_RBUTTON]) {
-                m_engineCamera->Translate(-0.05f, 0.0f, 0.0f);
+                float deltaPosX = (*m_engineDeltaTime) * m_cameraSpeed * -0.05f;
+                m_engineCamera->Translate(deltaPosX, 0.0f, 0.0f);
             }
             return;
 
         case VK_SPACE:
             if (m_keyMap[VK_RBUTTON]) {
-                m_engineCamera->Translate(0.0f, -0.05f, 0.0f);
+                float deltaPosY = (*m_engineDeltaTime) * m_cameraSpeed * -0.05f;
+                m_engineCamera->Translate(0.0f, deltaPosY, 0.0f);
             }
             return;
 
         case VK_SHIFT:
             if (m_keyMap[VK_RBUTTON]) {
-                m_engineCamera->Translate(0.0f, 0.05f, 0.0f);
+                float deltaPosY = (*m_engineDeltaTime) * m_cameraSpeed * 0.05f;
+                m_engineCamera->Translate(0.0f, deltaPosY, 0.0f);
             }
             return;
     }
