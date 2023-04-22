@@ -81,14 +81,13 @@ void Ark::Camera::Translate(float x, float y, float z)
 void Ark::Camera::Rotate(float pitch, float yaw)
 {	
 	m_yaw += yaw;
+    m_pitch -= pitch;
 
-    if (pitch > 90.0f) {
-        m_pitch = 0.0f;
+    //Clamp pitch
+    if (m_pitch > 90.0f) {
+        m_pitch = 90.0f;
     }
-    else if (pitch < -90.0f) {
-        m_pitch = 0.0f;
-    }
-    else {
-        m_pitch -= pitch;
+    else if (m_pitch < -90.0f) {
+        m_pitch = -90.0f;
     }
 }
