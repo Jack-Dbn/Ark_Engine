@@ -7,7 +7,7 @@
 class System
 {
 public:
-	virtual int Initialise() = 0;
+	virtual int Initialise(bool* isGameRunning) = 0;
 	virtual int Update(Ark::ComponentManager& engineCM) = 0;
 	virtual int Release() = 0;
 

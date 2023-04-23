@@ -16,7 +16,7 @@ class GraphicsSystem : public System
 public:
 	GraphicsSystem();
 
-	int Initialise();
+	int Initialise(bool* isGameRunning);
 	int Update(Ark::ComponentManager& engineCM);
 	int Release();
 

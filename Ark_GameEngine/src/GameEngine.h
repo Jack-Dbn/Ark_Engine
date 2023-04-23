@@ -60,6 +60,8 @@ namespace Ark {
 		float m_deltaTime;
 		DWORD m_lastTickCount;
 		DWORD m_newTickCount;
+
+		bool m_gameActive;
 	};
 
 	template<typename T>

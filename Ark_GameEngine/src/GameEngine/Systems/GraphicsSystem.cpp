@@ -6,8 +6,10 @@ GraphicsSystem::GraphicsSystem()
 }
 
 // Initialise Stage
-int GraphicsSystem::Initialise()
+int GraphicsSystem::Initialise(bool* isGameRunning)
 {
+
+
 	if (m_tgtWindow == NULL) {
 		return -1;
 	}

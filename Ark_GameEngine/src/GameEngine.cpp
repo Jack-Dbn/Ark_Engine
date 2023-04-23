@@ -11,6 +11,8 @@ namespace Ark {
 		m_lastTickCount = 0;
 		m_newTickCount = 0;
 
+		m_gameActive = false;
+
 		//Register components to use in the engine.
 		m_componentManager.RegisterComponent<Transform>();	
 		m_componentManager.RegisterComponent<Model>();
@@ -18,7 +20,7 @@ namespace Ark {
 		m_componentManager.RegisterComponent<InputRig>();
 
 		m_renderSystem.SetParam(windowHWND, assetFolderPath);
-		m_renderSystem.Initialise();
+		m_renderSystem.Initialise(&m_gameActive);
 		{
 			m_renderSystem.AddReqComponent<Transform>(m_componentManager.GetRegister());
 			m_renderSystem.AddReqComponent<Model>(m_componentManager.GetRegister());
@@ -27,7 +29,7 @@ namespace Ark {
 
 		m_inputSystem.SetCamera(m_renderSystem.GetCamera());
 		m_inputSystem.SetDeltaTime(&m_deltaTime);
-		m_inputSystem.Initialise();
+		m_inputSystem.Initialise(&m_gameActive);
 		{
 			m_inputSystem.AddReqComponent<Transform>(m_componentManager.GetRegister());
 			m_inputSystem.AddReqComponent<InputRig>(m_componentManager.GetRegister());

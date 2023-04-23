@@ -11,7 +11,7 @@ public:
 	bool SetCamera(Ark::Camera* camera);
 	bool SetDeltaTime(float* deltaTimePtr);
 
-	int Initialise();
+	int Initialise(bool* isGameRunning);
 	int Update(Ark::ComponentManager& engineCM);
 	int Release();
 
@@ -21,11 +21,9 @@ public:
 
 private:
 	void PreviewInput(int keyCode);
-	void GameInput(int keyCode);
+	void GameInput(int keyCode, Ark::ComponentManager& engineCM);
 
-	void RigInput(int keyCode, Ark::ComponentManager& engineCM);
-
-	bool m_designPreview;
+	bool* m_gameActive;
 
 	std::unordered_map<int, bool> m_keyMap;
 

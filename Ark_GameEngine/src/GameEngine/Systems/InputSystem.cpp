@@ -24,9 +24,10 @@ bool InputSystem::SetDeltaTime(float* deltaTimePtr)
     return false;
 }
 
-int InputSystem::Initialise()
+int InputSystem::Initialise(bool* isGameRunning)
 {
-    m_designPreview = true;
+    m_gameActive = isGameRunning;
+
     m_screenHeight = GetSystemMetrics(SM_CYSCREEN);
     m_screenWidth = GetSystemMetrics(SM_CXSCREEN);
 
@@ -46,25 +47,36 @@ int InputSystem::Initialise()
 
 int InputSystem::Update(Ark::ComponentManager& engineCM)
 {
-    if (m_designPreview) {
+    if (!*m_gameActive) {
 
         for (const auto& key : m_keyMap) {
-            if (key.second) {                
+
+            if (key.second && key.first != 'P') {
                 PreviewInput(key.first);
+            }
+            else if (key.second && key.first == 'P') {
+
+                *m_gameActive = true;
+                MessageBox(NULL, L"Game Started", L"Game Started", 0);
+                m_keyMap[key.first] = false;
             }
         }        
     }
     else {
         for (const auto& key : m_keyMap) {
-            if (key.second) {                
-                GameInput(key.first);
+            if (key.second && key.first != VK_ESCAPE) {
+                GameInput(key.first, engineCM);
+            }
+            else if (key.second && key.first == VK_ESCAPE) {
 
-                RigInput(key.first, engineCM);
+                *m_gameActive = false;
+                MessageBox(NULL, L"Game Stopped", L"Game Stopped", 0);
+                m_keyMap[key.first] = false;
             }
         }
     }
 
-    if (m_designPreview && m_keyMap[VK_RBUTTON]) {
+    if (!*m_gameActive && m_keyMap[VK_RBUTTON]) {
         POINT cursorPos = {};
         ::GetCursorPos(&cursorPos);
 
@@ -102,14 +114,7 @@ void InputSystem::KeyDown(int keyCode)
 
 void InputSystem::PreviewInput(int keyCode)
 {
-    switch (keyCode) {
-        case 'P':
-            if (m_designPreview) {
-                m_designPreview = false;
-                MessageBox(NULL, L"Game Started", L"Game Started", 0);
-                m_keyMap[keyCode] = false;
-            }            
-            return;
+    switch (keyCode) {        
 
         case 'W':
             if (m_keyMap[VK_RBUTTON]) {
@@ -155,20 +160,7 @@ void InputSystem::PreviewInput(int keyCode)
     }
 }
 
-void InputSystem::GameInput(int keyCode)
-{
-    switch (keyCode) {
-        case VK_ESCAPE:
-            if (!m_designPreview) {
-                m_designPreview = true;
-                MessageBox(NULL, L"Game Stopped", L"Game Stopped", 0);
-                m_keyMap[keyCode] = false;
-            }            
-            return;
-    }
-}
-
-void InputSystem::RigInput(int keyCode, Ark::ComponentManager& engineCM)
+void InputSystem::GameInput(int keyCode, Ark::ComponentManager& engineCM)
 {
     for (int i = 0; i < m_EntityList.size(); i++) {
         //Note entity id.
