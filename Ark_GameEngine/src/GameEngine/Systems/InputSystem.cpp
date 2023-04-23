@@ -56,6 +56,8 @@ int InputSystem::Update(Ark::ComponentManager& engineCM)
             }
             else if (key.second && key.first == 'P') {
 
+                engineCM.SaveTransforms();
+
                 *m_gameActive = true;
                 MessageBox(NULL, L"Game Started", L"Game Started", 0);
                 m_keyMap[key.first] = false;
@@ -68,6 +70,8 @@ int InputSystem::Update(Ark::ComponentManager& engineCM)
                 GameInput(key.first, engineCM);
             }
             else if (key.second && key.first == VK_ESCAPE) {
+
+                engineCM.LoadTransforms();
 
                 *m_gameActive = false;
                 MessageBox(NULL, L"Game Stopped", L"Game Stopped", 0);

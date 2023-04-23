@@ -4,6 +4,7 @@
 #include "EntityManager.h"
 #include "Component.h"
 #include "ComponentList.h"
+#include "Components/Transform.h"
 
 namespace Ark {
 	class ComponentManager
@@ -29,6 +30,9 @@ namespace Ark {
 		template <typename T>
 		bool RemoveComponent(Ark::Entity tgtEntity);
 
+		bool SaveTransforms();
+		bool LoadTransforms();
+
 	private:	
 
 		std::vector<unsigned int> m_availableIds;
@@ -36,6 +40,8 @@ namespace Ark {
 		std::unordered_map<std::string, unsigned int> m_componentMap;
 	
 		std::vector<std::shared_ptr<IComponentList>> m_componentListData = std::vector<std::shared_ptr<IComponentList>>(EntityManager::MAX_COMPONENTS);
+		ComponentList<Ark::Transform> m_transformSave;
+	
 	};
 
 	template<typename T>
