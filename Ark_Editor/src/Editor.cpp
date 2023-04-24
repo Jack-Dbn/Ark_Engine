@@ -9,6 +9,7 @@ int Editor::OnInit()
 	//Initialise Game Engine
 	m_gameEngine.Initialise(this->m_wndHandle);
 
+	Ark::Entity entityC = m_gameEngine.NewEntity();
 	Ark::Entity entityB = m_gameEngine.NewEntity();
 	Ark::Entity entityA = m_gameEngine.NewEntity();
 
@@ -18,6 +19,11 @@ int Editor::OnInit()
 
 	Ark::Model helmetModel = m_gameEngine.CreateModel("Debug/Assets/Models/Helmet.obj", false, true);
 	Ark::Material helmetMaterial = m_gameEngine.CreateMaterial(L"Debug/Assets/Textures/Helmet.dds");
+
+	Ark::Model flagModel = m_gameEngine.CreateModel("Debug/Assets/Models/Flag.obj", true, true);
+	Ark::Material goalMaterial = m_gameEngine.CreateMaterial(L"Debug/Assets/Textures/FinishFlag.dds");
+	Ark::Material hazardMaterial = m_gameEngine.CreateMaterial(L"Debug/Assets/Textures/ObstacleFlag.dds");
+
 	Ark::Model cubeModel = m_gameEngine.CreateModelEx(cube.vertices, ARRAYSIZE(cube.vertices), cube.indexes, ARRAYSIZE(cube.indexes));
 	Ark::Material rubiksMaterial = m_gameEngine.CreateMaterial(L"Debug/Assets/Textures/RubikTexture.dds");
 
@@ -40,6 +46,13 @@ int Editor::OnInit()
 	m_gameEngine.SetComponent<Ark::Transform>(entityB, entityBtransform);
 	m_gameEngine.SetComponent<Ark::Material>(entityB, helmetMaterial);
 	m_gameEngine.SetComponent<Ark::Model>(entityB, helmetModel);
+
+	//Entity C
+	Ark::Transform entityCtransform(1.0f, -1.5f, 4.5f);
+	entityCtransform.SetOrientation(0.0f, -90.0f, 0.0f);
+	m_gameEngine.SetComponent<Ark::Transform>(entityC, entityCtransform);
+	m_gameEngine.SetComponent<Ark::Material>(entityC, hazardMaterial);
+	m_gameEngine.SetComponent<Ark::Model>(entityC, flagModel);
 
 	//MessageBox(NULL, L"Editor OnInit", L"Editor OnInit", 0);
 
