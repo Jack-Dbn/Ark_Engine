@@ -2,6 +2,9 @@
 #include <Windows.h>
 #include "WindowApp.h"
 #include "GameEngine.h"
+#include "GameEngine/include/imgui/imgui.h"
+#include "GameEngine/include/imgui/imgui_impl_win32.h"
+#include "GameEngine/include/imgui/imgui_impl_dx11.h"
 
 class Editor : public Ark::WindowApp
 {
