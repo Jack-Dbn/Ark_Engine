@@ -38,9 +38,9 @@ Ark::matrix4x4 Ark::Camera::GetProjectionMatrix(float windowHeight, float window
 Ark::matrix4x4 Ark::Camera::GetViewMatrix()
 {
     Ark::matrix4x4 viewMatrix = {
-        -1.0f, 0.0f, 0.0f, 0.0f,
+        1.0f, 0.0f, 0.0f, 0.0f,
         0.0f, 1.0f, 0.0f, 0.0f,
-        0.0f, 0.0f, -1.0f, 0.0f,
+        0.0f, 0.0f, 1.0f, 0.0f,
         0.0f, 0.0f, 0.0f, 1.0f
     };    
 
@@ -81,7 +81,7 @@ void Ark::Camera::Translate(float x, float y, float z)
 void Ark::Camera::Rotate(float pitch, float yaw)
 {	
 	m_yaw += yaw;
-    m_pitch -= pitch;
+    m_pitch += pitch;
 
     //Clamp pitch
     if (m_pitch > 90.0f) {

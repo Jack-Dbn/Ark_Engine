@@ -29,7 +29,7 @@ int Editor::OnInit()
 	Ark::Material rubiksMaterial = m_gameEngine.CreateMaterial(L"Debug/Assets/Textures/RubikTexture.dds");
 
 	//Entity A - Rubiks Cube
-	Ark::Transform entityAtransform(-1, -1, 1.5f);
+	Ark::Transform entityAtransform(1.0f, -1, -1.5f);
 	m_gameEngine.SetComponent<Ark::Transform>(entityA, entityAtransform);
 	m_gameEngine.SetComponent<Ark::Material>(entityA, rubiksMaterial);
 	m_gameEngine.SetComponent<Ark::Model>(entityA, cubeModel);
@@ -45,15 +45,15 @@ int Editor::OnInit()
 	m_gameEngine.SetComponent<Ark::Logic>(entityA, entityAlogic);
 
 	//Entity B - Helmet
-	Ark::Transform entityBtransform(1.0f, -1, 1.5f);
-	entityBtransform.SetOrientation(0.0f, 90.0f, 0.0f);
+	Ark::Transform entityBtransform(-1.0f, -1, -1.5f);
+	entityBtransform.SetOrientation(0.0f, -90.0f, 0.0f);
 	m_gameEngine.SetComponent<Ark::Transform>(entityB, entityBtransform);
 	m_gameEngine.SetComponent<Ark::Material>(entityB, helmetMaterial);
 	m_gameEngine.SetComponent<Ark::Model>(entityB, helmetModel);
 
 	//Entity C - Hazard Flag
-	Ark::Transform entityCtransform(1.0f, -1.5f, 4.5f);
-	entityCtransform.SetOrientation(0.0f, -90.0f, 0.0f);
+	Ark::Transform entityCtransform(1.0f, -1.5f, -4.5f);
+	entityCtransform.SetOrientation(0.0f, 90.0f, 0.0f);
 	m_gameEngine.SetComponent<Ark::Transform>(entityC, entityCtransform);
 	m_gameEngine.SetComponent<Ark::Material>(entityC, hazardMaterial);
 	m_gameEngine.SetComponent<Ark::Model>(entityC, flagModel);
@@ -62,8 +62,8 @@ int Editor::OnInit()
 	m_gameEngine.SetComponent<Ark::Logic>(entityC, entityClogic);
 
 	//Entity D - Finish Flag
-	Ark::Transform entityDtransform(-1.0f, -1.5f, 4.5f);
-	entityDtransform.SetOrientation(0.0f, -90.0f, 0.0f);
+	Ark::Transform entityDtransform(-1.0f, -1.5f, -4.5f);
+	entityDtransform.SetOrientation(0.0f, 90.0f, 0.0f);
 	m_gameEngine.SetComponent<Ark::Transform>(entityD, entityDtransform);
 	m_gameEngine.SetComponent<Ark::Material>(entityD, goalMaterial);
 	m_gameEngine.SetComponent<Ark::Model>(entityD, flagModel);
