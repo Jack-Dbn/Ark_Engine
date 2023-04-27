@@ -60,7 +60,9 @@ int InputSystem::Update(Ark::ComponentManager& engineCM)
 
                 *m_gameActive = true;
                 MessageBox(NULL, L"Game Started", L"Game Started", 0);
-                m_keyMap[key.first] = false;
+
+                m_keyMap.clear();
+                return 0;
             }
         }        
     }
@@ -75,7 +77,9 @@ int InputSystem::Update(Ark::ComponentManager& engineCM)
 
                 *m_gameActive = false;
                 MessageBox(NULL, L"Game Stopped", L"Game Stopped", 0);
-                m_keyMap[key.first] = false;
+
+                m_keyMap.clear();
+                return 0;
             }
         }
     }

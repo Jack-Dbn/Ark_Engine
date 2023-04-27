@@ -6,10 +6,12 @@ namespace Ark {
 
 	LRESULT CALLBACK WindowProc(HWND wndHandle, UINT wndMsg, WPARAM wParam, LPARAM lParam) {
 
+		//Create pointer to the WindowApp instance calling this procedure.
 		WindowApp* tgtApp = reinterpret_cast<WindowApp*>(GetWindowLongPtr(wndHandle, GWLP_USERDATA));
 
 		switch (wndMsg) {
 
+		//When window is created...
 		case WM_CREATE:
 			{
 				LPCREATESTRUCT createStruct = reinterpret_cast<LPCREATESTRUCT>(lParam);
@@ -17,38 +19,29 @@ namespace Ark {
 			}
 			return 0;
 
+		//When right-click pressed...
 		case WM_RBUTTONDOWN:
 			::ShowCursor(false);
 			tgtApp->KeyDown(VK_RBUTTON);
 			return 0;
 
+		//When right-click released...
 		case WM_RBUTTONUP:
 			::ShowCursor(true);
 			tgtApp->KeyUp(VK_RBUTTON);
 			return 0;
 
+		//When keyboard-key is down...
 		case WM_KEYDOWN:
 			tgtApp->KeyDown((int)wParam);
 			return 0;
 
+		//When keyboard-key is released...
 		case WM_KEYUP:
 			tgtApp->KeyUp((int)wParam);
 			return 0;
-
-		case WM_PAINT:
-			if (true) {
-				PAINTSTRUCT paintStruct;
-				HDC hdc = BeginPaint(wndHandle, &paintStruct);
-
-				// All painting occurs here, between BeginPaint and EndPaint.
-
-				FillRect(hdc, &paintStruct.rcPaint, (HBRUSH)(COLOR_WINDOW + 1));
-
-				EndPaint(wndHandle, &paintStruct);
-			}
-			return 0;
-
 		
+		//As windows resized, store the height & width
 		case WM_SIZE:
 
 			windowHeight = HIWORD(lParam);
@@ -56,12 +49,14 @@ namespace Ark {
 
 			return 0;
 
+		//Trigger event method when resizing is finished.
 		case WM_EXITSIZEMOVE:
 
 			tgtApp->Resize(windowHeight, windowWidth);
 
 			return 0;
 
+		//Set boolean to false to exit update loop.
 		case WM_DESTROY:
 			tgtApp->m_WndActive = false;
 			return 0;
@@ -70,6 +65,7 @@ namespace Ark {
 			break;
 		}
 
+		//If no case triggered, return default response.
 		return DefWindowProc(wndHandle, wndMsg, wParam, lParam);
 	}
 

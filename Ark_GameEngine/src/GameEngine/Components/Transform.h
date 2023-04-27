@@ -19,6 +19,7 @@ namespace Ark {
 		void Resize(float x = 0, float y = 0, float z = 0);
 
 		Ark::matrix4x4 GetModelMtx();
+		Ark::vector3D GetPos();
 
 	private:
 		bool UpdateTransformMtx();

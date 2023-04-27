@@ -9,6 +9,7 @@ int Editor::OnInit()
 	//Initialise Game Engine
 	m_gameEngine.Initialise(this->m_wndHandle);
 
+	Ark::Entity entityD = m_gameEngine.NewEntity();
 	Ark::Entity entityC = m_gameEngine.NewEntity();
 	Ark::Entity entityB = m_gameEngine.NewEntity();
 	Ark::Entity entityA = m_gameEngine.NewEntity();
@@ -27,7 +28,7 @@ int Editor::OnInit()
 	Ark::Model cubeModel = m_gameEngine.CreateModelEx(cube.vertices, ARRAYSIZE(cube.vertices), cube.indexes, ARRAYSIZE(cube.indexes));
 	Ark::Material rubiksMaterial = m_gameEngine.CreateMaterial(L"Debug/Assets/Textures/RubikTexture.dds");
 
-	//Entity A
+	//Entity A - Rubiks Cube
 	Ark::Transform entityAtransform(-1, -1, 1.5f);
 	m_gameEngine.SetComponent<Ark::Transform>(entityA, entityAtransform);
 	m_gameEngine.SetComponent<Ark::Material>(entityA, rubiksMaterial);
@@ -40,21 +41,36 @@ int Editor::OnInit()
 	entityAinputRig.SetPositionInput(VK_DOWN, Ark::z, -0.05f);
 	m_gameEngine.SetComponent<Ark::InputRig>(entityA, entityAinputRig);
 
-	//Entity B
+	Ark::Logic entityAlogic(Ark::Player, 1.0f);
+	m_gameEngine.SetComponent<Ark::Logic>(entityA, entityAlogic);
+
+	//Entity B - Helmet
 	Ark::Transform entityBtransform(1.0f, -1, 1.5f);
 	entityBtransform.SetOrientation(0.0f, 90.0f, 0.0f);
 	m_gameEngine.SetComponent<Ark::Transform>(entityB, entityBtransform);
 	m_gameEngine.SetComponent<Ark::Material>(entityB, helmetMaterial);
 	m_gameEngine.SetComponent<Ark::Model>(entityB, helmetModel);
 
-	//Entity C
+	//Entity C - Hazard Flag
 	Ark::Transform entityCtransform(1.0f, -1.5f, 4.5f);
 	entityCtransform.SetOrientation(0.0f, -90.0f, 0.0f);
 	m_gameEngine.SetComponent<Ark::Transform>(entityC, entityCtransform);
 	m_gameEngine.SetComponent<Ark::Material>(entityC, hazardMaterial);
 	m_gameEngine.SetComponent<Ark::Model>(entityC, flagModel);
 
-	//MessageBox(NULL, L"Editor OnInit", L"Editor OnInit", 0);
+	Ark::Logic entityClogic(Ark::Hazard, 0.1f);
+	m_gameEngine.SetComponent<Ark::Logic>(entityC, entityClogic);
+
+	//Entity D - Finish Flag
+	Ark::Transform entityDtransform(-1.0f, -1.5f, 4.5f);
+	entityDtransform.SetOrientation(0.0f, -90.0f, 0.0f);
+	m_gameEngine.SetComponent<Ark::Transform>(entityD, entityDtransform);
+	m_gameEngine.SetComponent<Ark::Material>(entityD, goalMaterial);
+	m_gameEngine.SetComponent<Ark::Model>(entityD, flagModel);
+
+	Ark::Logic entityDlogic(Ark::Goal, 0.1f);
+	m_gameEngine.SetComponent<Ark::Logic>(entityD, entityDlogic);
+
 
 	wchar_t text[256];
 

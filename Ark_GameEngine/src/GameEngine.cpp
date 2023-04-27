@@ -18,6 +18,7 @@ namespace Ark {
 		m_componentManager.RegisterComponent<Model>();
 		m_componentManager.RegisterComponent<Material>();
 		m_componentManager.RegisterComponent<InputRig>();
+		m_componentManager.RegisterComponent<Logic>();
 
 		m_renderSystem.SetParam(windowHWND, assetFolderPath);
 		m_renderSystem.Initialise(&m_gameActive);
@@ -34,6 +35,12 @@ namespace Ark {
 			m_inputSystem.AddReqComponent<Transform>(m_componentManager.GetRegister());
 			m_inputSystem.AddReqComponent<InputRig>(m_componentManager.GetRegister());
 		}
+
+		m_gameplaySystem.Initialise(&m_gameActive);
+		{
+			m_gameplaySystem.AddReqComponent<Transform>(m_componentManager.GetRegister());
+			m_gameplaySystem.AddReqComponent<Logic>(m_componentManager.GetRegister());
+		}
 		
 		wchar_t text[256];
 
@@ -49,9 +56,14 @@ namespace Ark {
 
 		m_deltaTime = (m_newTickCount - m_lastTickCount) / 1000.0f;
 
+		//Gameplay System
+		std::vector<Ark::Entity> sysEntities = m_entityManager.EvalSysEntities(m_gameplaySystem.GetFilterMask());
+		m_gameplaySystem.SetEntityList(sysEntities);
+
+		m_gameplaySystem.Update(m_componentManager);
 
 		//Input System
-		std::vector<Ark::Entity> sysEntities = m_entityManager.EvalSysEntities(m_inputSystem.GetFilterMask());
+		sysEntities = m_entityManager.EvalSysEntities(m_inputSystem.GetFilterMask());
 		m_inputSystem.SetEntityList(sysEntities);
 
 		m_inputSystem.Update(m_componentManager);
@@ -65,6 +77,7 @@ namespace Ark {
 
 	void GameEngine::Release()
 	{
+		m_gameplaySystem.Release();
 		m_inputSystem.Release();
 		m_renderSystem.Release();
 	}

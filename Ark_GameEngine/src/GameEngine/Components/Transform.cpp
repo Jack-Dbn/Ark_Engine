@@ -91,6 +91,11 @@ Ark::matrix4x4 Ark::Transform::GetModelMtx()
 	return m_transformMtx;
 }
 
+Ark::vector3D Ark::Transform::GetPos()
+{
+	return Ark::vector3D(m_posX, m_posY, m_posZ);
+}
+
 bool Ark::Transform::UpdateTransformMtx()
 {
 	//Create matrix that stores combination of rotations.
