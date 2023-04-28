@@ -37,14 +37,12 @@ Ark::matrix4x4 Ark::Camera::GetProjectionMatrix(float windowHeight, float window
 
 Ark::matrix4x4 Ark::Camera::GetViewMatrix()
 {
-    Ark::matrix4x4 viewMatrix = {
-        1.0f, 0.0f, 0.0f, 0.0f,
-        0.0f, 1.0f, 0.0f, 0.0f,
-        0.0f, 0.0f, 1.0f, 0.0f,
-        0.0f, 0.0f, 0.0f, 1.0f
-    };    
+    //Create identity matrix.
+    Ark::matrix4x4 viewMatrix('i');
 
+    //Apply pitch.
     viewMatrix = viewMatrix * Ark::matrix4x4::RotateXmtx(m_pitch);
+    //Apply yaw.
     viewMatrix = viewMatrix * Ark::matrix4x4::RotateYmtx(m_yaw);   
     
     //Calculate new position using the delta position and the cameras rotation.
@@ -60,7 +58,7 @@ Ark::matrix4x4 Ark::Camera::GetViewMatrix()
     m_position.z += (viewMatrix[1][2] * m_deltaPosition.y);
     m_position.z += (viewMatrix[0][2] * m_deltaPosition.x);
 
-
+    //Apply new position.
     viewMatrix = viewMatrix * Ark::matrix4x4::TranslateMtx(m_position.x, m_position.y, m_position.z);
 
     //Reset deltas
