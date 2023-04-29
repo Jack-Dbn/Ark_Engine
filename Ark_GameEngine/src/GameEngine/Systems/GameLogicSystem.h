@@ -1,19 +1,19 @@
 #pragma once
 #include "../System.h"
-#include "../Components/Logic.h"
+#include "../Components/GameRole.h"
 
 namespace Ark {
-	class GameplaySystem : public System
+	class GameLogicSystem : public System
 	{
 	public:
-		GameplaySystem();
+		GameLogicSystem();
 
 		int Initialise(bool* isGameRunning);
 		int Update(Ark::ComponentManager& engineCM);
 		int Release();
 
 	private:
-		bool Collision(Ark::ComponentManager& engineCM, Ark::ObjectType triggerType);
+		bool Collision(Ark::ComponentManager& engineCM, Ark::Role triggerType);
 
 		bool* m_gameActive;
 	};

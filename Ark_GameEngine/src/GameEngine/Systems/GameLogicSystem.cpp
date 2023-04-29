@@ -1,17 +1,17 @@
-#include "GameplaySystem.h"
+#include "GameLogicSystem.h"
 
-Ark::GameplaySystem::GameplaySystem()
+Ark::GameLogicSystem::GameLogicSystem()
 {
 }
 
-int Ark::GameplaySystem::Initialise(bool* isGameRunning)
+int Ark::GameLogicSystem::Initialise(bool* isGameRunning)
 {
     m_gameActive = isGameRunning;
 
     return 0;
 }
 
-int Ark::GameplaySystem::Update(Ark::ComponentManager& engineCM)
+int Ark::GameLogicSystem::Update(Ark::ComponentManager& engineCM)
 {
     if (!m_gameActive) {
         return 0;
@@ -24,8 +24,8 @@ int Ark::GameplaySystem::Update(Ark::ComponentManager& engineCM)
         //Note entity id.
         Ark::Entity entityId = m_EntityList[i];
 
-        Ark::Logic logic;
-        engineCM.GetComponent<Ark::Logic>(entityId, logic);
+        Ark::GameRole logic;
+        engineCM.GetComponent<Ark::GameRole>(entityId, logic);
 
         Ark::Transform transform;
         engineCM.GetComponent<Ark::Transform>(entityId, transform);
@@ -46,10 +46,10 @@ int Ark::GameplaySystem::Update(Ark::ComponentManager& engineCM)
             Ark::Entity triggerEntity = triggerEntities[e];
 
             //Get logic components for player and trigger
-            Ark::Logic playerLogic;
-            Ark::Logic triggerLogic;
-            engineCM.GetComponent<Ark::Logic>(playerEntity, playerLogic);
-            engineCM.GetComponent<Ark::Logic>(triggerEntity, triggerLogic);
+            Ark::GameRole playerLogic;
+            Ark::GameRole triggerLogic;
+            engineCM.GetComponent<Ark::GameRole>(playerEntity, playerLogic);
+            engineCM.GetComponent<Ark::GameRole>(triggerEntity, triggerLogic);
 
             //Get transform components for player and trigger
             Ark::Transform playerTransform;
@@ -76,7 +76,7 @@ int Ark::GameplaySystem::Update(Ark::ComponentManager& engineCM)
     return 0;
 }
 
-bool Ark::GameplaySystem::Collision(Ark::ComponentManager& engineCM, Ark::ObjectType triggerType)
+bool Ark::GameLogicSystem::Collision(Ark::ComponentManager& engineCM, Ark::Role triggerType)
 {
     if (triggerType == Ark::Goal) {
         engineCM.LoadTransforms();
@@ -94,7 +94,7 @@ bool Ark::GameplaySystem::Collision(Ark::ComponentManager& engineCM, Ark::Object
     return true;
 }
 
-int Ark::GameplaySystem::Release()
+int Ark::GameLogicSystem::Release()
 {
     return 0;
 }

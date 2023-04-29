@@ -2,27 +2,27 @@
 
 namespace Ark {
 
-	enum ObjectType {
+	enum Role {
 		Player = 0,
 		Hazard = 1,
 		Goal = 2
 	};
 
-	class Logic
+	class GameRole
 	{
 	public:
-		Logic();
-		Logic(ObjectType type, float collisionRadius);
+		GameRole();
+		GameRole(Role type, float collisionRadius);
 
-		void SetType(ObjectType newType);
-		ObjectType GetType();
+		void SetType(Role newType);
+		Role GetType();
 
 		void SetRadius(float newRadius);
 		float GetRadius();
 		
 
 	private:
-		ObjectType m_type;
+		Role m_role;
 		float m_collisionRadius;
 	};
 }

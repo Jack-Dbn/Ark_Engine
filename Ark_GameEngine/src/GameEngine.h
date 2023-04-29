@@ -2,7 +2,7 @@
 #include <vector>
 #include "GameEngine/Systems/GraphicsSystem.h"
 #include "GameEngine/Systems/InputSystem.h"
-#include "GameEngine/Systems/GameplaySystem.h"
+#include "GameEngine/Systems/GameLogicSystem.h"
 #include "GameEngine/EntityManager.h"
 #include "GameEngine/ComponentManager.h"
 #include "GameEngine/Shapes.h"
@@ -57,7 +57,7 @@ namespace Ark {
 		
 		InputSystem m_inputSystem;
 		GraphicsSystem m_renderSystem;
-		GameplaySystem m_gameplaySystem;
+		GameLogicSystem m_gameplaySystem;
 
 		float m_deltaTime;
 		DWORD m_lastTickCount;

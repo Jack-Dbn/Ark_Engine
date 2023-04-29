@@ -72,10 +72,10 @@
     <ClInclude Include="src\GameEngine\Components\InputRig.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameEngine\Components\Logic.h">
+    <ClInclude Include="src\GameEngine\Components\GameRole.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameEngine\Systems\GameplaySystem.h">
+    <ClInclude Include="src\GameEngine\Systems\GameLogicSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -125,10 +125,10 @@
     <ClCompile Include="src\GameEngine\Components\InputRig.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameEngine\Components\Logic.cpp">
+    <ClCompile Include="src\GameEngine\Components\GameRole.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameEngine\Systems\GameplaySystem.cpp">
+    <ClCompile Include="src\GameEngine\Systems\GameLogicSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

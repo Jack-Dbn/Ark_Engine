@@ -18,7 +18,7 @@ namespace Ark {
 		m_componentManager.RegisterComponent<Model>();
 		m_componentManager.RegisterComponent<Material>();
 		m_componentManager.RegisterComponent<InputRig>();
-		m_componentManager.RegisterComponent<Logic>();
+		m_componentManager.RegisterComponent<GameRole>();
 
 		m_renderSystem.SetParam(windowHWND, assetFolderPath);
 		m_renderSystem.Initialise(&m_gameActive);
@@ -39,7 +39,7 @@ namespace Ark {
 		m_gameplaySystem.Initialise(&m_gameActive);
 		{
 			m_gameplaySystem.AddReqComponent<Transform>(m_componentManager.GetRegister());
-			m_gameplaySystem.AddReqComponent<Logic>(m_componentManager.GetRegister());
+			m_gameplaySystem.AddReqComponent<GameRole>(m_componentManager.GetRegister());
 		}
 		
 		wchar_t text[256];

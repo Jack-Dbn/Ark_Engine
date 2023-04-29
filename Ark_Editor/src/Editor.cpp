@@ -41,8 +41,8 @@ int Editor::OnInit()
 	entityAinputRig.SetPositionInput(VK_DOWN, Ark::z, 0.05f);
 	m_gameEngine.SetComponent<Ark::InputRig>(entityA, entityAinputRig);
 
-	Ark::Logic entityAlogic(Ark::Player, 1.0f);
-	m_gameEngine.SetComponent<Ark::Logic>(entityA, entityAlogic);
+	Ark::GameRole entityAlogic(Ark::Player, 1.0f);
+	m_gameEngine.SetComponent<Ark::GameRole>(entityA, entityAlogic);
 
 	//Entity B - Helmet
 	Ark::Transform entityBtransform(-1.0f, -1, -1.5f);
@@ -58,8 +58,8 @@ int Editor::OnInit()
 	m_gameEngine.SetComponent<Ark::Material>(entityC, hazardMaterial);
 	m_gameEngine.SetComponent<Ark::Model>(entityC, flagModel);
 
-	Ark::Logic entityClogic(Ark::Hazard, 0.1f);
-	m_gameEngine.SetComponent<Ark::Logic>(entityC, entityClogic);
+	Ark::GameRole entityClogic(Ark::Hazard, 0.1f);
+	m_gameEngine.SetComponent<Ark::GameRole>(entityC, entityClogic);
 
 	//Entity D - Finish Flag
 	Ark::Transform entityDtransform(-1.0f, -1.5f, -4.5f);
@@ -68,8 +68,8 @@ int Editor::OnInit()
 	m_gameEngine.SetComponent<Ark::Material>(entityD, goalMaterial);
 	m_gameEngine.SetComponent<Ark::Model>(entityD, flagModel);
 
-	Ark::Logic entityDlogic(Ark::Goal, 0.1f);
-	m_gameEngine.SetComponent<Ark::Logic>(entityD, entityDlogic);
+	Ark::GameRole entityDlogic(Ark::Goal, 0.1f);
+	m_gameEngine.SetComponent<Ark::GameRole>(entityD, entityDlogic);
 
 
 	wchar_t text[256];
