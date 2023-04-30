@@ -47,54 +47,6 @@ int InputSystem::Initialise(bool* isGameRunning)
 
 int InputSystem::Update(Ark::ComponentManager& engineCM)
 {
-    /*
-    //If in design stage...
-    if (!*m_gameActive) {
-        //Iterate through keys in keymap
-        for (const auto& key : m_keyMap) {
-
-            //If key active and not 'P'
-            if (key.second && key.first != 'P') {
-                PreviewInput(key.first);
-            }
-            //if key is 'P' and active
-            else if (key.second && key.first == 'P') {
-
-                //Save intial transforms.
-                engineCM.SaveTransforms();
-
-                //Switch engine to testing stage.
-                *m_gameActive = true;
-
-                //Notify user the testing has begun.
-                MessageBox(NULL, L"Game Started", L"Game Started", 0);
-
-                //Clear keymap as preview inputs not needed anymore.
-                m_keyMap.clear();
-
-                //Ensures no more design stage inputs are processed this tick.
-                return 0;
-            }
-        }        
-    }
-    else {
-        for (const auto& key : m_keyMap) {
-            if (key.second && key.first != VK_ESCAPE) {
-                GameInput(key.first, engineCM);
-            }
-            else if (key.second && key.first == VK_ESCAPE) {
-
-                engineCM.LoadTransforms();
-
-                *m_gameActive = false;
-                MessageBox(NULL, L"Game Stopped", L"Game Stopped", 0);
-
-                m_keyMap.clear();
-                return 0;
-            }
-        }
-    }*/
-
     //Iterate through to find pressed keys...
     for (const auto& key : m_keyMap) {
         //Design phase

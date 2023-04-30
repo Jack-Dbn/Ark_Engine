@@ -56,7 +56,7 @@ namespace Ark {
 		ComponentManager m_componentManager;
 		
 		InputSystem m_inputSystem;
-		GraphicsSystem m_renderSystem;
+		GraphicsSystem m_graphicsSystem;
 		GameLogicSystem m_gameplaySystem;
 
 		float m_deltaTime;

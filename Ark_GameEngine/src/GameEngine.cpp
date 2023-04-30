@@ -20,15 +20,15 @@ namespace Ark {
 		m_componentManager.RegisterComponent<InputRig>();
 		m_componentManager.RegisterComponent<GameRole>();
 
-		m_renderSystem.SetParam(windowHWND, assetFolderPath);
-		m_renderSystem.Initialise(&m_gameActive);
+		m_graphicsSystem.SetParam(windowHWND, assetFolderPath);
+		m_graphicsSystem.Initialise(&m_gameActive);
 		{
-			m_renderSystem.AddReqComponent<Transform>(m_componentManager.GetRegister());
-			m_renderSystem.AddReqComponent<Model>(m_componentManager.GetRegister());
-			m_renderSystem.AddReqComponent<Material>(m_componentManager.GetRegister());
+			m_graphicsSystem.AddReqComponent<Transform>(m_componentManager.GetRegister());
+			m_graphicsSystem.AddReqComponent<Model>(m_componentManager.GetRegister());
+			m_graphicsSystem.AddReqComponent<Material>(m_componentManager.GetRegister());
 		}
 
-		m_inputSystem.SetCamera(m_renderSystem.GetCamera());
+		m_inputSystem.SetCamera(m_graphicsSystem.GetCamera());
 		m_inputSystem.SetDeltaTime(&m_deltaTime);
 		m_inputSystem.Initialise(&m_gameActive);
 		{
@@ -69,22 +69,22 @@ namespace Ark {
 		m_inputSystem.Update(m_componentManager);
 
 		//Render System
-		sysEntities = m_entityManager.EvalSysEntities(m_renderSystem.GetFilterMask());
-		m_renderSystem.SetEntityList(sysEntities);
+		sysEntities = m_entityManager.EvalSysEntities(m_graphicsSystem.GetFilterMask());
+		m_graphicsSystem.SetEntityList(sysEntities);
 
-		m_renderSystem.Update(m_componentManager);
+		m_graphicsSystem.Update(m_componentManager);
 	}
 
 	void GameEngine::Release()
 	{
 		m_gameplaySystem.Release();
 		m_inputSystem.Release();
-		m_renderSystem.Release();
+		m_graphicsSystem.Release();
 	}
 
 	void GameEngine::WindowResize(int newHeight, int newWidth)
 	{
-		m_renderSystem.Resize(newHeight, newWidth);
+		m_graphicsSystem.Resize(newHeight, newWidth);
 	}
 
 	void GameEngine::KeyUp(int key)
@@ -112,16 +112,16 @@ namespace Ark {
 		unsigned int* idxArray,
 		unsigned int idxArraySize)
 	{
-		return m_renderSystem.CreateDxModelEx(vtxArray, vtxArraySize, idxArray, idxArraySize);
+		return m_graphicsSystem.CreateDxModelEx(vtxArray, vtxArraySize, idxArray, idxArraySize);
 	}
 
 	Ark::Model GameEngine::CreateModel(std::string filePath, bool CwWindingDir, bool LH_Convert)
 	{
-		return m_renderSystem.CreateDxModel(filePath, CwWindingDir, LH_Convert);
+		return m_graphicsSystem.CreateDxModel(filePath, CwWindingDir, LH_Convert);
 	}
 
 	Ark::Material GameEngine::CreateMaterial(std::wstring textureFilePath)
 	{
-		return m_renderSystem.CreateMaterial(textureFilePath);
+		return m_graphicsSystem.CreateMaterial(textureFilePath);
 	}
 }
