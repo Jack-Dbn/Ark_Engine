@@ -1,16 +1,19 @@
 #pragma once
 #include <unordered_map>
 
+//Interface to mask type difference between component lists.
 class IComponentList 
 {
 public:
 	virtual ~IComponentList() = default;
 };
 
+//Component List - Template Class
 template<typename T>
 class ComponentList : public IComponentList
 {
 public:
+	//CRUD methods to modify component data.
 	bool Add(Ark::Entity entity, T newComponent);
 
 	bool Set(Ark::Entity entity, T newComponent);
@@ -20,10 +23,13 @@ public:
 	bool Remove(Ark::Entity entity);
 
 private:
+	//Ensures entity is in the component list.
 	bool EntityExists(Ark::Entity entity);
 
+	//Stores the components themseleves.
 	std::vector<T> m_componentData;
 
+	//Hash maps for efficient data access.
 	std::unordered_map<Ark::Entity, unsigned int> m_entityMap;
 	std::unordered_map<unsigned int, Ark::Entity> m_idMap;
 };
@@ -31,13 +37,18 @@ private:
 template<typename T>
 inline bool ComponentList<T>::Add(Ark::Entity entity, T newComponent)
 {
+	//If entity already exists no need to add component.
 	if (EntityExists(entity)) {
 		return false;
 	}
 
+	//Map entity to position of new data (which will be the back of m_componentData)
 	m_entityMap[entity] = m_componentData.size();
+
+	//Do reverse for id map.
 	m_idMap[m_componentData.size()] = entity;
 
+	//Add new component to the back of component data.
 	m_componentData.push_back(newComponent);
 
 	return true;
@@ -46,11 +57,15 @@ inline bool ComponentList<T>::Add(Ark::Entity entity, T newComponent)
 template<typename T>
 inline bool ComponentList<T>::Set(Ark::Entity entity, T newComponent)
 {
+	//If entity doesn't exist, use add method instead.
 	if (!EntityExists(entity)) {
 		return this->Add(entity, newComponent);
 	}
 
+	//Get id from entity map.
 	unsigned int id = m_entityMap[entity];
+
+	//Use id to overwrite component data.
 	m_componentData[id] = newComponent;
 
 	return true;
@@ -59,11 +74,15 @@ inline bool ComponentList<T>::Set(Ark::Entity entity, T newComponent)
 template<typename T>
 inline bool ComponentList<T>::Get(Ark::Entity entity, T &tgtComponent)
 {
+	//If component exist operation cannot complete
 	if (!EntityExists(entity)) {
 		return false;
 	}
 
+	//Get id from entity map.
 	unsigned int id = m_entityMap[entity];
+
+	//Use id to copy component data into provided target component.
 	tgtComponent = m_componentData[id];
 
 	return true;

@@ -2,7 +2,6 @@
 #include <typeinfo>
 #include <memory>
 #include "EntityManager.h"
-#include "Component.h"
 #include "ComponentList.h"
 #include "Components/Transform.h"
 
@@ -12,15 +11,19 @@ namespace Ark {
 	public:
 		ComponentManager();
 
+		//Allow component type to be used in the engine.
 		template <typename T>
 		bool RegisterComponent();		
 
+		//Debugging - ensures component types are being registered.
 		int GetRegisterCount();
 
+		//Based on type specfied, get position of component list in m_componentListData
 		std::unordered_map<std::string, unsigned int>* GetRegister();
 		template <typename T>
 		unsigned int GetBitPos();
 
+		//CRUD methods - for modifying component data.
 		template <typename T>
 		bool SetComponent(Ark::Entity tgtEntity, T newComponent);
 
@@ -30,18 +33,22 @@ namespace Ark {
 		template <typename T>
 		bool RemoveComponent(Ark::Entity tgtEntity);
 
+		//Ensure creating and loading the back of the transforms.
 		bool SaveTransforms();
 		bool LoadTransforms();
 
 	private:	
-
+		//Bit pos' that can be assigned to a new component type.
 		std::vector<unsigned int> m_availableIds;
 
+		//Map type name string to bit pos.
 		std::unordered_map<std::string, unsigned int> m_componentMap;
 	
+		//Stores the Component Data in lists for each type.
 		std::vector<std::shared_ptr<IComponentList>> m_componentListData = std::vector<std::shared_ptr<IComponentList>>(EntityManager::MAX_COMPONENTS);
-		ComponentList<Ark::Transform> m_transformSave;
-	
+
+		//Backs up design version of transforms.
+		ComponentList<Ark::Transform> m_transformSave;	
 	};
 
 	template<typename T>
@@ -75,33 +82,47 @@ namespace Ark {
 	template<typename T>
 	inline unsigned int ComponentManager::GetBitPos()
 	{
+		//Convert type to string.
 		std::string typeNameStr = typeid(T).name();
 
+		//Use component map to find out if type is registered.
 		if (m_componentMap.find(typeNameStr) == m_componentMap.end()) {
 			return UINT_MAX;//Type is not registered yet.
 		}
 
+		//Return position of component list in m_componentListData
 		unsigned int bitPos = m_componentMap[typeNameStr];
 				
 		return bitPos;
 	}
 
+	//Assign component to the entity specified.
 	template<typename T>
 	inline bool ComponentManager::SetComponent(Ark::Entity tgtEntity, T newComponent)
 	{
+		//Get position of component list in m_componentListData
 		unsigned int componentID = this->GetBitPos<T>();
+
+		//Create pointer to list for specfied type.
 		std::shared_ptr<ComponentList<T>> listPtr = std::static_pointer_cast<ComponentList<T>>(m_componentListData[componentID]);
+
+		//Take new component and assign it to target entity.
 		listPtr->Set(tgtEntity, newComponent);
 
 		return true;
 	}
 
+	//Retrieve the component data of the entity specified.
 	template<typename T>
 	inline bool ComponentManager::GetComponent(Ark::Entity tgtEntity, T &tgtComponent)
 	{
+		//Get position of component list in m_componentListData
 		unsigned int componentID = this->GetBitPos<T>();
 
+		//Create pointer to list for specfied type.
 		std::shared_ptr<ComponentList<T>> listPtr = std::static_pointer_cast<ComponentList<T>>(m_componentListData[componentID]);
+
+		//Retrieve component data.
 		listPtr->Get(tgtEntity, tgtComponent);
 
 		return true;
@@ -110,9 +131,13 @@ namespace Ark {
 	template<typename T>
 	inline bool ComponentManager::RemoveComponent(Ark::Entity tgtEntity)
 	{
+		//Get position of component list in m_componentListData
 		unsigned int componentID = this->GetBitPos<T>();
 
+		//Create pointer to list for specfied type.
 		std::shared_ptr<ComponentList<T>> listPtr = std::static_pointer_cast<ComponentList<T>>(m_componentListData[componentID]);
+
+		//Remove the component of this type from the entity.
 		listPtr->Remove(tgtEntity);
 
 		return true;

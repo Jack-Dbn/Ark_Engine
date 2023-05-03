@@ -3,6 +3,7 @@
 #include "..\..\Math.h"
 
 namespace Ark {
+	//Pipeline Buffer
 	class ConstantBuffer
 	{
 	public:

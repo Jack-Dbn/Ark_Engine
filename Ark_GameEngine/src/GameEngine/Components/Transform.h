@@ -1,10 +1,10 @@
 #pragma once
 #include <Windows.h>
 #include <string>
-#include "..\Component.h"
+#include "../Math.h"
 
 namespace Ark {
-	class Transform : public Component
+	class Transform
 	{
 	public:
 		Transform();

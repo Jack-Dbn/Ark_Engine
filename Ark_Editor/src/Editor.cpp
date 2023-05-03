@@ -9,26 +9,29 @@ int Editor::OnInit()
 	//Initialise Game Engine
 	m_gameEngine.Initialise(this->m_wndHandle);
 
+	//Create example entities
 	Ark::Entity entityD = m_gameEngine.NewEntity();
 	Ark::Entity entityC = m_gameEngine.NewEntity();
 	Ark::Entity entityB = m_gameEngine.NewEntity();
 	Ark::Entity entityA = m_gameEngine.NewEntity();
 
-	//Ark::Triangle triangle;
-	//Ark::Square plane;
+	//Create cube mesh
 	Ark::Cube cube;
 
+	//Import helmet model and texture.
 	Ark::Model helmetModel = m_gameEngine.CreateModel("Debug/Assets/Models/Helmet.obj", false, true);
 	Ark::Material helmetMaterial = m_gameEngine.CreateMaterial(L"Debug/Assets/Textures/Helmet.dds");
 
+	//Import flag model and textures.
 	Ark::Model flagModel = m_gameEngine.CreateModel("Debug/Assets/Models/Flag.obj", true, true);
 	Ark::Material goalMaterial = m_gameEngine.CreateMaterial(L"Debug/Assets/Textures/FinishFlag.dds");
 	Ark::Material hazardMaterial = m_gameEngine.CreateMaterial(L"Debug/Assets/Textures/ObstacleFlag.dds");
 
+	//Create code model and import rubiks texture.
 	Ark::Model cubeModel = m_gameEngine.CreateModelEx(cube.vertices, ARRAYSIZE(cube.vertices), cube.indexes, ARRAYSIZE(cube.indexes));
 	Ark::Material rubiksMaterial = m_gameEngine.CreateMaterial(L"Debug/Assets/Textures/RubikTexture.dds");
 
-	//Entity A - Rubiks Cube
+	//Entity A - Rubiks Cube.
 	Ark::Transform entityAtransform(1.0f, -1, -1.5f);
 	m_gameEngine.SetComponent<Ark::Transform>(entityA, entityAtransform);
 	m_gameEngine.SetComponent<Ark::Material>(entityA, rubiksMaterial);
@@ -72,10 +75,12 @@ int Editor::OnInit()
 	m_gameEngine.SetComponent<Ark::GameRole>(entityD, entityDlogic);
 
 
+	//Debugging code.
+	/*
 	wchar_t text[256];
 
 	swprintf_s(text, L"Total Entities: %d", m_gameEngine.GetEC()->GetEntityCount());
-	MessageBox(NULL, text, text, 0);
+	MessageBox(NULL, text, text, 0);*/
 
 	return 0;
 }
@@ -85,7 +90,6 @@ int Editor::OnUpdate()
 	//Update Game Engine, Perform tick/render frame
 	m_gameEngine.Update();
 
-	//MessageBox(NULL, L"Editor OnUpdate", L"Editor OnUpdate", 0);
 	return 0;
 }
 
@@ -94,24 +98,25 @@ int Editor::OnDestroy()
 	//Close Game Engine
 	m_gameEngine.Release();
 
-	//MessageBox(NULL, L"Editor OnDestroy", L"Editor OnDestroy", 0);
 	return 0;
 }
 
 
 void Editor::Resize(int newHeight, int newWidth)
 {
+	//Send resize event to engine
 	m_gameEngine.WindowResize(newHeight, newWidth);
-	//MessageBox(NULL, L"Editor Resize", L"Editor Resize", 0);
 }
 
 void Editor::KeyDown(int key)
 {
+	//Send key down event to engine
 	m_gameEngine.KeyDown(key);
 }
 
 void Editor::KeyUp(int key)
 {
+	//Send key up event to engine
 	m_gameEngine.KeyUp(key);
 }
 

@@ -13,6 +13,7 @@ int Ark::GameLogicSystem::Initialise(bool* isGameRunning)
 
 int Ark::GameLogicSystem::Update(Ark::ComponentManager& engineCM)
 {
+    //Only operate if engine is in testing phase.
     if (!m_gameActive) {
         return 0;
     }
@@ -20,6 +21,7 @@ int Ark::GameLogicSystem::Update(Ark::ComponentManager& engineCM)
     std::vector<Ark::Entity> playerEntities;
     std::vector<Ark::Entity> elementEntities;
 
+    //Sort entities by role.
     for (int i = 0; i < m_EntityList.size(); i++) {
         //Note entity id.
         Ark::Entity entityId = m_EntityList[i];
@@ -38,6 +40,7 @@ int Ark::GameLogicSystem::Update(Ark::ComponentManager& engineCM)
         }
     }
 
+    //Find distances between players and objectives.
     for (int p = 0; p < playerEntities.size(); p++) {
         for (int e = 0; e < elementEntities.size(); e++) {
 

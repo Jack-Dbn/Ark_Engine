@@ -13,14 +13,17 @@ namespace Ark {
 	{
 	public:
 
+		//Constructor
 		GameEngine();
 		
+		//Engine Stages
 		void Initialise(HWND windowHWND, std::wstring assetFolderPath = L"Debug/Assets/");
 
 		void Update();
 
 		void Release();
 
+		//Engine Events
 		void WindowResize(int newHeight, int newWidth);
 		void KeyUp(int key);
 		void KeyDown(int key);
@@ -30,6 +33,7 @@ namespace Ark {
 
 		Ark::Entity NewEntity();
 
+		//Material & Model methods
 		Ark::Model CreateModelEx(
 			void* vtxArray,
 			unsigned int vtxArraySize,
@@ -38,6 +42,7 @@ namespace Ark {
 		Ark::Model CreateModel(std::string filePath, bool CwWindingDir = false, bool LH_Convert = true);
 		Ark::Material CreateMaterial(std::wstring textureFilePath);
 
+		//Component CRUD methods
 		template <typename T>
 		bool AddComponent(Ark::Entity tgtEntity);
 
@@ -51,21 +56,25 @@ namespace Ark {
 		bool RemoveComponent(Ark::Entity tgtEntity);		
 
 	private:
-
+		//Engine Architecture
 		EntityManager m_entityManager;
 		ComponentManager m_componentManager;
 		
+		//Systems
 		InputSystem m_inputSystem;
 		GraphicsSystem m_graphicsSystem;
 		GameLogicSystem m_gameplaySystem;
 
+		//Delta time
 		float m_deltaTime;
 		DWORD m_lastTickCount;
 		DWORD m_newTickCount;
 
+		//Design Phase/Testing Phase boolean
 		bool m_gameActive;
 	};
 
+	//Component CRUD - Template methods
 	template<typename T>
 	inline bool GameEngine::AddComponent(Ark::Entity tgtEntity)
 	{

@@ -6,6 +6,7 @@ InputSystem::InputSystem()
 
 bool InputSystem::SetCamera(Ark::Camera* camera)
 {
+    //Ensure pointer isn't null
     if (camera) {
         m_engineCamera = camera;
         return true;
@@ -16,6 +17,7 @@ bool InputSystem::SetCamera(Ark::Camera* camera)
 
 bool InputSystem::SetDeltaTime(float* deltaTimePtr)
 {
+    //Ensure pointer isn't null
     if (deltaTimePtr) {
         m_engineDeltaTime = deltaTimePtr;
         return true;
@@ -28,12 +30,14 @@ int InputSystem::Initialise(bool* isGameRunning)
 {
     m_gameActive = isGameRunning;
 
+    //Get screen size and width.
     m_screenHeight = GetSystemMetrics(SM_CYSCREEN);
     m_screenWidth = GetSystemMetrics(SM_CXSCREEN);
 
     m_mouseSensitivity = 10.0f;
     m_cameraSpeed = 75.0f;
 
+    //Ensure parameters are valid pointers.
     if (!m_engineCamera) {
         return -1;
     }
@@ -130,53 +134,56 @@ int InputSystem::Release()
 
 void InputSystem::KeyUp(int keyCode)
 {
+    //Indicate key is no longer pressed.
     m_keyMap[keyCode] = false;    
 }
 
 void InputSystem::KeyDown(int keyCode)
 {
+    //Key is pressed.
     m_keyMap[keyCode] = true;
 }
 
 void InputSystem::PreviewInput(int keyCode)
 {
+    //Camera position controls.
     switch (keyCode) {        
-
+        //Forward
         case 'W':
-            if (m_keyMap[VK_RBUTTON]) {
-                float deltaPosZ = (*m_engineDeltaTime) * m_cameraSpeed * 0.05f;
-                m_engineCamera->Translate(0.0f, 0.0f, deltaPosZ);
+            if (m_keyMap[VK_RBUTTON]) {//Controls should only work if right click is held.
+                float deltaPosZ = (*m_engineDeltaTime) * m_cameraSpeed * 0.05f;//Calculate change in position for this frame.
+                m_engineCamera->Translate(0.0f, 0.0f, deltaPosZ);//Apply change in position.
             }
             return;
-
+        //Left
         case 'A':
             if (m_keyMap[VK_RBUTTON]) {
                 float deltaPosX = (*m_engineDeltaTime) * m_cameraSpeed * 0.05f;
                 m_engineCamera->Translate(deltaPosX, 0.0f, 0.0f);
             }
             return;
-
+        //Backward
         case 'S':
             if (m_keyMap[VK_RBUTTON]) {
                 float deltaPosZ = (*m_engineDeltaTime) * m_cameraSpeed * -0.05f;
                 m_engineCamera->Translate(0.0f, 0.0f, deltaPosZ);
             }
             return;
-
+        //Right
         case 'D':
             if (m_keyMap[VK_RBUTTON]) {
                 float deltaPosX = (*m_engineDeltaTime) * m_cameraSpeed * -0.05f;
                 m_engineCamera->Translate(deltaPosX, 0.0f, 0.0f);
             }
             return;
-
+        //Up
         case VK_SPACE:
             if (m_keyMap[VK_RBUTTON]) {
                 float deltaPosY = (*m_engineDeltaTime) * m_cameraSpeed * -0.05f;
                 m_engineCamera->Translate(0.0f, deltaPosY, 0.0f);
             }
             return;
-
+        //Down
         case VK_SHIFT:
             if (m_keyMap[VK_RBUTTON]) {
                 float deltaPosY = (*m_engineDeltaTime) * m_cameraSpeed * 0.05f;

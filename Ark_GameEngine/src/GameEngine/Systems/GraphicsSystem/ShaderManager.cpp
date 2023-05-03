@@ -7,8 +7,6 @@ Ark::ShaderManager::ShaderManager() {
 bool Ark::ShaderManager::SetShaderPath(std::wstring shaderPath)
 {
     m_shaderFolder = shaderPath.c_str();
-       
-    //TO DO: Check folder contains default pixel and vertex shader.
 
     return true;
 }
@@ -27,8 +25,10 @@ bool Ark::ShaderManager::CompileVertexShader(std::wstring shaderFileName, Micros
     Microsoft::WRL::ComPtr<ID3DBlob> errorBlob = nullptr;
     Microsoft::WRL::ComPtr<ID3DBlob> vtxShaderBlob = nullptr;
 
+    //Compile
     HRESULT compileResult = D3DCompileFromFile(fullShaderPath.c_str(), nullptr, nullptr, entryPoint.c_str(), "vs_5_0", shaderFlags, 0, &vtxShaderBlob, &errorBlob);
 
+    //Notify user when shaders have failed to compile.
     if (FAILED(compileResult)) {
         MessageBoxA(NULL, "Vertex Shader Compilation Error", "Shader Error", MB_OK);
         return false;
@@ -36,6 +36,7 @@ bool Ark::ShaderManager::CompileVertexShader(std::wstring shaderFileName, Micros
 
     Microsoft::WRL::ComPtr<ID3D11VertexShader> vertexShader;
 
+    //Create vertex shader object.
     HRESULT createShaderResult = d3dDevice->CreateVertexShader(vtxShaderBlob->GetBufferPointer(), vtxShaderBlob->GetBufferSize(), nullptr, &vertexShader);
 
     if (FAILED(createShaderResult)) {
@@ -43,6 +44,7 @@ bool Ark::ShaderManager::CompileVertexShader(std::wstring shaderFileName, Micros
         return false;
     }
 
+    //Add vertex shader object to vertex shader vector.
     m_vertexShaders.push_back(vertexShader);
 
     return this->CreateInputLayout(vtxShaderBlob, d3dDevice);
@@ -62,6 +64,7 @@ bool Ark::ShaderManager::CompilePixelShader(std::wstring shaderFileName, Microso
     Microsoft::WRL::ComPtr<ID3DBlob> errorBlob = nullptr;
     Microsoft::WRL::ComPtr<ID3DBlob> pxlShaderBlob = nullptr;
 
+    //Compile
     HRESULT compileResult = D3DCompileFromFile(fullShaderPath.c_str(), nullptr, nullptr, entryPoint.c_str(), "ps_5_0", shaderFlags, 0, &pxlShaderBlob, &errorBlob);
 
     if (FAILED(compileResult)) {
@@ -71,6 +74,7 @@ bool Ark::ShaderManager::CompilePixelShader(std::wstring shaderFileName, Microso
 
     Microsoft::WRL::ComPtr<ID3D11PixelShader> pixelShader;
 
+    //Create pixel shader object.
     HRESULT createShaderResult = d3dDevice->CreatePixelShader(pxlShaderBlob->GetBufferPointer(), pxlShaderBlob->GetBufferSize(), nullptr, &pixelShader);
 
     if (FAILED(createShaderResult)) {
@@ -78,6 +82,7 @@ bool Ark::ShaderManager::CompilePixelShader(std::wstring shaderFileName, Microso
         return false;
     }
 
+    //Add pixel shader object to pixel shader vector.
     m_pixelShaders.push_back(pixelShader);
 
     return true;

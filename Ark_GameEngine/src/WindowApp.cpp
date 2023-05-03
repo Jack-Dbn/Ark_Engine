@@ -14,6 +14,7 @@ namespace Ark {
 		//When window is created...
 		case WM_CREATE:
 			{
+				//Initialise WindowApp pointer.
 				LPCREATESTRUCT createStruct = reinterpret_cast<LPCREATESTRUCT>(lParam);
 				SetWindowLongPtr(wndHandle, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(createStruct->lpCreateParams));
 			}
@@ -76,7 +77,7 @@ namespace Ark {
 
 		newWndClass.lpszClassName = className;
 		newWndClass.hInstance = instHandle;
-		newWndClass.lpfnWndProc = WindowProc;
+		newWndClass.lpfnWndProc = WindowProc;//Set callback above as window procedure to use.
 
 		m_wndClass = newWndClass;
 		m_wndText = windowText;//Text thats displayed in header.
@@ -96,10 +97,11 @@ namespace Ark {
 			NULL,
 			NULL,
 			m_wndClass.hInstance,
-			this
+			this//Pass through itself so it can call event methods in window proc.
 		);
 	}
 
+	//Display window to the user.
 	bool WindowApp::DisplayWindow(int displayMode)
 	{
 		//Check handle has been created sucessfully.
@@ -110,6 +112,7 @@ namespace Ark {
 		//Show Window
 		ShowWindow(m_wndHandle, displayMode);
 
+		//Set update loop flag to true.
 		m_WndActive = true;
 
 		return true;
@@ -148,7 +151,7 @@ namespace Ark {
 		return 0;
 	}
 
-	//App Events
+	//App Events - Not abstract as not every child app class may want to override.
 	void WindowApp::Resize(int newHeight, int newWidth)
 	{
 	}

@@ -17,6 +17,7 @@ bool Ark::Model::SetMeshEx(
     unsigned int idxArraySize, 
     Microsoft::WRL::ComPtr<ID3D11Device> &d3dDevice)
 {
+    //Create vertex and index buffers.
     bool res = CreateVtxBuffer(d3dDevice, vtxArray, vtxArraySize, m_vertexBuffer);
     res = res && CreateIdxBuffer(d3dDevice, idxArray, idxArraySize, m_indexBuffer);
 
@@ -185,7 +186,7 @@ bool Ark::Model::CreateVtxBuffer(Microsoft::WRL::ComPtr<ID3D11Device>& d3dDevice
 {
     //Vertex Buffer Creation
     D3D11_BUFFER_DESC vtxBufferDesc = { 0 };
-    vtxBufferDesc.ByteWidth = sizeof(Ark::vertex) * vtxArraySize;
+    vtxBufferDesc.ByteWidth = sizeof(Ark::vertex) * vtxArraySize;//Size of buffer needs to take into account size of data being stored.
     vtxBufferDesc.Usage = D3D11_USAGE_DEFAULT;
     vtxBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
     vtxBufferDesc.CPUAccessFlags = 0;
@@ -210,7 +211,7 @@ bool Ark::Model::CreateIdxBuffer(Microsoft::WRL::ComPtr<ID3D11Device>& d3dDevice
 {
     //Index Buffer Creation
     D3D11_BUFFER_DESC idxBufferDesc;
-    idxBufferDesc.ByteWidth = sizeof(unsigned int) * idxArraySize;
+    idxBufferDesc.ByteWidth = sizeof(unsigned int) * idxArraySize;//Size of buffer needs to take into account size of data being stored.
     idxBufferDesc.Usage = D3D11_USAGE_DEFAULT;
     idxBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
     idxBufferDesc.CPUAccessFlags = 0;

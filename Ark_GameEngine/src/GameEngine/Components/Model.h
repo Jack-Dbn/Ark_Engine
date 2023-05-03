@@ -4,14 +4,16 @@
 #include <wrl.h>
 #include <d3d11.h>
 #include <d3d11_2.h>
-#include "..\Component.h"
+#include "../Math.h"
 
 namespace Ark {
-	class Model : Component
+	class Model
 	{
 	public:
+		//0 is the default shader.
 		Model(unsigned int vtxShader = 0);
-				
+		
+		//Create mesh from manually defined meshes in Shapes.h
 		bool SetMeshEx(
 			void* vtxArray, 
 			unsigned int vtxArraySize, 
@@ -19,6 +21,7 @@ namespace Ark {
 			unsigned int idxArraySize, 
 			Microsoft::WRL::ComPtr<ID3D11Device> &d3dDevice);
 
+		//Create mesh from .obj file.
 		bool SetMeshFromFile(std::string filePath, Microsoft::WRL::ComPtr<ID3D11Device>& d3dDevice, bool CwWindingDir = false, bool LH_Convert = true);
 
 		ID3D11Buffer** GetVtxBufferAddr();
@@ -27,6 +30,7 @@ namespace Ark {
 		unsigned int GetIdxCount();
 		unsigned int GetVtxShaderId();
 
+		//Flag to ensure entity cannot be rendered without being in a vertex buffer.
 		bool m_RenderReady;
 
 		Microsoft::WRL::ComPtr<ID3D11Buffer> m_vertexBuffer;
@@ -35,6 +39,7 @@ namespace Ark {
 		unsigned int m_indexCount;
 
 	private:
+		//Static methods to create vertex and index buffer objects.
 		static bool CreateVtxBuffer(
 			Microsoft::WRL::ComPtr<ID3D11Device>& d3dDevice, 
 			void* vtxArray, 
@@ -47,6 +52,7 @@ namespace Ark {
 			unsigned int idxArraySize, 
 			Microsoft::WRL::ComPtr<ID3D11Buffer> &tgtBuffer);
 
+		//Index of vertex shader to use on this model.
 		unsigned int m_vtxShaderPos;		
 	};
 }

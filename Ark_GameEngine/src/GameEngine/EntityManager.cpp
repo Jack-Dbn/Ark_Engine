@@ -1,15 +1,19 @@
 #include "EntityManager.h"
 
+//Constructor 
 Ark::EntityManager::EntityManager()
 {
+	//At start all values between 0 and MAX_ENTITIES are available.
 	for(unsigned int i = MAX_ENTITIES-1; m_availableIds.size() < MAX_ENTITIES; i--) {
 		m_availableIds.push_back(i);
 	}
 
+	//Reserve space needed in memory.
 	m_entityMasks.reserve(MAX_ENTITIES);
 	m_entityCount = 0;
 }
 
+//Create a entity.
 Ark::Entity Ark::EntityManager::NewEntity()
 {
 	//Check to ensure at least one id is free to be assigned.
@@ -38,10 +42,12 @@ Ark::Entity Ark::EntityManager::NewEntity()
 
 bool Ark::EntityManager::UpdateMask(Ark::Entity tgtEntity, unsigned int bitPos, bool bitState)
 {
+	//Check value provided isnt out of range.
 	if (tgtEntity > m_entityMasks.size() || bitPos >= MAX_COMPONENTS) {
-		return false;
+		return false;//Indicate failure.
 	}
 
+	//Set value.
 	m_entityMasks[tgtEntity][bitPos] = bitState;
 
 	return true;
@@ -51,9 +57,10 @@ std::vector<Ark::Entity> Ark::EntityManager::EvalSysEntities(std::bitset<MAX_COM
 {
 	std::vector<Ark::Entity> systemEntities;
 
+	//Check for each entity...
 	for (Ark::Entity i = 0; i < m_entityMasks.size(); i++) {
-		if ((m_entityMasks[i] & sysFilterMask) == sysFilterMask) {
-			systemEntities.push_back(i);
+		if ((m_entityMasks[i] & sysFilterMask) == sysFilterMask) {//Perform bitwise and operation between entity and system mask.
+			systemEntities.push_back(i);//Add compatible entity to vector.
 		}
 	}
 

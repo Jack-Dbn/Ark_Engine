@@ -9,7 +9,7 @@
 class Editor : public Ark::WindowApp
 {
 public:
-
+	//Constructor
 	Editor(HINSTANCE instHandle, LPCWSTR windowText = L"", LPCWSTR className = L"Window Class Name");
 
 	//App Stages
@@ -23,6 +23,7 @@ public:
 	void KeyUp(int key);
 
 private:
+	//Instance of game engine.
 	Ark::GameEngine m_gameEngine;
 };
 

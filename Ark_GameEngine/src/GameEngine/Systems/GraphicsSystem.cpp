@@ -8,44 +8,51 @@ GraphicsSystem::GraphicsSystem()
 // Initialise Stage
 int GraphicsSystem::Initialise(bool* isGameRunning)
 {
-
-
+	//Check there is a window to render to.
 	if (m_tgtWindow == NULL) {
 		return -1;
 	}
 
+	//Check shader manage has path to shaders.
 	if (!m_shaderManager.SetShaderPath(m_assetFolderPath + L"Shaders/")) {
 		return -2;
 	}
 
-	//Create Device & SwapChain
+	//Create D3D11 Device & Device Context
 	CreateDevice();
 
+	//Create Swap chain
 	CreateSwapChain();	
 
+	//Create Render Target View
 	CreateRenderTgtView();
 
+	//Create Depth Stencil View
 	D3D11_TEXTURE2D_DESC backBufferDesc = GetBackBufferDesc();
 	CreateDepthStencilVw(backBufferDesc);
 
+	//Create Sampler
 	CreateSampler();
 
+	//Create Constant Buffer
 	CreateConstBuffer();
 
+	//Update pipeline buffer with camera matrices.
 	m_constantBufferData.m_proj = m_camera.GetProjectionMatrix(static_cast<float>(backBufferDesc.Height), static_cast<float>(backBufferDesc.Width));
 	m_constantBufferData.m_view = m_camera.GetViewMatrix();
 
+	//Set viewport
 	SetViewPort(backBufferDesc.Width, backBufferDesc.Height);
 
 	//Compile Shaders
 	bool compileSuccess = m_shaderManager.CompileVertexShader(L"Basic_VS.hlsl", m_d3dDevice);
 	compileSuccess = compileSuccess && m_shaderManager.CompilePixelShader(L"Colour_PS.hlsl", m_d3dDevice, "Colour_PS");
 
+	//Return error code if compile is unsuccessful.
 	if (!compileSuccess) {
 		return -3;
 	}
 
-	//MessageBox(NULL, L"DirectX11 Initialised", L"DirectX11 Initialised", 0);
 	return 0;
 }
 
@@ -82,6 +89,7 @@ bool GraphicsSystem::CreateDevice()
 		return false;
 	}
 
+	//Store device & context in class.
 	newD3dDevice.As(&m_d3dDevice);
 	newD3dDeviceContext.As(&m_d3dDeviceContext);
 
@@ -126,6 +134,7 @@ bool GraphicsSystem::CreateSwapChain()
 	Microsoft::WRL::ComPtr<IDXGIFactory2> dxgiFactory;
 	dxgiAdapter->GetParent(IID_PPV_ARGS(&dxgiFactory));
 
+	//Create swap chain and assign it to window.
 	HRESULT swpChnResult = dxgiFactory->CreateSwapChainForHwnd(
 		m_d3dDevice.Get(),
 		m_tgtWindow,
@@ -159,6 +168,7 @@ bool GraphicsSystem::CreateRenderTgtView()
 	return true;
 }
 
+//Ensures objects are rendered at correct depths, e.g. object behind another object is obscured.
 bool GraphicsSystem::CreateDepthStencilVw(D3D11_TEXTURE2D_DESC backBufferDesc)
 {
 
@@ -286,6 +296,7 @@ void GraphicsSystem::SetupFrame(float redVal, float greenVal, float blueVal, flo
 {
 	m_d3dDeviceContext->OMSetRenderTargets(1, m_renderTgtView.GetAddressOf(), m_depthStencilView.Get());
 
+	//Set background colour of scene.
 	float backgrndColour[4] = { redVal, greenVal, blueVal, alphaVal };
 	m_d3dDeviceContext->ClearRenderTargetView(m_renderTgtView.Get(), backgrndColour);
 	m_d3dDeviceContext->ClearDepthStencilView(m_depthStencilView.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0);
@@ -375,6 +386,7 @@ bool GraphicsSystem::DrawEntity(Ark::Model &tgtModel, Ark::Material &tgtMaterial
 	return true;
 }
 
+//Display frame on window.
 bool GraphicsSystem::PresentFrame(bool vSyncOn)
 {
 	int syncInterval = 0;
@@ -400,11 +412,13 @@ int GraphicsSystem::Release()
 
 bool GraphicsSystem::Resize(int newHeight, int newWidth)
 {
+	//Ensure swap chain exists before attempting resize.
 	if (m_swapChain) {
 
 		m_depthStencilView.Reset();
 		m_renderTgtView.Reset();		
 
+		//Resize swapchain's buffers.
 		HRESULT resizeRes = m_swapChain->ResizeBuffers(2, 0, 0, DXGI_FORMAT_B8G8R8A8_UNORM, 0);
 
 		if (FAILED(resizeRes)) {
@@ -417,6 +431,8 @@ bool GraphicsSystem::Resize(int newHeight, int newWidth)
 		a = a && CreateDepthStencilVw(backBufferDesc);
 
 		SetViewPort(static_cast<float>(newWidth), static_cast<float>(newHeight));
+
+		//Readjust projection matrix as there will be a new aspect ratio.
 		m_constantBufferData.m_proj = m_camera.GetProjectionMatrix(static_cast<float>(backBufferDesc.Height), static_cast<float>(backBufferDesc.Width));
 
 		return true;
@@ -436,6 +452,7 @@ Ark::Camera* GraphicsSystem::GetCamera()
 	return &m_camera;
 }
 
+//Material & model methods need to go via graphics system for d3d device.
 Ark::Model GraphicsSystem::CreateDxModelEx(void* vtxArray, unsigned int vtxArraySize, unsigned int* idxArray, unsigned int idxArraySize)
 {
 	Ark::Model newModel;

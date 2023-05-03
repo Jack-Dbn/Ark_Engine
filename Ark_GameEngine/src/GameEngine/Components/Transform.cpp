@@ -1,7 +1,8 @@
 #include "Transform.h"
 
-Ark::Transform::Transform() : Component()
+Ark::Transform::Transform()
 {
+	//Default Values
 	m_posX = 0.0f;
 	m_posY = 0.0f;
 	m_posZ = 0.0f;
@@ -14,11 +15,13 @@ Ark::Transform::Transform() : Component()
 	m_scaleY = 1.0f;
 	m_scaleZ = 1.0f;
 
+	//Create Transform Matrix from default values.
 	UpdateTransformMtx();
 }
 
 Ark::Transform::Transform(float x, float y, float z)
 {
+	//Allow user to set position on instance creation.
 	SetPosition(x,y,z);
 
 	m_rotationX = 0.0f;

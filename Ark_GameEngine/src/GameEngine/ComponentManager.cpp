@@ -2,6 +2,7 @@
 
 Ark::ComponentManager::ComponentManager()
 {
+	//Initialise available component map indexes (bit pos).
 	for (unsigned int i = EntityManager::MAX_COMPONENTS - 1; m_availableIds.size() < EntityManager::MAX_COMPONENTS; i--) {
 		m_availableIds.push_back(i);
 	}
@@ -32,9 +33,13 @@ bool Ark::ComponentManager::SaveTransforms()
 		return false;
 	}
 
+	//Get id of transform component
 	unsigned int transformId = this->GetBitPos<Ark::Transform>();
 
+	//Create list pointer for transform component.
 	std::shared_ptr<ComponentList<Ark::Transform>> listPtr = std::static_pointer_cast<ComponentList<Ark::Transform>>(m_componentListData[transformId]);
+	
+	//Dereference pointer and save a copy of the list in m_transformSave.
 	m_transformSave = *listPtr;
 }
 
@@ -45,10 +50,12 @@ bool Ark::ComponentManager::LoadTransforms()
 		return false;
 	}
 
+	//Get id of transform component
 	unsigned int transformId = this->GetBitPos<Ark::Transform>();
 
+	//Create list pointer for transform component.
 	std::shared_ptr<ComponentList<Ark::Transform>> listPtr = std::static_pointer_cast<ComponentList<Ark::Transform>>(m_componentListData[transformId]);
 	
-	//Revert transform list to save.
+	//Overwrite the list's data with m_transformSave.
 	*listPtr = m_transformSave;
 }

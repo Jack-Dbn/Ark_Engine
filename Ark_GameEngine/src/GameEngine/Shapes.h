@@ -1,6 +1,9 @@
 #pragma once
 #include "Math.h"
 
+/// <summary>
+/// This header file manually defines some basic meshes.
+/// </summary>
 namespace Ark {
 
 struct Square {

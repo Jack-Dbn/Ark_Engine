@@ -10,8 +10,6 @@ namespace Ark {
 
 		int Run(int displayMode = SW_NORMAL);
 
-		
-
 		//App Events
 		virtual void Resize(int newHeight = 900, int newWidth = 1600);
 		virtual void KeyDown(int key);
@@ -25,6 +23,7 @@ namespace Ark {
 		virtual int OnUpdate() = 0;
 		virtual int OnDestroy() = 0;
 
+		//Window handle
 		HWND m_wndHandle = NULL;		
 
 		WNDCLASS m_wndClass = {};
@@ -32,6 +31,7 @@ namespace Ark {
 		LPCWSTR m_wndText = L"";
 		long m_wndStyle = WS_OVERLAPPEDWINDOW;
 
+		//Use default parameters for window properties
 		int m_width = CW_USEDEFAULT, m_height = CW_USEDEFAULT, m_posX = CW_USEDEFAULT, m_posY = CW_USEDEFAULT;
 
 	private:

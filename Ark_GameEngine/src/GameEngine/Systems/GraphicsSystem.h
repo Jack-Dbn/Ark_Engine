@@ -16,16 +16,19 @@ class GraphicsSystem : public System
 public:
 	GraphicsSystem();
 
+	//System stages
 	int Initialise(bool* isGameRunning);
 	int Update(Ark::ComponentManager& engineCM);
 	int Release();
 
+	//App Event
 	bool Resize(int newHeight, int newWidth);
 
 	//Getters & Setters
 	void SetParam(HWND windowHWND, std::wstring assetFolderPath);
 	Ark::Camera* GetCamera();
 
+	//Create model and material objects for user.
 	Ark::Model CreateDxModelEx(
 		void* vtxArray,
 		unsigned int vtxArraySize,
@@ -37,7 +40,7 @@ public:
 	Ark::Material CreateMaterial(std::wstring textureFilePath);
 
 private:
-	//Init
+	//Init - D3D11
 	bool CreateDevice();
 	bool CreateSwapChain();
 	bool CreateRenderTgtView();
@@ -46,16 +49,26 @@ private:
 	bool CreateSampler();
 	void SetViewPort(float viewPortWidth = 1920.0f, float viewPortHeight = 1080.0f);
 
+	//Util
 	D3D11_TEXTURE2D_DESC GetBackBufferDesc();
 
 	//Update
+
+	//Draw backdrop
 	void SetupFrame(const float redVal = 0.66f, const float greenVal = 0.73f, const float blueVal = 0.75f, const float alphaVal = 1.0f);
+
+	//Draw entity
 	bool DrawEntity(Ark::Model& tgtModel, Ark::Material& tgtMaterial);
+
+	//Present frame with drawn entities.
 	bool PresentFrame(bool vSyncOn = true);	
 
+	//Stores window handle
 	HWND m_tgtWindow = NULL;
+	//Stores directory with models/textures/shaders
 	std::wstring m_assetFolderPath = L"";
 
+	//D3D11 Objects
 	Microsoft::WRL::ComPtr<ID3D11Device> m_d3dDevice;
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_d3dDeviceContext;
 
@@ -66,13 +79,11 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11SamplerState> m_sampler;
 
 	Microsoft::WRL::ComPtr<ID3D11Buffer> m_constantBuffer;
+	//Pipeline Buffer
 	Ark::ConstantBuffer m_constantBufferData;
 
 	//Cameras
 	Ark::Camera m_camera;
 
 	Ark::ShaderManager m_shaderManager;
-
-	//Simply to rotate model until input is added.
-	float m_tempDegVar = 0.0f;
 };

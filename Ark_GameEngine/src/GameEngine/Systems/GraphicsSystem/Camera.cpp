@@ -2,12 +2,15 @@
 
 Ark::Camera::Camera()
 {
+    //Default FOV
 	m_fov = 70.0f;
 
+    //Default Clipping Planes
 	m_nearClipPlane = 0.01f;
 	m_farClipPlane = 100.0f;
 }
 
+//Calculate projection matrix.
 Ark::matrix4x4 Ark::Camera::GetProjectionMatrix(float windowHeight, float windowWidth)
 {
     //Initialise scaling factors.
@@ -35,6 +38,7 @@ Ark::matrix4x4 Ark::Camera::GetProjectionMatrix(float windowHeight, float window
 	return projectionMatrix;
 }
 
+//Calculate view matrix.
 Ark::matrix4x4 Ark::Camera::GetViewMatrix()
 {
     //Create identity matrix.
@@ -71,6 +75,7 @@ Ark::matrix4x4 Ark::Camera::GetViewMatrix()
 
 void Ark::Camera::Translate(float x, float y, float z)
 {
+    //Store much the camera's position will change by in next update.
     m_deltaPosition.x += x;
     m_deltaPosition.y += y;
     m_deltaPosition.z += z;
@@ -78,6 +83,7 @@ void Ark::Camera::Translate(float x, float y, float z)
 
 void Ark::Camera::Rotate(float pitch, float yaw)
 {	
+    //Increase pitch and yaw.
 	m_yaw += yaw;
     m_pitch += pitch;
 

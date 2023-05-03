@@ -13,39 +13,46 @@ namespace Ark {
 
 		m_gameActive = false;
 
-		//Register components to use in the engine.
+		//Register components so they can be used in the engine.
 		m_componentManager.RegisterComponent<Transform>();	
 		m_componentManager.RegisterComponent<Model>();
 		m_componentManager.RegisterComponent<Material>();
 		m_componentManager.RegisterComponent<InputRig>();
 		m_componentManager.RegisterComponent<GameRole>();
 
+		//Set window handle and location of assets.
 		m_graphicsSystem.SetParam(windowHWND, assetFolderPath);
 		m_graphicsSystem.Initialise(&m_gameActive);
 		{
+			//State which components are required by this system.
 			m_graphicsSystem.AddReqComponent<Transform>(m_componentManager.GetRegister());
 			m_graphicsSystem.AddReqComponent<Model>(m_componentManager.GetRegister());
 			m_graphicsSystem.AddReqComponent<Material>(m_componentManager.GetRegister());
 		}
 
+		//Set input system to use graphics system's camera.
 		m_inputSystem.SetCamera(m_graphicsSystem.GetCamera());
 		m_inputSystem.SetDeltaTime(&m_deltaTime);
 		m_inputSystem.Initialise(&m_gameActive);
 		{
+			//State which components are required by this system.
 			m_inputSystem.AddReqComponent<Transform>(m_componentManager.GetRegister());
 			m_inputSystem.AddReqComponent<InputRig>(m_componentManager.GetRegister());
 		}
 
 		m_gameplaySystem.Initialise(&m_gameActive);
 		{
+			//State which components are required by this system.
 			m_gameplaySystem.AddReqComponent<Transform>(m_componentManager.GetRegister());
 			m_gameplaySystem.AddReqComponent<GameRole>(m_componentManager.GetRegister());
 		}
 		
+		//Debugging code
+		/*
 		wchar_t text[256];
 
 		swprintf_s(text, L"Registered Components: %d", m_componentManager.GetRegisterCount());
-		MessageBox(NULL, text, text, 0);		
+		MessageBox(NULL, text, text, 0);*/
 	}
 
 	void GameEngine::Update()
@@ -82,6 +89,7 @@ namespace Ark {
 		m_graphicsSystem.Release();
 	}
 
+	//Pass events to the relevant systems.
 	void GameEngine::WindowResize(int newHeight, int newWidth)
 	{
 		m_graphicsSystem.Resize(newHeight, newWidth);
@@ -97,6 +105,7 @@ namespace Ark {
 		m_inputSystem.KeyDown(key);
 	}
 
+	//To allow editor to create new entities
 	Ark::EntityManager* GameEngine::GetEC()
 	{
 		return &m_entityManager;
@@ -107,6 +116,7 @@ namespace Ark {
 		return m_entityManager.NewEntity();
 	}
 
+	//Graphics System - Use Cases
 	Ark::Model GameEngine::CreateModelEx(void* vtxArray,
 		unsigned int vtxArraySize,
 		unsigned int* idxArray,
