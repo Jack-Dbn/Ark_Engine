@@ -31,6 +31,8 @@ Ark::Entity Ark::EntityManager::NewEntity()
 
 	//Increase entity count.
 	m_entityCount++;
+
+	m_activeEntities.push_back(newEntity);
 	
 	//Return new entity id.
 	return newEntity;
@@ -63,4 +65,9 @@ std::vector<Ark::Entity> Ark::EntityManager::EvalSysEntities(std::bitset<MAX_COM
 unsigned int Ark::EntityManager::GetEntityCount()
 {
 	return m_entityCount;
+}
+
+std::vector<Ark::Entity> Ark::EntityManager::GetActiveEntityList()
+{
+	return m_activeEntities;
 }

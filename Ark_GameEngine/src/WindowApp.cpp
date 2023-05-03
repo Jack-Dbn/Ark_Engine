@@ -1,10 +1,14 @@
 #include "WindowApp.h"
+#include "GameEngine/include/ImGui/imgui_impl_win32.cpp"
 
 namespace Ark {
 
 	float windowHeight, windowWidth;
 
 	LRESULT CALLBACK WindowProc(HWND wndHandle, UINT wndMsg, WPARAM wParam, LPARAM lParam) {
+
+		//Gui
+		ImGui_ImplWin32_WndProcHandler(wndHandle, wndMsg, wParam, lParam);
 
 		//Create pointer to the WindowApp instance calling this procedure.
 		WindowApp* tgtApp = reinterpret_cast<WindowApp*>(GetWindowLongPtr(wndHandle, GWLP_USERDATA));

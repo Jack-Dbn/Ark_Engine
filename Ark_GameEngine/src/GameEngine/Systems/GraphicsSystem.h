@@ -9,7 +9,10 @@
 #include "GraphicsSystem/ShaderManager.h"
 #include "GraphicsSystem/ConstantBuffer.h"
 #include "GraphicsSystem/Camera.h"
-
+//GUI
+#include "../include/ImGui/imgui.h"
+#include "../include/ImGui/imgui_impl_win32.h"
+#include "../include/ImGui/imgui_impl_dx11.h"
 
 class GraphicsSystem : public System
 {
@@ -25,6 +28,9 @@ public:
 	//Getters & Setters
 	void SetParam(HWND windowHWND, std::wstring assetFolderPath);
 	Ark::Camera* GetCamera();
+
+	ID3D11Device* GetDevice();
+	ID3D11DeviceContext* GetDeviceContext();
 
 	Ark::Model CreateDxModelEx(
 		void* vtxArray,

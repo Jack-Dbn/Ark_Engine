@@ -42,10 +42,28 @@ namespace Ark {
 			m_gameplaySystem.AddReqComponent<GameRole>(m_componentManager.GetRegister());
 		}
 		
+		//Gui
+		// Setup Dear ImGui context
+		IMGUI_CHECKVERSION();
+		ImGui::CreateContext();
+		ImGuiIO& io = ImGui::GetIO(); (void)io;
+		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+		io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+
+		// Setup Dear ImGui style
+		ImGui::StyleColorsDark();
+
+		// Setup Platform/Renderer backends
+		ImGui_ImplWin32_Init(windowHWND);
+		ImGui_ImplDX11_Init(m_graphicsSystem.GetDevice(), m_graphicsSystem.GetDeviceContext());
+
+		m_selectedEntity = 0;
+
 		wchar_t text[256];
 
 		swprintf_s(text, L"Registered Components: %d", m_componentManager.GetRegisterCount());
-		MessageBox(NULL, text, text, 0);		
+		MessageBox(NULL, text, text, 0);
+		
 	}
 
 	void GameEngine::Update()
@@ -54,7 +72,7 @@ namespace Ark {
 		m_lastTickCount = m_newTickCount;
 		m_newTickCount = ::GetTickCount();
 
-		m_deltaTime = (m_newTickCount - m_lastTickCount) / 1000.0f;
+		m_deltaTime = (m_newTickCount - m_lastTickCount) / 1000.0f;		
 
 		//Gameplay System
 		std::vector<Ark::Entity> sysEntities = m_entityManager.EvalSysEntities(m_gameplaySystem.GetFilterMask());
@@ -68,6 +86,16 @@ namespace Ark {
 
 		m_inputSystem.Update(m_componentManager);
 
+		//Gui
+		ImGui_ImplDX11_NewFrame();
+		ImGui_ImplWin32_NewFrame();
+		ImGui::NewFrame();
+
+		if (!m_gameActive) {
+			GuiEntityWindow();	
+			GuiComponentWindow();
+		}		
+
 		//Render System
 		sysEntities = m_entityManager.EvalSysEntities(m_graphicsSystem.GetFilterMask());
 		m_graphicsSystem.SetEntityList(sysEntities);
@@ -77,6 +105,11 @@ namespace Ark {
 
 	void GameEngine::Release()
 	{
+		// Cleanup
+		ImGui_ImplDX11_Shutdown();
+		ImGui_ImplWin32_Shutdown();
+		ImGui::DestroyContext();
+
 		m_gameplaySystem.Release();
 		m_inputSystem.Release();
 		m_graphicsSystem.Release();
@@ -123,5 +156,46 @@ namespace Ark {
 	Ark::Material GameEngine::CreateMaterial(std::wstring textureFilePath)
 	{
 		return m_graphicsSystem.CreateMaterial(textureFilePath);
+	}
+
+	//Gui elements
+	void GameEngine::GuiEntityWindow()
+	{
+		ImGui::Begin("Entities");
+
+		//New Entity Button
+		if (ImGui::Button("New Entity")) {
+			this->NewEntity();
+		}
+
+		std::vector<Ark::Entity> activeEntityList = m_entityManager.GetActiveEntityList();
+		//Entity List
+		if (ImGui::BeginTable("Entity ID", 1)) {
+			for (int n = 0; n < activeEntityList.size(); n++) {
+				ImGui::TableNextRow();
+				ImGui::TableNextColumn();
+				//ImGui::Text(("Entity: " + std::to_string(activeEntityList[n])).c_str());
+				ImGuiSelectableFlags flags = ImGuiSelectableFlags_None;
+				
+				
+				if (ImGui::Selectable(std::to_string(activeEntityList[n]).c_str(), false, flags))
+				{
+					m_selectedEntity = activeEntityList[n];
+				}
+
+			}
+			ImGui::EndTable();
+		}
+			
+		
+
+		ImGui::End();
+	}
+	void GameEngine::GuiComponentWindow()
+	{
+		ImGui::Begin("Components");
+		ImGui::Text(std::to_string(m_selectedEntity).c_str());
+
+		ImGui::End();
 	}
 }

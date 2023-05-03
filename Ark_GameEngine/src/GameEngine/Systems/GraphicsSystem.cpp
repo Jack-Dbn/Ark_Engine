@@ -284,6 +284,9 @@ D3D11_TEXTURE2D_DESC GraphicsSystem::GetBackBufferDesc()
 
 void GraphicsSystem::SetupFrame(float redVal, float greenVal, float blueVal, float alphaVal)
 {
+	//Gui
+	ImGui::Render();
+
 	m_d3dDeviceContext->OMSetRenderTargets(1, m_renderTgtView.GetAddressOf(), m_depthStencilView.Get());
 
 	float backgrndColour[4] = { redVal, greenVal, blueVal, alphaVal };
@@ -377,6 +380,8 @@ bool GraphicsSystem::DrawEntity(Ark::Model &tgtModel, Ark::Material &tgtMaterial
 
 bool GraphicsSystem::PresentFrame(bool vSyncOn)
 {
+	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+
 	int syncInterval = 0;
 	if (vSyncOn) {
 		syncInterval = 1;
@@ -434,6 +439,16 @@ void GraphicsSystem::SetParam(HWND windowHWND, std::wstring assetFolderPath)
 Ark::Camera* GraphicsSystem::GetCamera()
 {
 	return &m_camera;
+}
+
+ID3D11Device* GraphicsSystem::GetDevice()
+{
+	return m_d3dDevice.Get();
+}
+
+ID3D11DeviceContext* GraphicsSystem::GetDeviceContext()
+{
+	return m_d3dDeviceContext.Get();
 }
 
 Ark::Model GraphicsSystem::CreateDxModelEx(void* vtxArray, unsigned int vtxArraySize, unsigned int* idxArray, unsigned int idxArraySize)

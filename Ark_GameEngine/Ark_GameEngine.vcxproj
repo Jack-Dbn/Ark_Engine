@@ -147,6 +147,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\GameEngine\include\ImGui\imconfig.h" />
+    <ClInclude Include="src\GameEngine\include\ImGui\imgui.h" />
+    <ClInclude Include="src\GameEngine\include\ImGui\imgui_impl_dx11.h" />
+    <ClInclude Include="src\GameEngine\include\ImGui\imgui_impl_win32.h" />
+    <ClInclude Include="src\GameEngine\include\ImGui\imgui_internal.h" />
+    <ClInclude Include="src\GameEngine\include\ImGui\imstb_rectpack.h" />
+    <ClInclude Include="src\GameEngine\include\ImGui\imstb_textedit.h" />
+    <ClInclude Include="src\GameEngine\include\ImGui\imstb_truetype.h" />
     <ClInclude Include="src\GameEngine\Systems\GameLogicSystem.h" />
     <ClInclude Include="src\GameEngine\Components\GameRole.h" />
     <ClInclude Include="src\GameEngine\Components\InputRig.h" />
@@ -170,6 +178,13 @@
     <ClInclude Include="src\GameEngine\Components\Transform.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\GameEngine\include\ImGui\imgui.cpp" />
+    <ClCompile Include="src\GameEngine\include\ImGui\imgui_demo.cpp" />
+    <ClCompile Include="src\GameEngine\include\ImGui\imgui_draw.cpp" />
+    <ClCompile Include="src\GameEngine\include\ImGui\imgui_impl_dx11.cpp" />
+    <ClCompile Include="src\GameEngine\include\ImGui\imgui_impl_win32.cpp" />
+    <ClCompile Include="src\GameEngine\include\ImGui\imgui_tables.cpp" />
+    <ClCompile Include="src\GameEngine\include\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="src\GameEngine\Systems\GameLogicSystem.cpp" />
     <ClCompile Include="src\GameEngine\Components\GameRole.cpp" />
     <ClCompile Include="src\GameEngine\Components\InputRig.cpp" />

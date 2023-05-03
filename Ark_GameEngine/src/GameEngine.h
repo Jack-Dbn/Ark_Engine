@@ -7,6 +7,7 @@
 #include "GameEngine/ComponentManager.h"
 #include "GameEngine/Shapes.h"
 
+
 namespace Ark {	
 
 	class GameEngine
@@ -51,6 +52,10 @@ namespace Ark {
 		bool RemoveComponent(Ark::Entity tgtEntity);		
 
 	private:
+
+		void GuiEntityWindow();
+		void GuiComponentWindow();
+		Ark::Entity m_selectedEntity;
 
 		EntityManager m_entityManager;
 		ComponentManager m_componentManager;

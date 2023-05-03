@@ -21,10 +21,12 @@ namespace Ark {
 		std::vector<Ark::Entity> EvalSysEntities(std::bitset<MAX_COMPONENTS> sysFilterMask);
 
 		unsigned int GetEntityCount();
+		std::vector<Ark::Entity> GetActiveEntityList();
 
 	private:
 		std::vector<std::bitset<MAX_COMPONENTS>> m_entityMasks;
 		std::vector<unsigned int> m_availableIds;
+		std::vector<Ark::Entity> m_activeEntities;
 
 		unsigned int m_entityCount;
 	};
