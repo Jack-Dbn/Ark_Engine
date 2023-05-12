@@ -31,11 +31,15 @@ int Editor::OnInit()
 	Ark::Model cubeModel = m_gameEngine.CreateModelEx(cube.vertices, ARRAYSIZE(cube.vertices), cube.indexes, ARRAYSIZE(cube.indexes));
 	Ark::Material rubiksMaterial = m_gameEngine.CreateMaterial(L"Debug/Assets/Textures/RubikTexture.dds");
 
+	//Player
+	Ark::Model playerModel = m_gameEngine.CreateModel("Debug/Assets/Models/dummy.obj", false, true);
+	Ark::Material playerMaterial = m_gameEngine.CreateMaterial(L"Debug/Assets/Textures/dummy.dds");
+
 	//Entity A - Rubiks Cube.
 	Ark::Transform entityAtransform(1.0f, -1, -1.5f);
 	m_gameEngine.SetComponent<Ark::Transform>(entityA, entityAtransform);
-	m_gameEngine.SetComponent<Ark::Material>(entityA, rubiksMaterial);
-	m_gameEngine.SetComponent<Ark::Model>(entityA, cubeModel);
+	m_gameEngine.SetComponent<Ark::Material>(entityA, playerMaterial);
+	m_gameEngine.SetComponent<Ark::Model>(entityA, playerModel);
 
 	Ark::InputRig entityAinputRig;
 	entityAinputRig.SetPositionInput(VK_LEFT, Ark::x, -0.05f);
