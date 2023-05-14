@@ -130,7 +130,8 @@
       <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
-      <Command>xcopy /y /e "$(SolutionDir)Ark_GameEngine\Assets"  "$(OutDir)Assets\"</Command>
+      <Command>xcopy /y /e "$(SolutionDir)Ark_GameEngine\Assets"  "$(OutDir)Assets\"
+xcopy /y /e "$(SolutionDir)Ark_GameEngine\Assets"  "$(ProjectDir)Assets\"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

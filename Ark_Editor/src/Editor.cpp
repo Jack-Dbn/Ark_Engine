@@ -19,21 +19,21 @@ int Editor::OnInit()
 	Ark::Cube cube;
 
 	//Import helmet model and texture.
-	Ark::Model helmetModel = m_gameEngine.CreateModel("Debug/Assets/Models/Helmet.obj", false, true);
-	Ark::Material helmetMaterial = m_gameEngine.CreateMaterial(L"Debug/Assets/Textures/Helmet.dds");
+	Ark::Model helmetModel = m_gameEngine.CreateModel("Assets/Models/Helmet.obj", false, true);
+	Ark::Material helmetMaterial = m_gameEngine.CreateMaterial(L"Assets/Textures/Helmet.dds");
 
 	//Import flag model and textures.
-	Ark::Model flagModel = m_gameEngine.CreateModel("Debug/Assets/Models/Flag.obj", true, true);
-	Ark::Material goalMaterial = m_gameEngine.CreateMaterial(L"Debug/Assets/Textures/FinishFlag.dds");
-	Ark::Material hazardMaterial = m_gameEngine.CreateMaterial(L"Debug/Assets/Textures/ObstacleFlag.dds");
+	Ark::Model flagModel = m_gameEngine.CreateModel("Assets/Models/Flag.obj", true, true);
+	Ark::Material goalMaterial = m_gameEngine.CreateMaterial(L"Assets/Textures/FinishFlag.dds");
+	Ark::Material hazardMaterial = m_gameEngine.CreateMaterial(L"Assets/Textures/ObstacleFlag.dds");
 
 	//Create code model and import rubiks texture.
 	Ark::Model cubeModel = m_gameEngine.CreateModelEx(cube.vertices, ARRAYSIZE(cube.vertices), cube.indexes, ARRAYSIZE(cube.indexes));
-	Ark::Material rubiksMaterial = m_gameEngine.CreateMaterial(L"Debug/Assets/Textures/RubikTexture.dds");
+	Ark::Material rubiksMaterial = m_gameEngine.CreateMaterial(L"Assets/Textures/RubikTexture.dds");
 
 	//Player
-	Ark::Model playerModel = m_gameEngine.CreateModel("Debug/Assets/Models/dummy.obj", false, true);
-	Ark::Material playerMaterial = m_gameEngine.CreateMaterial(L"Debug/Assets/Textures/dummy.dds");
+	Ark::Model playerModel = m_gameEngine.CreateModel("Assets/Models/dummy.obj", false, true);
+	Ark::Material playerMaterial = m_gameEngine.CreateMaterial(L"Assets/Textures/dummy.dds");
 
 	//Entity A - Rubiks Cube.
 	Ark::Transform entityAtransform(1.0f, -1, -1.5f);
